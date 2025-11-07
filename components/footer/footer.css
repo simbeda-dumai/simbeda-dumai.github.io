@@ -1,7 +1,6 @@
 .app-footer {
-  background-color: #1e3a8a;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  font-size: 0.9em;
+  background: linear-gradient(90deg, #0f172a, #1e3a8a);
+  color: white; text-align: center; padding: 15px 0;
+  font-size: 0.9em; border-top: 3px solid #60a5fa;
 }
+.footer-bottom p { margin: 3px 0; }

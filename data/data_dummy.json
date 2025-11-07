@@ -1,24 +1,14 @@
 [
   {
-    "id": 1,
     "jenis": "Banjir",
-    "lokasi": "Kelurahan Bukit Timah",
-    "lat": 1.6915,
-    "lng": 101.4552,
-    "tanggal": "2025-02-10",
-    "kerugian": "15 rumah terdampak",
-    "korban": "Tidak ada korban jiwa",
+    "lokasi": "Bukit Timah, Dumai Selatan",
+    "tanggal": "2025-11-08",
     "status": "Tertangani"
   },
   {
-    "id": 2,
     "jenis": "Kebakaran",
-    "lokasi": "Kelurahan Laksamana",
-    "lat": 1.6821,
-    "lng": 101.4478,
-    "tanggal": "2025-04-02",
-    "kerugian": "2 unit rumah hangus",
-    "korban": "1 luka ringan",
-    "status": "Selesai"
+    "lokasi": "Lubuk Gaung, Sungai Sembilan",
+    "tanggal": "2025-11-06",
+    "status": "Dalam Penanganan"
   }
 ]

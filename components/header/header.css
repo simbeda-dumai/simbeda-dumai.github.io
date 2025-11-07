@@ -1,37 +1,14 @@
 .app-header {
-  background: linear-gradient(135deg, #0f172a, #2563eb);
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
   color: white;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-  border-bottom: 3px solid #60a5fa;
-}
-.top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 30px;
-  flex-wrap: wrap;
+  padding: 10px 20px;
 }
-.logo-container img {
-  height: 55px;
-  margin: 0 8px;
+.logo-container img { height: 48px; margin: 0 5px; }
+.nav-menu a {
+  color: white; text-decoration: none;
+  margin: 0 10px; font-weight: 500;
 }
-.user-info {font-weight: 500;}
-.navbar {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  background: linear-gradient(90deg, #1e40af, #2563eb);
-  padding: 10px 0;
-}
-.navbar a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 14px;
-  transition: all 0.3s;
-  border-radius: 5px;
-}
-.navbar a:hover {
-  background-color: #f0f9ff;
-  color: #1e3a8a;
-}
+.nav-menu a:hover { text-decoration: underline; }
