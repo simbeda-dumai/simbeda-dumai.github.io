@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='id'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Lapor Warga - SIMBEDA</title>
+<script src='/js/layout/layout.js' defer></script>
+<script src='lapor_warga.js' defer></script>
+<link rel='stylesheet' href='lapor_warga.css'>
+</head>
+<body>
+<div id='header'></div>
+<main>
+  <h2>📣 Form Lapor Warga</h2>
+  <form id='formLapor'>
+    <label>Nama:</label><input id='nama' required>
+    <label>NIK:</label><input id='nik' maxlength='16' required>
+    <label>Pekerjaan:</label><input id='pekerjaan' required>
+    <label>Alamat:</label><textarea id='alamat' required></textarea>
+    <label>Jenis Bencana:</label><select id='jenis'><option>Banjir</option><option>Kebakaran</option><option>Pohon tumbang</option><option>Tanah longsor</option></select>
+    <label>Deskripsi Singkat:</label><textarea id='deskripsi' required></textarea>
+    <button type='submit'>Kirim Laporan</button>
+  </form>
+</main>
+<div id='footer'></div>
+</body>
+</html>

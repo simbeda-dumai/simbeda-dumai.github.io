@@ -1,0 +1,5 @@
+form{max-width:600px;margin:20px auto;padding:20px;border-radius:10px;border:2px solid #2563eb;background:#f9fafb;}
+form label{display:block;margin-top:10px;font-weight:500;}
+form input,textarea,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:5px;margin-top:5px;}
+form button{background:linear-gradient(90deg,#1e40af,#2563eb);color:white;border:none;padding:10px 15px;margin-top:15px;border-radius:8px;cursor:pointer;}
+form button:hover{background:#1d4ed8;}

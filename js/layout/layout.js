@@ -10,17 +10,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   header.innerHTML = headerHTML;
   footer.innerHTML = footerHTML;
 
-  const linkHeader = document.createElement("link");
-  linkHeader.rel = "stylesheet";
-  linkHeader.href = "/components/header/header.css";
-  document.head.appendChild(linkHeader);
+  const linkH = document.createElement("link");
+  linkH.rel="stylesheet"; linkH.href="/components/header/header.css";
+  document.head.appendChild(linkH);
 
-  const linkFooter = document.createElement("link");
-  linkFooter.rel = "stylesheet";
-  linkFooter.href = "/components/footer/footer.css";
-  document.head.appendChild(linkFooter);
+  const linkF=document.createElement("link");
+  linkF.rel="stylesheet"; linkF.href="/components/footer/footer.css";
+  document.head.appendChild(linkF);
 
-  const scriptQuotes = document.createElement("script");
-  scriptQuotes.src = "/components/footer/quotes.js";
-  document.body.appendChild(scriptQuotes);
+  const script=document.createElement("script");
+  script.src="/components/footer/quotes.js";
+  document.body.appendChild(script);
 });
