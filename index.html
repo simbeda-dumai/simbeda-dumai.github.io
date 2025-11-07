@@ -4,19 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIMBEDA Kota Dumai</title>
+
+  <!-- Font & Style -->
   <link rel="stylesheet" href="components/header/header.css" />
   <link rel="stylesheet" href="components/footer/footer.css" />
+  <link rel="stylesheet" href="assets/fonts/Roboto.css" />
+
+  <!-- Layout Loader -->
   <script src="js/layout/layout.js" defer></script>
 </head>
+
 <body>
   <div id="header"></div>
-  <main style="padding: 20px; text-align:center;">
-    <h1>🛰️ SIMBEDA Kota Dumai</h1>
-    <p>Sistem Informasi Manajemen Bencana Daerah</p>
-    <a href="modules/login/login.html" class="btn">Masuk ke Sistem</a>
-    <br><br>
-    <a href="modules/lapor_warga/lapor_warga.html" class="btn">Lapor Warga</a>
+
+  <main class="main-home">
+    <section class="intro">
+      <h1>Selamat Datang di <span>SIMBEDA Kota Dumai</span></h1>
+      <p>Sistem Informasi Manajemen Bencana Daerah</p>
+      <a href="modules/login/login.html" class="btn-home">Masuk ke Sistem</a>
+    </section>
+
+    <section class="info">
+      <h2>Tujuan SIMBEDA</h2>
+      <p>
+        SIMBEDA merupakan platform digital Badan Penanggulangan Bencana Daerah
+        (BPBD) Kota Dumai untuk mengelola laporan bencana, memantau kondisi
+        wilayah, dan menyalurkan informasi cepat kepada masyarakat serta pihak
+        terkait.
+      </p>
+    </section>
   </main>
+
   <div id="footer"></div>
 </body>
 </html>

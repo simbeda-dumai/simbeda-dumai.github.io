@@ -1,11 +1,78 @@
-.form-lokasi {
-  margin-top: 20px;
-  border: 2px solid #1e3a8a;
-  padding: 15px;
-  border-radius: 10px;
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
 }
-#mapPicker {
-  height: 300px;
-  border-radius: 10px;
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f9fafb;
+  margin: 0;
+}
+
+.laporan-container {
+  padding: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2, h3 {
+  color: #1e293b;
+}
+
+form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
   margin-top: 10px;
+  font-weight: 600;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 1em;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #facc15, #fb923c);
+  color: #1e293b;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #fbbf24, #f97316);
+  color: white;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+th, td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: #fff7ed;
+  color: #92400e;
 }

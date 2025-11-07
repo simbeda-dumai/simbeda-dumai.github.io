@@ -1,27 +1,78 @@
 <!DOCTYPE html>
-<html lang='id'>
+<html lang="id">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>Lapor Warga - SIMBEDA</title>
-<script src='/js/layout/layout.js' defer></script>
-<script src='lapor_warga.js' defer></script>
-<link rel='stylesheet' href='lapor_warga.css'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lapor Warga | SIMBEDA Kota Dumai</title>
+
+  <link rel="stylesheet" href="../../components/header/header.css" />
+  <link rel="stylesheet" href="../../components/footer/footer.css" />
+  <link rel="stylesheet" href="lapor_warga.css" />
+  <script src="../../js/layout/layout.js" defer></script>
 </head>
+
 <body>
-<div id='header'></div>
-<main>
-  <h2>📣 Form Lapor Warga</h2>
-  <form id='formLapor'>
-    <label>Nama:</label><input id='nama' required>
-    <label>NIK:</label><input id='nik' maxlength='16' required>
-    <label>Pekerjaan:</label><input id='pekerjaan' required>
-    <label>Alamat:</label><textarea id='alamat' required></textarea>
-    <label>Jenis Bencana:</label><select id='jenis'><option>Banjir</option><option>Kebakaran</option><option>Pohon tumbang</option><option>Tanah longsor</option></select>
-    <label>Deskripsi Singkat:</label><textarea id='deskripsi' required></textarea>
-    <button type='submit'>Kirim Laporan</button>
-  </form>
-</main>
-<div id='footer'></div>
+  <div id="header"></div>
+
+  <main class="lapor-container">
+    <h2>Formulir Lapor Warga</h2>
+    <form id="formWarga" onsubmit="return simpanLaporanWarga(event)">
+      <label>Nama Lengkap:</label>
+      <input type="text" id="nama" required />
+
+      <label>NIK:</label>
+      <input type="text" id="nik" required maxlength="16" />
+
+      <label>Pekerjaan:</label>
+      <input type="text" id="pekerjaan" required />
+
+      <label>Alamat:</label>
+      <textarea id="alamat" rows="2" required></textarea>
+
+      <label>Kecamatan:</label>
+      <select id="kecamatan" required onchange="isiKelurahan()">
+        <option value="">-- Pilih Kecamatan --</option>
+        <option value="Sungai Sembilan">Sungai Sembilan</option>
+        <option value="Dumai Barat">Dumai Barat</option>
+        <option value="Dumai Kota">Dumai Kota</option>
+        <option value="Dumai Timur">Dumai Timur</option>
+        <option value="Dumai Selatan">Dumai Selatan</option>
+        <option value="Bukit Kapur">Bukit Kapur</option>
+        <option value="Medang Kampai">Medang Kampai</option>
+      </select>
+
+      <label>Kelurahan:</label>
+      <select id="kelurahan" required>
+        <option value="">-- Pilih Kelurahan --</option>
+      </select>
+
+      <label>Jenis Bencana:</label>
+      <select id="jenisBencana" onchange="cekJenisManual()" required>
+        <option value="">-- Pilih Jenis --</option>
+        <option value="Banjir">Banjir</option>
+        <option value="Kebakaran">Kebakaran</option>
+        <option value="Tanah Longsor">Tanah Longsor</option>
+        <option value="Angin Puting Beliung">Angin Puting Beliung</option>
+        <option value="Lainnya">Lainnya (Isi Manual)</option>
+      </select>
+
+      <div id="manualJenis" style="display:none;">
+        <label>Masukkan Jenis Bencana Manual:</label>
+        <input type="text" id="jenisManual" placeholder="Contoh: Gelombang Pasang" />
+      </div>
+
+      <label>Titik Koordinat Lokasi:</label>
+      <input type="text" id="latitude" placeholder="Latitude (misal: 1.6789)" />
+      <input type="text" id="longitude" placeholder="Longitude (misal: 101.4411)" />
+
+      <label>Deskripsi Kejadian:</label>
+      <textarea id="deskripsi" rows="3" required></textarea>
+
+      <button type="submit">Kirim Laporan</button>
+    </form>
+  </main>
+
+  <div id="footer"></div>
+  <script src="lapor_warga.js"></script>
 </body>
 </html>

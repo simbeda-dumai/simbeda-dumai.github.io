@@ -1,18 +1,15 @@
 const users = {
-  // BPBD
   kalaksa: { name: "Kepala Pelaksana", area: "BPBD Kota Dumai" },
   sekre: { name: "Sekretaris", area: "BPBD Kota Dumai" },
   kabid: { name: "Kepala Bidang", area: "BPBD Kota Dumai" },
   admin: { name: "Admin BPBD", area: "BPBD Kota Dumai" },
-
-  // Kecamatan
-  ss: { name: "Kecamatan Sungai Sembilan", area: "Kecamatan Sungai Sembilan" },
-  dk: { name: "Kecamatan Dumai Kota", area: "Kecamatan Dumai Kota" },
-  db: { name: "Kecamatan Dumai Barat", area: "Kecamatan Dumai Barat" },
-  dt: { name: "Kecamatan Dumai Timur", area: "Kecamatan Dumai Timur" },
-  ds: { name: "Kecamatan Dumai Selatan", area: "Kecamatan Dumai Selatan" },
-  bk: { name: "Kecamatan Bukit Kapur", area: "Kecamatan Bukit Kapur" },
-  mk: { name: "Kecamatan Medang Kampai", area: "Kecamatan Medang Kampai" }
+  ss: { name: "Kecamatan Sungai Sembilan", area: "Sungai Sembilan" },
+  dk: { name: "Kecamatan Dumai Kota", area: "Dumai Kota" },
+  db: { name: "Kecamatan Dumai Barat", area: "Dumai Barat" },
+  dt: { name: "Kecamatan Dumai Timur", area: "Dumai Timur" },
+  ds: { name: "Kecamatan Dumai Selatan", area: "Dumai Selatan" },
+  bk: { name: "Kecamatan Bukit Kapur", area: "Bukit Kapur" },
+  mk: { name: "Kecamatan Medang Kampai", area: "Medang Kampai" }
 };
 
 function loginUser(e) {

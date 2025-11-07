@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  background: #f9fafb;
+}
+.main-home {
+  text-align: center;
+  padding: 80px 20px;
+}
+.main-home h1 span {
+  color: #f59e0b;
+}
+.btn-home {
+  display: inline-block;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #facc15, #fb923c);
+  color: #1e293b;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.btn-home:hover {
+  background: linear-gradient(90deg, #fbbf24, #f97316);
+  color: white;
+}

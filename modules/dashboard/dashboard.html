@@ -1,21 +1,49 @@
 <!DOCTYPE html>
-<html lang='id'>
+<html lang="id">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>Dashboard SIMBEDA</title>
-<script src='/js/layout/layout.js' defer></script>
-<script src='https://unpkg.com/leaflet/dist/leaflet.js'></script>
-<link rel='stylesheet' href='https://unpkg.com/leaflet/dist/leaflet.css'/>
-<script src='dashboard.js' defer></script>
-<link rel='stylesheet' href='dashboard.css'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | SIMBEDA Kota Dumai</title>
+
+  <link rel="stylesheet" href="../../components/header/header.css" />
+  <link rel="stylesheet" href="../../components/footer/footer.css" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="../../js/layout/layout.js" defer></script>
 </head>
+
 <body>
-<div id='header'></div>
-<main>
-  <h2>Peta Kejadian Bencana Kota Dumai</h2>
-  <div id='map'></div>
-</main>
-<div id='footer'></div>
+  <div id="header"></div>
+
+  <main class="dashboard-container">
+    <div class="top-bar">
+      <div class="user-info">
+        <span id="userName"></span> | <span id="userArea"></span>
+        <button id="logoutBtn">Logout</button>
+      </div>
+      <h2>Dashboard SIMBEDA</h2>
+    </div>
+
+    <div class="stats">
+      <div class="card">
+        <h3 id="reportsCount">0</h3>
+        <p>Total Laporan</p>
+      </div>
+      <div class="card">
+        <h3 id="adminCount">0</h3>
+        <p>Laporan Internal</p>
+      </div>
+      <div class="card">
+        <h3 id="wargaCount">0</h3>
+        <p>Laporan Warga</p>
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>

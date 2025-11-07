@@ -3,52 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Cepat - SIMBEDA</title>
+  <title>Laporan Cepat | SIMBEDA Kota Dumai</title>
+
+  <link rel="stylesheet" href="../../components/header/header.css">
+  <link rel="stylesheet" href="../../components/footer/footer.css">
   <link rel="stylesheet" href="laporan_cepat.css">
-  <script src="/js/layout/layout.js" defer></script>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <script src="https://unpkg.com/proj4/dist/proj4.js"></script>
-  <script src="laporan_cepat.js" defer></script>
+  <script src="../../js/layout/layout.js" defer></script>
 </head>
+
 <body>
   <div id="header"></div>
-  <main>
-    <h2>Form Laporan Cepat Bencana</h2>
 
-    <section class="form-lokasi">
-      <h3>📍 Input Lokasi Kejadian</h3>
-      <label>Pilih metode input:</label>
-      <select id="modeLokasi" onchange="gantiModeLokasi()">
-        <option value="latlng">Koordinat Universal (Lat/Lng)</option>
-        <option value="utm">Koordinat Metrik (UTM)</option>
-        <option value="map">Tandai di Peta</option>
-      </select>
+  <main class="laporan-container">
+    <h2>Laporan Cepat Bencana</h2>
+    <form id="formLaporan" onsubmit="return simpanLaporan(event)">
+      <label>Jenis Bencana:</label>
+      <input type="text" id="jenis" placeholder="Contoh: Banjir, Kebakaran" required>
 
-      <div id="inputLatLng">
-        <label>Latitude:</label>
-        <input type="number" id="latitude" step="0.000001" placeholder="-6.123456">
-        <label>Longitude:</label>
-        <input type="number" id="longitude" step="0.000001" placeholder="106.987654">
-      </div>
+      <label>Lokasi Kejadian:</label>
+      <input type="text" id="lokasi" placeholder="Nama jalan / area" required>
 
-      <div id="inputUTM" style="display:none;">
-        <label>Zona:</label>
-        <input type="text" id="utmZona" placeholder="47N">
-        <label>Easting (m):</label>
-        <input type="number" id="utmEasting" placeholder="342000">
-        <label>Northing (m):</label>
-        <input type="number" id="utmNorthing" placeholder="9820000">
-        <button type="button" onclick="konversiUTM()">Konversi ke Koordinat Universal</button>
-      </div>
+      <label>Deskripsi Singkat:</label>
+      <textarea id="deskripsi" rows="3" placeholder="Tuliskan deskripsi kejadian"></textarea>
 
-      <div id="inputMap" style="display:none;">
-        <div id="mapPicker"></div>
-      </div>
-    </section>
+      <button type="submit">Kirim Laporan</button>
+    </form>
 
-    <button onclick="simpanLaporan()">💾 Simpan Laporan</button>
+    <h3>Riwayat Laporan</h3>
+    <table id="tabelLog">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>User</th>
+          <th>Jenis</th>
+          <th>Lokasi</th>
+          <th>Deskripsi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </main>
+
   <div id="footer"></div>
+  <script src="laporan_cepat.js"></script>
 </body>
 </html>

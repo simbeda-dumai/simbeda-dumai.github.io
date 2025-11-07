@@ -1,6 +1,24 @@
-.app-footer {
-  background: linear-gradient(90deg, #0f172a, #1e3a8a);
-  color: white; text-align: center; padding: 15px 0;
-  font-size: 0.9em; border-top: 3px solid #60a5fa;
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
 }
-.footer-bottom p { margin: 3px 0; }
+
+.app-footer {
+  background: linear-gradient(90deg, #facc15, #fb923c);
+  color: #1e293b;
+  text-align: center;
+  padding: 12px 10px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+}
+
+.footer-text p {
+  margin: 4px 0;
+}
+
+#timeNow {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #374151;
+}

@@ -1,5 +1,60 @@
-form{max-width:600px;margin:20px auto;padding:20px;border-radius:10px;border:2px solid #2563eb;background:#f9fafb;}
-form label{display:block;margin-top:10px;font-weight:500;}
-form input,textarea,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:5px;margin-top:5px;}
-form button{background:linear-gradient(90deg,#1e40af,#2563eb);color:white;border:none;padding:10px 15px;margin-top:15px;border-radius:8px;cursor:pointer;}
-form button:hover{background:#1d4ed8;}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f9fafb;
+  margin: 0;
+}
+
+.lapor-container {
+  padding: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  color: #1e293b;
+}
+
+form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 1em;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  background: linear-gradient(90deg, #facc15, #fb923c);
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  color: #1e293b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #fbbf24, #f97316);
+  color: white;
+}

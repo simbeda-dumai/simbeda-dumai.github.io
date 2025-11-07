@@ -1,55 +1,39 @@
-let mapPicker;
-let marker;
+function simpanLaporan(e) {
+  e.preventDefault();
 
-function gantiModeLokasi() {
-  const mode = document.getElementById('modeLokasi').value;
-  document.getElementById('inputLatLng').style.display = mode === 'latlng' ? 'block' : 'none';
-  document.getElementById('inputUTM').style.display = mode === 'utm' ? 'block' : 'none';
-  document.getElementById('inputMap').style.display = mode === 'map' ? 'block' : 'none';
+  const jenis = document.getElementById("jenis").value.trim();
+  const lokasi = document.getElementById("lokasi").value.trim();
+  const deskripsi = document.getElementById("deskripsi").value.trim();
+  const waktu = new Date().toLocaleString("id-ID");
+  const user = localStorage.getItem("user_name") || "Anonim";
 
-  if (mode === 'map' && !mapPicker) initMapPicker();
+  const laporan = { waktu, user, jenis, lokasi, deskripsi };
+
+  let log = JSON.parse(localStorage.getItem("laporan_cepat") || "[]");
+  log.unshift(laporan);
+  localStorage.setItem("laporan_cepat", JSON.stringify(log));
+
+  tampilkanLog();
+  document.getElementById("formLaporan").reset();
+  alert("✅ Laporan berhasil disimpan!");
 }
 
-function initMapPicker() {
-  mapPicker = L.map('mapPicker').setView([1.6815, 101.4495], 12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(mapPicker);
+function tampilkanLog() {
+  const tbody = document.querySelector("#tabelLog tbody");
+  tbody.innerHTML = "";
+  const log = JSON.parse(localStorage.getItem("laporan_cepat") || "[]");
 
-  mapPicker.on('click', function (e) {
-    const { lat, lng } = e.latlng;
-    document.getElementById('latitude').value = lat.toFixed(6);
-    document.getElementById('longitude').value = lng.toFixed(6);
-
-    if (marker) mapPicker.removeLayer(marker);
-    marker = L.marker([lat, lng]).addTo(mapPicker)
-      .bindPopup(`Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`).openPopup();
+  log.forEach(l => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${l.waktu}</td>
+      <td>${l.user}</td>
+      <td>${l.jenis}</td>
+      <td>${l.lokasi}</td>
+      <td>${l.deskripsi}</td>
+    `;
+    tbody.appendChild(tr);
   });
 }
 
-function konversiUTM() {
-  const zona = document.getElementById('utmZona').value.trim();
-  const easting = parseFloat(document.getElementById('utmEasting').value);
-  const northing = parseFloat(document.getElementById('utmNorthing').value);
-
-  if (!zona || isNaN(easting) || isNaN(northing)) {
-    alert('Lengkapi data UTM terlebih dahulu.');
-    return;
-  }
-
-  const proj4str = `+proj=utm +zone=${zona.replace(/\D/g, '')} +datum=WGS84 +units=m +no_defs`;
-  const [lng, lat] = proj4(proj4str, '+proj=longlat +datum=WGS84 +no_defs', [easting, northing]);
-  document.getElementById('latitude').value = lat.toFixed(6);
-  document.getElementById('longitude').value = lng.toFixed(6);
-  alert(`Hasil konversi: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
-}
-
-function simpanLaporan() {
-  const laporan = {
-    latitude: parseFloat(document.getElementById('latitude').value),
-    longitude: parseFloat(document.getElementById('longitude').value),
-    waktu: new Date().toISOString()
-  };
-  localStorage.setItem("laporan_terbaru", JSON.stringify(laporan));
-  alert("Laporan berhasil disimpan di LocalStorage!");
-}
+document.addEventListener("DOMContentLoaded", tampilkanLog);
