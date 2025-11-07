@@ -1,0 +1,11 @@
+.app-header {
+  text-align: center;
+  background-color: #1e3a8a;
+  color: white;
+  padding: 15px 0;
+}
+.logo-container img {
+  height: 55px;
+  margin: 0 10px;
+  vertical-align: middle;
+}

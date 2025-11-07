@@ -1,0 +1,11 @@
+.form-lokasi {
+  margin-top: 20px;
+  border: 2px solid #1e3a8a;
+  padding: 15px;
+  border-radius: 10px;
+}
+#mapPicker {
+  height: 300px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
