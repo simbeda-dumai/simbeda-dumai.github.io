@@ -1,50 +1,14 @@
 {
-    "kalaksa": {
-        "name": "Kepala Pelaksana",
-        "area": "BPBD Kota Dumai",
-        "password": "siagasatu",
-        "role": "Kota"
-    },
-    "sekre": {
-        "name": "Sekretaris",
-        "area": "BPBD Kota Dumai",
-        "password": "",
-        "role": "Kota"
-    },
-    "kabid": {
-        "name": "Kepala Bidang",
-        "area": "BPBD Kota Dumai",
-        "password": "",
-        "role": "Kota"
-    },
-    "admin": {
-        "name": "Admin BPBD",
-        "area": "BPBD Kota Dumai",
-        "password": "",
-        "role": "Kota"
-    },
-    "ss": {
-        "name": "Kecamatan Sungai Sembilan",
-        "area": "Sungai Sembilan",
-        "password": "",
-        "role": "Kecamatan"
-    },
-    "dk": {
-        "name": "Kecamatan Dumai Kota",
-        "area": "Dumai Kota",
-        "password": "",
-        "role": "Kecamatan"
-    },
-    "db": {
-        "name": "Kecamatan Dumai Barat",
-        "area": "Dumai Barat",
-        "password": "",
-        "role": "Kecamatan"
-    },
-    "dt": {
-        "name": "Kecamatan D'...",
-        "area": "Dumai Timur",
-        "password": "",
-        "role": "Kecamatan"
-    }
+  "kalaksa": { "password": "siagasatu", "role": "Kota", "area": "BPBD Kota Dumai", "modules": ["dashboard", "laporan_cepat", "lapor_warga", "admin"] },
+  "sekre":   { "password": "siagasatu", "role": "Kota", "area": "BPBD Kota Dumai", "modules": ["dashboard", "laporan_cepat", "lapor_warga", "admin"] },
+  "kabid":   { "password": "siagasatu", "role": "Kota", "area": "BPBD Kota Dumai", "modules": ["dashboard", "laporan_cepat", "lapor_warga", "admin"] },
+  "admin":   { "password": "siagasatu", "role": "Kota", "area": "BPBD Kota Dumai", "modules": ["dashboard", "laporan_cepat", "lapor_warga", "admin"] },
+
+  "bk": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Bukit Kapur",     "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "db": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Dumai Barat",      "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "dk": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Dumai Kota",       "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "ds": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Dumai Selatan",    "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "dt": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Dumai Timur",      "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "mk": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Medang Kampai",    "modules": ["dashboard", "laporan_cepat", "lapor_warga"] },
+  "ss": { "password": "dumaisiaga", "role": "Kecamatan", "area": "Sungai Sembilan",  "modules": ["dashboard", "laporan_cepat", "lapor_warga"] }
 }
