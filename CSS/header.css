@@ -1,11 +1,26 @@
 :root{
-  /* Gradien baru: hijau muda → kuning → oranye → biru tua */
-  --g0:#34d399;   /* hijau muda */
-  --g1:#facc15;   /* kuning */
-  --g2:#f59e0b;   /* oranye */
-  --g3:#0b1a3c;   /* biru tua */
+  /* Radial gradient: putih → hijau muda → kuning → emas → oranye → merah → biru → biru tua */
+  --g0:#ffffff;   /* putih */
+  --g1:#86efac;   /* hijau muda */
+  --g2:#facc15;   /* kuning */
+  --g3:#d4af37;   /* emas */
+  --g4:#f59e0b;   /* oranye */
+  --g5:#ef4444;   /* merah */
+  --g6:#3b82f6;   /* biru */
+  --g7:#0b1a3c;   /* biru tua */
 
-  --hdr-grad: linear-gradient(90deg, var(--g0) 0%, var(--g1) 33%, var(--g2) 66%, var(--g3) 100%);
+  /* pusat radial sedikit di atas header agar gradasi menyapu ke bawah */
+  --hdr-grad: radial-gradient(circle at 50% -30%,
+    var(--g0) 0%,
+    var(--g1) 16%,
+    var(--g2) 30%,
+    var(--g3) 44%,
+    var(--g4) 58%,
+    var(--g5) 72%,
+    var(--g6) 86%,
+    var(--g7) 100%
+  );
+
   --txt:#e9eefb;
   --muted:#c9d1e6;
   --ring: 0 0 0 3px rgba(255,255,255,.25);
@@ -47,7 +62,7 @@
 .sb-auth{ margin-left:10px; display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px }
 .sb-auth .sep{ opacity:.7; margin:0 4px }
 
-/* Mobile */
+/* Hamburger (mobile) */
 .sb-hamburger{ display:none; cursor:pointer; margin-left:auto; width:36px; height:36px; border-radius:8px; align-items:center; justify-content:center; }
 .sb-hamburger span{ display:block; width:22px; height:2px; background:#fff; margin:5px 7px; transition:transform .2s ease, opacity .2s ease; }
 .sb-nav-toggle{ display:none }
@@ -56,7 +71,7 @@
   .sb-hamburger{ display:flex }
   .sb-nav{
     position:fixed; left:0; right:0; top:56px;
-    background: var(--hdr-grad);
+    background: var(--hdr-grad);   /* pakai gradient radial yang sama */
     display:grid; gap:0; padding:8px 10px;
     transform: translateY(-12px); opacity:0; pointer-events:none;
     transition: transform .18s ease, opacity .18s ease;
