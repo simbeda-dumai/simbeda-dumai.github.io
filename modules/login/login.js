@@ -1,5 +1,5 @@
 const users = {
-  kalaksa: { name: "Kepala Pelaksana", area: "BPBD Kota Dumai" },
+  kalaksa: { name: "Kepala Pelaksana", area: "BPBD Kota Dumai", password: "siagasatu" },
   sekre: { name: "Sekretaris", area: "BPBD Kota Dumai" },
   kabid: { name: "Kepala Bidang", area: "BPBD Kota Dumai" },
   admin: { name: "Admin BPBD", area: "BPBD Kota Dumai" },
@@ -22,8 +22,8 @@ function loginUser(e) {
     alert("❌ Username tidak ditemukan!");
     return false;
   }
-  if (p !== "dumaisiaga") {
-    alert("❌ Password salah!");
+  if (p !== users[u].password) {
+    alert("❌ Password salah! Silahkan Coba Lagi!");
     return false;
   }
 
