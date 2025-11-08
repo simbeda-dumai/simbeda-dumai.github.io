@@ -1,78 +1,23 @@
-@font-face {
-  font-family: 'Roboto';
-  src: url('../../assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  background: #f9fafb;
-  margin: 0;
-}
-
-.laporan-container {
-  padding: 30px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-h2, h3 {
-  color: #1e293b;
-}
-
-form {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  padding: 20px;
-  margin-bottom: 25px;
-}
-
-label {
-  display: block;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  margin-top: 5px;
-  font-size: 1em;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  background: linear-gradient(90deg, #facc15, #fb923c);
-  color: #1e293b;
-  cursor: pointer;
-}
-
-button:hover {
-  background: linear-gradient(90deg, #fbbf24, #f97316);
-  color: white;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-}
-
-th, td {
-  border-bottom: 1px solid #e2e8f0;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background: #fff7ed;
-  color: #92400e;
-}
+/* Layout kartu sederhana agar konsisten dengan halaman lain */
+:root { --radius: 16px; --gap: 16px; }
+.page-laporan-cepat { font-family: Roboto, system-ui, -apple-system, Segoe UI, Arial, sans-serif; }
+.lc-container { max-width: 960px; margin: 32px auto; padding: 0 16px; }
+.lc-card { background:#fff; border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,.08); padding:24px; }
+.lc-title { margin:0 0 8px; font-size:1.5rem; font-weight:700; }
+.lc-subtitle { margin:0 0 20px; color:#475569; }
+.lc-form { display:grid; gap:16px; }
+.lc-row { display:grid; gap:8px; }
+.lc-grid-2 { display:grid; gap:16px; grid-template-columns:1fr; }
+@media (min-width:720px){ .lc-grid-2 { grid-template-columns:1fr 1fr; } }
+label { font-weight:600; }
+input[type="text"], select, textarea { border:1px solid #cbd5e1; border-radius:12px; padding:10px 12px; font:inherit; }
+textarea { resize: vertical; }
+.lc-actions { display:flex; align-items:center; gap:8px; margin-top:8px; }
+.lc-spacer { flex:1; }
+.btn { border:0; border-radius:999px; padding:10px 16px; cursor:pointer; font-weight:600; }
+.btn.primary { background:#0ea5e9; color:#fff; }
+.btn.secondary { background:#e2e8f0; }
+.btn.ghost { background:transparent; border:1px solid #cbd5e1; }
+.btn:disabled { opacity:.6; cursor:not-allowed; }
+.lc-hint { margin-top:12px; color:#64748b; font-size:.9rem; }
+.lc-hidden { display:none; }
