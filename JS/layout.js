@@ -1,4 +1,4 @@
-// SIMBEDA - Layout injector (ABSOLUTE PATHS)
+// SIMBEDA - Layout injector (ABSOLUTE PATHS + auto load quotes.js)
 (function () {
   'use strict';
 
@@ -6,6 +6,7 @@
   const CSS_LIST = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
   const HEADER_HTML = '/HTML/header.html';
   const FOOTER_HTML = '/HTML/footer.html';
+  const QUOTES_JS   = '/JS/quotes.js';
 
   function injectCssOnce(href) {
     if ([...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href.includes(href))) return;
@@ -13,6 +14,15 @@
     link.rel = 'stylesheet';
     link.href = href;
     document.head.appendChild(link);
+  }
+
+  function ensureScript(src) {
+    const exists = [...document.querySelectorAll('script')].some(s => (s.src || '').includes(src));
+    if (exists) return;
+    const sc = document.createElement('script');
+    sc.src = src;
+    sc.defer = true;
+    document.body.appendChild(sc);
   }
 
   async function fetchHtml(url) {
@@ -25,12 +35,12 @@
     // CSS
     CSS_LIST.forEach(injectCssOnce);
 
-    // HEADER
+    // HEADER host
     const headerHost = document.getElementById('header') || (() => {
       const d = document.createElement('div');
       d.id = 'header'; document.body.prepend(d); return d;
     })();
-    // FOOTER
+    // FOOTER host
     const footerHost = document.getElementById('footer') || (() => {
       const d = document.createElement('div');
       d.id = 'footer'; document.body.appendChild(d); return d;
@@ -38,7 +48,11 @@
 
     // Inject HTML
     try { headerHost.innerHTML = await fetchHtml(HEADER_HTML); } catch (e) { console.error(e); }
-    try { footerHost.innerHTML = await fetchHtml(FOOTER_HTML); } catch (e) { console.error(e); }
+    try {
+      footerHost.innerHTML = await fetchHtml(FOOTER_HTML);
+      // Pastikan quotes.js dimuat setelah footer siap
+      ensureScript(QUOTES_JS);
+    } catch (e) { console.error(e); }
 
     // Set nav active (berdasarkan path)
     try {

@@ -1,42 +1,56 @@
 :root{
-  /* Samakan gradasi dengan header agar konsisten */
-  --g0:#000000; --g1:#0b1a3c; --g2:#3a7bd5; --g3:#00c8b3; --g4:#fff4b1; --g5:#f2c400; --g6:#ff8a00; --g7:#6b4f2a;
-  --ftr-grad: linear-gradient(90deg, var(--g0) 0%, var(--g1) 12%, var(--g2) 24%, var(--g3) 38%, var(--g4) 54%, var(--g5) 68%, var(--g6) 82%, var(--g7) 100%);
-  --txt:#f5f7ff; --muted:#d6def2;
+  /* Gradien: hitam → biru tua → biru muda → toska → kuning muda → kuning tua → oranye → coklat */
+  --g0:#000000; --g1:#0b1a3c; --g2:#3a7bd5; --g3:#00c8b3;
+  --g4:#fff4b1; --g5:#f2c400; --g6:#ff8a00; --g7:#6b4f2a;
+
+  --ftr-grad: linear-gradient(90deg,
+    var(--g0) 0%,
+    var(--g1) 12%,
+    var(--g2) 24%,
+    var(--g3) 38%,
+    var(--g4) 54%,
+    var(--g5) 68%,
+    var(--g6) 82%,
+    var(--g7) 100%);
+
+  --txt:#f5f7ff;
+  --muted:#e6ecff;
 }
 
 .sb-footer{
-  margin-top:24px;
   color:var(--txt);
   background: var(--ftr-grad);
+  margin-top:24px;
 }
+
 .sb-footer__inner{
   max-width:1200px; margin:0 auto;
-  padding:18px 14px 22px;
-  display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:center;
+  padding:16px 14px 22px;
+  display:grid;
+  grid-template-rows:auto auto;
+  align-items:center; justify-items:center;
+  row-gap:10px;
+  text-align:center;
 }
 
-.footer-brand{ display:flex; align-items:center; gap:12px }
-.footer-brand .logo{ height:28px; width:auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)) }
-.footer-brand .meta{ display:flex; flex-direction:column; line-height:1.2 }
-.footer-brand .meta small{ color:var(--muted) }
-
-.footer-links{ display:flex; gap:12px; flex-wrap:wrap }
-.footer-links a{
-  color:var(--txt); text-decoration:none; font-weight:600;
-  padding:6px 8px; border-radius:8px; background: rgba(0,0,0,.18);
+.footer-line{
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  flex-wrap:wrap;
 }
-.footer-links a:hover{ background: rgba(0,0,0,.28) }
+.footer-brand{ font-size:16px; font-weight:700; letter-spacing:.2px }
+.footer-sep{ opacity:.8 }
+.footer-clock{
+  font-variant-numeric: tabular-nums;
+  padding:4px 8px; border-radius:8px;
+  background: rgba(0,0,0,.18);
+}
 
 .footer-quote{
-  grid-column: 1 / -1;
-  margin:8px 0 0;
-  font-style: italic; color:#fff; opacity:.95;
+  margin:0;
+  font-style:italic; color:#ffffff; opacity:.95;
 }
 
-@media (max-width:880px){
-  .sb-footer__inner{
-    grid-template-columns: 1fr; gap:10px;
-  }
-  .footer-links{ justify-content:flex-start }
+@media (max-width:720px){
+  .sb-footer__inner{ padding:14px 12px 18px }
+  .footer-brand{ font-size:15px }
 }

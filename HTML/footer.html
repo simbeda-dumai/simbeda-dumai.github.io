@@ -1,27 +1,10 @@
 <footer class="sb-footer" role="contentinfo">
   <div class="sb-footer__inner">
-    <div class="footer-brand">
-      <img src="/IMG/logo_simbeda.png" alt="Logo SIMBEDA" class="logo" />
-      <div class="meta">
-        <strong>SIMBEDA Kota Dumai</strong>
-        <small>© <span id="year"></span> — Badan Penanggulangan Bencana Daerah</small>
-      </div>
+    <div class="footer-line">
+      <strong class="footer-brand">SIMBEDA Kota Dumai</strong>
+      <span class="footer-sep">•</span>
+      <span id="footer-clock" class="footer-clock" aria-live="polite">--:--:--</span>
     </div>
-
-    <div class="footer-links">
-      <a href="/index.html">Beranda</a>
-      <a href="/HTML/dashboard.html">Dashboard</a>
-      <a href="/HTML/laporan_cepat.html">Laporan Cepat</a>
-      <a href="/HTML/lapor_warga.html">Lapor Warga</a>
-      <a href="/HTML/login.html">Masuk</a>
-    </div>
-
     <p id="footer-quote" class="footer-quote" aria-live="polite">…</p>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const y = document.getElementById('year');
-      if (y) y.textContent = new Date().getFullYear();
-    });
-  </script>
 </footer>

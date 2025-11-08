@@ -1,6 +1,9 @@
-// SIMBEDA - Quotes footer (ganti tiap 5 menit)
+// SIMBEDA - Footer Quotes + Real-time Clock
+// - Memutarkan quotes tiap 5 menit
+// - Menampilkan jam real-time (HH:mm:ss) di #footer-clock
 (function () {
   'use strict';
+
   const QUOTES = [
     "Siaga hari ini, selamatkan esok.",
     "Respons cepat, nyawa selamat.",
@@ -8,20 +11,38 @@
     "Kerja sama kuat, bencana surut.",
     "Dari Dumai, untuk keselamatan bersama."
   ];
-  const TARGET = '#footer-quote';          // pastikan ada elemen ini di footer.html
-  const INTERVAL_MS = 5 * 60 * 1000;
+  const Q_TARGET = '#footer-quote';
+  const C_TARGET = '#footer-clock';
+  const QUOTE_INTERVAL = 5 * 60 * 1000; // 5 menit
+  const CLOCK_INTERVAL = 1000;          // 1 detik
 
-  function pick(i) { return QUOTES[i % QUOTES.length]; }
-
-  function render(i) {
-    const el = document.querySelector(TARGET);
-    if (!el) return;
-    el.textContent = pick(i);
+  function fmtTime(d) {
+    return d.toLocaleTimeString('id-ID', { hour12:false });
   }
 
+  function bindWhenReady(sel, cb, tries=0) {
+    const el = document.querySelector(sel);
+    if (el) { cb(el); return; }
+    if (tries > 300) return; // max ~5 menit total kalau footer diinject lambat
+    setTimeout(() => bindWhenReady(sel, cb, tries+1), 1000);
+  }
+
+  function startClock(el) {
+    const tick = () => { el.textContent = fmtTime(new Date()); };
+    tick();
+    setInterval(tick, CLOCK_INTERVAL);
+  }
+
+  function startQuotes(el) {
+    let idx = Math.floor(Date.now() / QUOTE_INTERVAL) % QUOTES.length;
+    const render = () => { el.textContent = QUOTES[idx % QUOTES.length]; idx++; };
+    render();
+    setInterval(render, QUOTE_INTERVAL);
+  }
+
+  // Footer diinject via layout.js → pastikan elemen siap dulu
   document.addEventListener('DOMContentLoaded', () => {
-    let idx = Math.floor((Date.now()/INTERVAL_MS)) % QUOTES.length;
-    render(idx++);
-    setInterval(() => render(idx++), INTERVAL_MS);
+    bindWhenReady(C_TARGET, startClock);
+    bindWhenReady(Q_TARGET, startQuotes);
   });
 })();
