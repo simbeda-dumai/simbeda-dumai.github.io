@@ -9,13 +9,13 @@
   <meta name="simbeda:module" content="laporan_cepat">
   <script src="/JS/auth-guard.js" defer></script>
 
-  <!-- Style modul (ABSOLUTE PATH) -->
+  <!-- Style modul -->
   <link rel="stylesheet" href="/CSS/laporan_cepat.css" />
 
-  <!-- Wilayah (opsional untuk isi dropdown) -->
+  <!-- Wilayah (isi dropdown) -->
   <script src="/JS/config.js" defer></script>
 
-  <!-- Layout injector: header/footer + css umum -->
+  <!-- Layout injector: header/footer + quotes -->
   <script src="/JS/layout.js" defer></script>
 
   <!-- Script modul -->
@@ -27,7 +27,7 @@
   <main class="page-wrap">
     <section class="page-card">
       <h1>Laporan Cepat</h1>
-      <p class="subtitle">Catat kejadian singkat untuk reaksi cepat.</p>
+      <p class="subtitle">Catat kejadian singkat untuk reaksi cepat. (Role-aware + GPS)</p>
 
       <form class="form-grid" autocomplete="off">
         <div class="field">
@@ -40,6 +40,7 @@
           <select id="kecamatan">
             <option value="">— Pilih kecamatan —</option>
           </select>
+          <small id="kec-lock" class="muted" hidden>Diunci sesuai wilayah akun.</small>
         </div>
 
         <div class="field">
@@ -50,8 +51,12 @@
         </div>
 
         <div class="field col-2">
-          <label for="lokasi">Lokasi (boleh isi koordinat, mis. 1.668, 101.45)</label>
-          <input type="text" id="lokasi" placeholder="Contoh: Jl. Merdeka No.1 / lat:1.67 lng:101.45" />
+          <label for="lokasi">Lokasi (alamat/koordinat)</label>
+          <div class="loc-inline">
+            <input type="text" id="lokasi" placeholder="Contoh: Jl. Merdeka / lat:1.667890 lng:101.450123" />
+            <button id="btn-lokasi" class="btn-secondary" type="button">Gunakan Lokasi Saya</button>
+          </div>
+          <small id="loc-status" class="muted"></small>
         </div>
 
         <div class="field">
