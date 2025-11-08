@@ -1,24 +1,20 @@
 :root{
-  /* Radial gradient: putih → hijau muda → kuning → emas → oranye → merah → biru → biru tua */
+  /* Radial gradient: putih → emas → oranye → merah → biru → biru tua (tanpa kuning & hijau) */
   --g0:#ffffff;   /* putih */
-  --g1:#86efac;   /* hijau muda */
-  --g2:#facc15;   /* kuning */
-  --g3:#d4af37;   /* emas */
-  --g4:#f59e0b;   /* oranye */
-  --g5:#ef4444;   /* merah */
-  --g6:#3b82f6;   /* biru */
-  --g7:#0b1a3c;   /* biru tua */
+  --g1:#d4af37;   /* emas */
+  --g2:#f59e0b;   /* oranye */
+  --g3:#ef4444;   /* merah */
+  --g4:#3b82f6;   /* biru */
+  --g5:#0b1a3c;   /* biru tua */
 
   /* pusat radial sedikit di atas header agar gradasi menyapu ke bawah */
   --hdr-grad: radial-gradient(circle at 50% -30%,
     var(--g0) 0%,
-    var(--g1) 16%,
-    var(--g2) 30%,
-    var(--g3) 44%,
-    var(--g4) 58%,
-    var(--g5) 72%,
-    var(--g6) 86%,
-    var(--g7) 100%
+    var(--g1) 24%,
+    var(--g2) 42%,
+    var(--g3) 60%,
+    var(--g4) 78%,
+    var(--g5) 100%
   );
 
   --txt:#e9eefb;
