@@ -13,9 +13,9 @@
   <link rel="stylesheet" href="/components/footer/footer.css" />
   <link rel="stylesheet" href="laporan_cepat.css" />
 
-  <!-- Script layout (inject header/footer + font & transition fallback) -->
+  <!-- Script data wilayah + layout + modul -->
+  <script src="/js/config.js" defer></script>
   <script src="/js/layout/layout.js" defer></script>
-  <!-- Script modul -->
   <script src="laporan_cepat.js" defer></script>
 </head>
 <body class="page page-laporan-cepat fade-in">
@@ -39,25 +39,18 @@
           </select>
         </div>
 
-        <div class="lc-row">
-          <label for="deskripsi">Deskripsi Singkat</label>
-          <textarea id="deskripsi" name="deskripsi" rows="3" placeholder="Ringkas kronologi, dampak awal, kebutuhan mendesak" required></textarea>
-        </div>
-
         <div class="lc-grid-2">
           <div class="lc-row">
             <label for="kecamatan">Kecamatan</label>
             <select id="kecamatan" name="kecamatan" required>
-              <option value="">— pilih —</option>
-              <option value="Dumai Kota">Dumai Kota</option>
-              <option value="Lainnya">Lainnya</option>
+              <option value="">— pilih kecamatan —</option>
             </select>
             <input id="kecamatan_text" name="kecamatan_text" class="lc-hidden" type="text" placeholder="Nama kecamatan" />
           </div>
           <div class="lc-row">
             <label for="kelurahan">Kelurahan/Desa</label>
             <select id="kelurahan" name="kelurahan" required>
-              <option value="">— pilih —</option>
+              <option value="">— pilih kelurahan —</option>
             </select>
             <input id="kelurahan_text" name="kelurahan_text" class="lc-hidden" type="text" placeholder="Nama kelurahan/desa" />
           </div>
@@ -91,13 +84,13 @@
         </div>
       </form>
 
-      <p class="lc-hint">Catatan: jika daftar kelurahan tidak tersedia, pilih “Lainnya” dan ketik manual.</p>
+      <p class="lc-hint">Jika daftar belum muncul, muat ulang halaman. Kamu juga bisa pilih “Lainnya” untuk mengetik manual.</p>
     </section>
   </main>
 
   <div id="footer"></div>
 
-  <!-- Penopang jika script modul tidak mengikat tombol lokasi -->
+  <!-- Fallback geolokasi jika modul belum binding tombol -->
   <script>
   window.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('btn-lokasi');

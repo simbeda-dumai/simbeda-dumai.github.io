@@ -1,4 +1,4 @@
-// Proteksi login + logika form Laporan Cepat
+// Laporan Cepat — pakai data wilayah penuh dari js/config.js
 (function () {
   const BASE = window.SIMBEDA_BASE || (function(){
     const parts = window.location.pathname.split('/').filter(Boolean);
@@ -7,65 +7,72 @@
     return (!first || roots.has(first)) ? '/' : `/${first}/`;
   })();
 
-  // ==== Proteksi Login (halaman internal) ====
+  // Proteksi (internal)
   const user = localStorage.getItem('user_login');
   if (!user) {
-    // Redirect halus ke halaman login jika belum login
     const loginUrl = BASE + 'modules/login/login.html';
     try { window.location.replace(loginUrl); } catch (_) { window.location.href = loginUrl; }
     return;
   }
 
-  // ==== Elemen ====
+  const wilayah = (window.SIMBEDA_WILAYAH || {});
+  const LIST_KEC = Array.isArray(wilayah.kecamatan) ? wilayah.kecamatan.slice() : [];
+  const KEL_BY_KEC = wilayah.kelurahanByKecamatan || {};
+
   const form = document.getElementById('form-laporan-cepat');
   const kecSel = document.getElementById('kecamatan');
   const kelSel = document.getElementById('kelurahan');
   const kecText = document.getElementById('kecamatan_text');
   const kelText = document.getElementById('kelurahan_text');
 
-  // ==== Opsi Dinamis Minimal ====
-  // Hindari data yang berpotensi salah: sediakan opsi manual saat "Lainnya"
-  const kelByKec = {
-    'Dumai Kota': [] // bisa diisi kemudian dari sumber resmi
-  };
+  function populateKecamatan() {
+    if (!kecSel) return;
+    const current = kecSel.value;
+    kecSel.innerHTML = '<option value="">— pilih kecamatan —</option>';
+    LIST_KEC.forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = n; opt.textContent = n; kecSel.appendChild(opt);
+    });
+    const optLain = document.createElement('option');
+    optLain.value = 'Lainnya'; optLain.textContent = 'Lainnya';
+    kecSel.appendChild(optLain);
+    if (current) Array.from(kecSel.options).some(o => (o.value === current) && (kecSel.value = current));
+  }
 
-  function refreshKelurahan() {
-    const kec = kecSel.value;
-    kelSel.innerHTML = '<option value="">— pilih —</option>';
-    if (kelByKec[kec] && kelByKec[kec].length) {
-      kelByKec[kec].forEach(n => {
-        const opt = document.createElement('option');
-        opt.value = n; opt.textContent = n; kelSel.appendChild(opt);
+  function populateKelurahan(kec) {
+    if (!kelSel) return;
+    kelSel.innerHTML = '<option value="">— pilih kelurahan —</option>';
+    const arr = KEL_BY_KEC[kec] || [];
+    if (arr.length) {
+      arr.forEach(n => {
+        const opt = document.createElement('option'); opt.value = n; opt.textContent = n; kelSel.appendChild(opt);
       });
       kelSel.classList.remove('lc-hidden');
-      kelText.classList.add('lc-hidden');
-      kelText.value = '';
+      kelText.classList.add('lc-hidden'); kelText.value = '';
     } else {
-      // kalau tidak ada daftar, arahkan user mengetik manual
       kelSel.classList.add('lc-hidden');
       kelText.classList.remove('lc-hidden');
       kelSel.value = '';
     }
   }
 
-  function toggleKecamatanField() {
-    if (kecSel.value === 'Lainnya') {
+  function handleKecamatanChange() {
+    const v = kecSel.value;
+    if (v === 'Lainnya') {
       kecText.classList.remove('lc-hidden');
-      kelSel.classList.add('lc-hidden');
-      kelText.classList.remove('lc-hidden');
-      kelSel.value = '';
+      populateKelurahan('');
     } else {
       kecText.classList.add('lc-hidden');
-      refreshKelurahan();
+      populateKelurahan(v);
     }
   }
 
-  if (kecSel && kelSel && kecText && kelText) {
-    kecSel.addEventListener('change', toggleKecamatanField);
-    toggleKecamatanField();
-  }
+  // Init
+  populateKecamatan();
+  kecSel && kecSel.addEventListener('change', handleKecamatanChange);
+  if (kecSel && kecSel.value) handleKecamatanChange();
 
-  // ==== Ambil Lokasi (jika tombol belum di-bind dari inline fallback) ====
+  // Geolokasi
   const btnLok = document.getElementById('btn-lokasi');
   if (btnLok && !btnLok.dataset.bound) {
     btnLok.dataset.bound = '1';
@@ -82,16 +89,19 @@
     });
   }
 
-  // ==== Submit ====
+  // Submit
   form && form.addEventListener('submit', function (e) {
     e.preventDefault();
     const data = new FormData(form);
+    const isLain = (data.get('kecamatan') === 'Lainnya');
+    const kecNama = isLain ? (data.get('kecamatan_text') || '').trim() : (data.get('kecamatan') || '').trim();
+    const kelNama = (kelSel && !kelSel.classList.contains('lc-hidden')) ? (data.get('kelurahan') || '').trim() : (data.get('kelurahan_text') || '').trim();
 
     const payload = {
       jenis: data.get('jenis') || 'Lainnya',
       deskripsi: (data.get('deskripsi') || '').trim(),
-      kecamatan: (data.get('kecamatan') === 'Lainnya') ? (data.get('kecamatan_text') || '').trim() : (data.get('kecamatan') || '').trim(),
-      kelurahan: kelSel && !kelSel.classList.contains('lc-hidden') ? (data.get('kelurahan') || '').trim() : (data.get('kelurahan_text') || '').trim(),
+      kecamatan: kecNama,
+      kelurahan: kelNama,
       latitude: (data.get('latitude') || data.get('lat') || data.get('lokasi_lat') || '').toString().trim(),
       longitude: (data.get('longitude') || data.get('lng') || data.get('lokasi_lng') || '').toString().trim(),
       alamat: (data.get('alamat') || '').trim(),
@@ -99,11 +109,11 @@
       by_user: localStorage.getItem('user_name') || localStorage.getItem('user_login') || 'unknown'
     };
 
-    // Validasi minimal
     if (!payload.deskripsi) { alert('Deskripsi wajib diisi.'); return; }
-    if (!payload.latitude || !payload.longitude) { alert('Koordinat belum terisi. Klik "Gunakan Lokasi Saya" atau isi manual.'); return; }
+    if (!payload.kecamatan) { alert('Kecamatan harus dipilih/diisi.'); return; }
+    if (!payload.kelurahan) { alert('Kelurahan harus dipilih/diisi.'); return; }
+    if (!payload.latitude || !payload.longitude) { alert('Koordinat belum terisi. Klik \"Gunakan Lokasi Saya\" atau isi manual.'); return; }
 
-    // Simpan lokal (bisa diubah ke API di masa depan)
     const KEY = 'laporan_cepat';
     const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
     arr.push(payload);

@@ -102,6 +102,7 @@
     root.appendChild(table2);
   }
 
+  // Render setelah DOM siap
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', renderRecap);
   } else {
