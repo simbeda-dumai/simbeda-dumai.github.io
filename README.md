@@ -1,180 +1,196 @@
-# 🛰️ SIMBEDA – Sistem Informasi Manajemen Bencana Daerah
-### Badan Penanggulangan Bencana Daerah (BPBD) Kota Dumai
+SIMBEDA — Sistem Manajemen Bencana Daerah (Kota Dumai)
 
-![Status](https://img.shields.io/badge/status-active-brightgreen)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-orange)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
-![Made with](https://img.shields.io/badge/stack-HTML%20%2F%20CSS%20%2F%20JavaScript-yellow)
 
----
 
-## 📘 Tentang SIMBEDA
 
-**SIMBEDA (Sistem Informasi Manajemen Bencana Daerah)** adalah platform digital resmi **BPBD Kota Dumai** yang berfungsi sebagai pusat data, pelaporan, dan informasi kebencanaan secara terpadu.  
-Dibangun dengan teknologi web statis modern berbasis **HTML, CSS, dan JavaScript**, sistem ini dirancang **ringan, responsif, dan dapat diakses melalui GitHub Pages** tanpa memerlukan server backend.
 
-### 🎯 Tujuan Utama
-- Meningkatkan efisiensi dan transparansi pelaporan bencana.  
-- Menyediakan **data real-time** tentang kejadian bencana di wilayah Kota Dumai.  
-- Memudahkan koordinasi antara **BPBD**, **petugas lapangan**, dan **masyarakat**.  
-- Mendukung sistem **lapor cepat, monitoring peta bencana, dan rekapitulasi laporan harian**.
 
----
 
-## 🧩 Fitur Utama
 
-| Fitur | Keterangan |
-|-------|-------------|
-| 🌐 **Dashboard Utama** | Menampilkan statistik kejadian bencana dan status laporan secara real-time. |
-| 📱 **Lapor Warga** | Formulir pelaporan bencana oleh masyarakat (terhubung dengan WhatsApp Web). |
-| ⚡ **Laporan Cepat** | Input dan rekap data oleh petugas lapangan dengan lokasi GPS. |
-| 🗺️ **Peta Interaktif** | Pemetaan titik kejadian menggunakan **Leaflet.js**. |
-| 🧭 **Agenda BPBD** | Jadwal kegiatan dan koordinasi penanggulangan bencana. |
-| 🔐 **Login & Role User** | Sistem otentikasi berbasis `localStorage` untuk Admin BPBD, Petugas, dan Publik. |
-| 🖨️ **Cetak & PDF** | Laporan dapat dicetak langsung atau diunduh dalam format PDF. |
-| 💬 **Quotes Inspiratif** | Menampilkan pesan motivatif setiap 5 menit di bagian footer. |
 
----
 
-## 🧱 Struktur Direktori
 
-```
-📁 / (root)
-│── index.html
-│── README.md
-│
-├── 📁 assets/
-│   └── img/
-│       ├── bpbd_logo.png
-│       ├── dumai_logo.png
-│       ├── indonesia_logo.png
-│       └── bw_dumai.png
-│
-├── 📁 components/
-│   ├── header/
-│   │   ├── header.html
-│   │   └── header.css
-│   └── footer/
-│       ├── footer.html
-│       ├── footer.css
-│       └── quotes.js
-│
-├── 📁 js/
-│   ├── config.js
-│   └── layout/
-│       └── layout.js
-│
-└── 📁 modules/
-    ├── dashboard/
-    │   ├── dashboard.html
-    │   ├── dashboard.css
-    │   └── dashboard.js
-    ├── laporan_cepat/
-    │   ├── laporan_cepat.html
-    │   ├── laporan_cepat.css
-    │   └── laporan_cepat.js
-    ├── lapor_warga/
-    │   ├── lapor_warga.html
-    │   ├── lapor_warga.css
-    │   └── lapor_warga.js
-    ├── agenda/
-    │   ├── agenda.html
-    │   ├── agenda.css
-    │   └── agenda.js
-    ├── login/
-    │   ├── login.html
-    │   ├── login.css
-    │   ├── login.js
-    │   └── users.js
-    └── print/
-        └── print.js
-```
 
-> Semua halaman otomatis memuat **header dan footer** melalui `layout.js`.  
-> Kutipan inspiratif di footer berubah setiap **5 menit** via `quotes.js`.
+Portal SIMBEDA membantu pencatatan cepat kejadian, pelaporan warga, dan tampilan ringkas situasi via peta untuk wilayah Kota Dumai.
 
----
+🔧 Fitur Utama
 
-## 🚀 Cara Penggunaan
+Struktur Repo Sederhana (tanpa subfolder modul) dengan path absolut:
 
-### 🔹 A. Online (GitHub Pages)
-1. Buka repositori `simbeda-dumai.github.io` di GitHub.  
-2. Pastikan **Pages** aktif dengan pengaturan berikut:  
-   - Source: `main`  
-   - Folder: `/ (root)`  
-3. Tunggu proses build otomatis oleh GitHub Pages.  
-4. Akses portal di:  
-   👉 [https://simbeda-dumai.github.io/](https://simbeda-dumai.github.io/)
+/CSS, /JS, /HTML, /IMG, /JSON, /fonts, /index.html
 
-### 🔹 B. Offline (Lokal)
-Untuk menjalankan sistem secara lokal di laptop:
-```bash
-# Clone repository
-git clone https://github.com/simbeda-dumai/simbeda-dumai.github.io.git
 
-# Masuk ke direktori proyek
-cd simbeda-dumai.github.io
+Header & Footer gradasi (hijau muda → kuning → oranye → biru tua), logo & link ABSOLUTE PATH.
 
-# Jalankan server lokal (contoh dengan Python 3)
-python -m http.server 8000
+Footer dinamis: jam real-time + 50 quotes (motivasi kerja, manajemen bencana, Kota Dumai) — font NotoSans Italic Bold.
 
-# Akses di browser
-http://localhost:8000/
-```
+Login via /JSON/users.json (tanpa backend) → sesi disimpan localStorage('simbeda_auth').
 
-> 💡 Jika header/footer tidak muncul, pastikan file dijalankan melalui server lokal (bukan langsung file://) karena `fetch()` membutuhkan protokol HTTP.
+Guard Akses (role-based) untuk:
 
----
+dashboard → butuh login & izin modul.
 
-## ⚙️ Panduan Pengembangan
+laporan_cepat → butuh login & izin modul.
 
-| File / Folder | Fungsi |
-|----------------|--------|
-| `"/JS/layout.js"` | Menyuntikkan header dan footer ke seluruh halaman. |
-| `/components/footer/quotes.js` | Mengatur rotasi kutipan inspiratif tiap 5 menit. |
-| `/modules/print/print.js` | Mengelola format cetak & ekspor laporan ke PDF. |
-| `/js/config.js` | Menyimpan pengaturan global sistem (versi, URL API, dll). |
-| `/modules/login/users.js` | Data user & role untuk simulasi login lokal. |
+lapor_warga → tanpa guard (akses publik).
 
-### 🧠 Tips Pengembang
-- Gunakan `console.log()` untuk debug error modul.  
-- Cek Console di browser untuk pesan “404” atau kesalahan CORS.  
-- Gunakan CDN untuk font & ikon agar loading cepat di GitHub Pages.  
-- Semua gaya umum dikelola di `main.css`, sedangkan gaya khusus di setiap modul.  
+Dashboard: statistik (total laporan, jumlah kecamatan asal, pengunjung) + peta Leaflet (OSM). Marker otomatis bila kolom “lokasi” berisi koordinat.
 
----
+Konfigurasi wilayah tersentral di /JS/config.js (7 kecamatan, 36 kelurahan).
 
-## 🛠️ Teknologi yang Digunakan
-- **HTML5** – Struktur halaman dan komponen.  
-- **CSS3** – Desain responsif & layout modular.  
-- **JavaScript (ES6)** – Interaktivitas, validasi, dan pemuatan dinamis.  
-- **Leaflet.js** – Peta interaktif titik kejadian.  
-- **GitHub Pages** – Hosting gratis dan otomatis untuk publikasi sistem.  
+Penyimpanan data klien:
 
----
+localStorage('laporan_cepat')
 
-## 📊 Status dan Monitoring
-- 🔄 Pengembangan: **Berjalan (Versi 1.0.0)**  
-- 🧱 Repository: [simbeda-dumai.github.io](https://github.com/simbeda-dumai/simbeda-dumai.github.io)  
-- 🌍 Hosting: GitHub Pages  
-- 🧩 Developer: Tim SIMBEDA BPBD Dumai  
+localStorage('lapor_warga')
 
----
+localStorage('simbeda_auth')
 
-## 🤝 Kredit dan Lisensi
+📁 Struktur Repositori
+CSS/        # stylesheet (header.css, footer.css, dashboard.css, login.css, laporan_cepat.css, lapor_warga.css, Roboto.css, transition.css)
+JS/         # script (layout.js, quotes.js, login.js, auth-guard.js, dashboard.js, laporan_cepat.js, lapor_warga.js, config.js, util breadcrumb)
+HTML/       # halaman modul (header.html, footer.html, dashboard.html, laporan_cepat.html, lapor_warga.html, login.html)
+IMG/        # aset gambar (logo_simbeda.png, dumai_idaman.png, asn.png)
+JSON/       # data (users.json, data_dummy.json)
+fonts/      # NotoSans & Roboto (variable fonts)
+index.html  # beranda
+README.md
 
-**Dikembangkan oleh:**  
-🧭 *Bidang Pencegahan dan Kesiapsiagaan*  
-**Badan Penanggulangan Bencana Daerah (BPBD) Kota Dumai**
 
-**Dibimbing oleh:**  
-Kepala BPBD Kota Dumai dan Sekretariat BPBD
+Semua link/asset memakai path absolut (mis. /JS/layout.js, /HTML/login.html, /IMG/logo_simbeda.png).
 
-**Lisensi:**  
-MIT License — dapat digunakan untuk keperluan pengembangan sistem kebencanaan di wilayah Pemerintah Kota Dumai.
+🚀 Cara Menjalankan
+1) GitHub Pages (direkomendasikan)
 
----
+Commit & push. Akses melalui URL Pages repo ini. Struktur sudah Pages-ready.
 
-> _“Manajemen bencana yang cepat, transparan, dan terintegrasi adalah kunci keselamatan masyarakat.”_  
-> — **SIMBEDA BPBD Kota Dumai, 2025**
+2) Lokal (tanpa backend)
+
+Pakailah server statis (agar fetch('/JSON/users.json') tidak di-block):
+
+VS Code “Live Server” / python -m http.server / http-server.
+
+Buka di browser: http://localhost:XXXX.
+
+🧭 Halaman & Modul
+
+Beranda: /index.html
+
+Login: /HTML/login.html
+
+Dashboard (guard): /HTML/dashboard.html
+
+Memerlukan sesi login + izin modul.
+
+Laporan Cepat (guard): /HTML/laporan_cepat.html
+
+Simpan ringkas kejadian, opsi isi koordinat.
+
+Lapor Warga (publik): /HTML/lapor_warga.html
+
+Header & footer di-inject otomatis oleh /JS/layout.js.
+
+🔐 Login & Hak Akses
+
+Sumber user: /JSON/users.json (format object map direkomendasikan):
+
+{
+  "kalaksa": { "password": "siagasatu", "role": "Kota", "area": "BPBD Kota Dumai", "modules": ["dashboard","laporan_cepat","lapor_warga","admin"] },
+  "dk":      { "password": "dumaisiaga", "role": "Kecamatan", "area": "Dumai Kota", "modules": ["dashboard","laporan_cepat","lapor_warga"] }
+}
+
+
+Penyimpanan sesi: localStorage('simbeda_auth').
+
+Guard:
+
+Tambahkan di <head> halaman yang dijaga:
+
+<meta name="simbeda:module" content="dashboard">  <!-- atau: laporan_cepat -->
+<script src="/JS/auth-guard.js" defer></script>
+
+
+Redirect pasca login: ditangani di /JS/login.js (mapping role → halaman). Default ke /HTML/dashboard.html.
+
+🗺️ Peta (Dashboard)
+
+CDN Leaflet:
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+
+Elemen peta:
+
+<div id="map" style="height:380px;"></div>
+
+
+Sumber marker: gabungan data localStorage('laporan_cepat') & localStorage('lapor_warga').
+Isi koordinat di kolom lokasi (contoh: 1.668, 101.45 atau lat:1.668 lng:101.45).
+
+🧩 Potongan Include Penting
+
+Layout (di semua halaman):
+
+<div id="header"></div>
+<!-- konten halaman -->
+<div id="footer"></div>
+
+<script src="/JS/layout.js" defer></script>
+
+
+Guard (khusus dashboard & laporan_cepat):
+
+<meta name="simbeda:module" content="dashboard"> <!-- atau laporan_cepat -->
+<script src="/JS/auth-guard.js" defer></script>
+
+
+Login:
+
+<link rel="stylesheet" href="/CSS/login.css" />
+<script src="/JS/login.js" defer></script>
+
+⚙️ Konfigurasi Wilayah
+
+Ubah di /JS/config.js (kecamatan & kelurahan). Form Laporan Cepat dan Lapor Warga akan mengisi dropdown otomatis.
+
+🧪 Troubleshooting
+
+Jam/Quotes footer tidak tampil
+Pastikan /JS/layout.js memuat /HTML/footer.html lalu menyusul /JS/quotes.js. Versi terbaru sudah memanggil SIMBEDA_FOOTER_BOOT() otomatis.
+
+Login gagal
+
+Cek Network → users.json harus 200 OK di /JSON/users.json.
+
+Pastikan field password cocok. Username tidak case-sensitive.
+
+Peta kosong
+
+Pastikan elemen #map ada dan punya tinggi.
+
+Isi koordinat di kolom lokasi.
+
+🛡️ Catatan Keamanan
+
+Repositori ini tanpa backend; jangan menaruh data sensitif di users.json. Untuk produksi, gunakan server & autentikasi yang aman.
+
+📌 Rencana Pengembangan
+
+Ekspor PDF/CSV rekap.
+
+Filter peta per-kecamatan, time range.
+
+Sinkronisasi data ke backend (API) bila disiapkan.
+
+👥 Kontribusi
+
+Fork → branch → PR.
+
+Ikuti gaya kode yang ada (path absolut, tidak membuat subfolder modul).
+
+📝 Lisensi
+
+Tentukan lisensi proyek sesuai kebijakan instansi. (Contoh: MIT / Apache-2.0).
+
+SIMBEDA Kota Dumai — “Data rapi, aksi pasti.”
