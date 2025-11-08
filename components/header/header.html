@@ -1,32 +1,14 @@
-<header class="app-header">
-  <div class="header-left">
-    <img src="/assets/img/logo_simbeda.png" alt="Logo SIMBEDA" class="main-logo">
-    <div class="title-text">
-      <h1>SIMBEDA Kota Dumai</h1>
-      <p>Sistem Informasi Manajemen Bencana Daerah</p>
+<!-- components/header/header.html -->
+<header class="hdr">
+  <div class="wrap">
+    <div class="logos">
+      <img src="/assets/img/dumai.png" alt="Pemko Dumai">
+      <img src="/assets/img/dumai_idaman.png" alt="Dumai Idaman">
+      <img src="/assets/img/asn.png" alt="ASN">
+      <strong>SIMBEDA Dumai</strong>
     </div>
+    <div id="userBox"></div>
   </div>
-
-  <nav class="nav-menu">
-    <a href="/index.html" class="nav-item">Beranda</a>
-    <a href="/modules/dashboard/dashboard.html" class="nav-item">Dashboard</a>
-    <a href="/modules/laporan_cepat/laporan_cepat.html" class="nav-item">Laporan Cepat</a>
-    <a href="/modules/lapor_warga/lapor_warga.html" class="nav-item">Lapor Warga</a>
-    <a href="/modules/login/login.html" class="nav-item">Login</a>
-  </nav>
-
-  <div class="header-right">
-    <img src="/assets/img/dumai_idaman.png" alt="Logo Dumai Idaman">
-    <img src="/assets/img/asn.png" alt="Logo ASN">
-  </div>
+  <div id="breadcrumb"></div>
 </header>
-
-<script>
-  // aktifkan link sesuai halaman aktif
-  const current = window.location.pathname;
-  document.querySelectorAll(".nav-item").forEach(link => {
-    if (current === link.getAttribute("href")) {
-      link.classList.add("active");
-    }
-  });
-</script>
+<link rel="stylesheet" href="/components/header/header.css">

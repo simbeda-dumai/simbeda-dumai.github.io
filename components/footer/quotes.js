@@ -1,28 +1,6 @@
-const quotes = [
-  "Kesiapsiagaan hari ini adalah keselamatan esok hari.",
-  "Bencana bisa datang kapan saja, siaplah dari sekarang.",
-  "Solidaritas adalah kekuatan terbesar saat bencana.",
-  "Tanggap, tangguh, dan tumbuh bersama.",
-  "Satu langkah siaga, sejuta nyawa terselamatkan."
-];
-
-function updateFooter() {
-  const q = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById("quote").textContent = q;
-  document.querySelector(".footer-right").style.animation = "fadeQuote 1s ease-in-out";
-}
-
-function updateTime() {
-  const now = new Date();
-  document.getElementById("timeNow").textContent =
-    now.toLocaleString("id-ID", { dateStyle: "full", timeStyle: "medium" });
-}
-
-// Update awal
-updateFooter();
-updateTime();
-
-// Ubah quotes tiap 60 detik
-setInterval(updateFooter, 60000);
-// Update waktu real-time tiap detik
-setInterval(updateTime, 1000);
+// components/footer/quotes.js
+(function(){
+  const quotes=["“Selalu siap, sigap, dan solid.”","“Cegah lebih baik daripada tanggap.”","“Data akurat, respon cepat.”","“Bersama warga, kita kuat.”"];
+  function tick(){ const el=document.getElementById("quotesBox"); if(!el) return; const i=Math.floor(Date.now()/1000/300)%quotes.length; el.textContent=quotes[i]; }
+  tick(); setInterval(tick, 10000);
+})();
