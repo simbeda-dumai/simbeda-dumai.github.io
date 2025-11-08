@@ -1,9 +1,8 @@
-// SIMBEDA - Layout injector (ABSOLUTE PATHS + auto load quotes.js)
+// SIMBEDA - Layout injector (ABSOLUTE PATHS + panggil quotes setelah footer siap)
 (function () {
   'use strict';
 
-  // ABSOLUTE paths
-  const CSS_LIST = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
+  const CSS_LIST   = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
   const HEADER_HTML = '/HTML/header.html';
   const FOOTER_HTML = '/HTML/footer.html';
   const QUOTES_JS   = '/JS/quotes.js';
@@ -16,12 +15,12 @@
     document.head.appendChild(link);
   }
 
-  function ensureScript(src) {
+  function ensureScript(src, onload) {
     const exists = [...document.querySelectorAll('script')].some(s => (s.src || '').includes(src));
-    if (exists) return;
+    if (exists) { try { onload && onload(); } catch(_){} return; }
     const sc = document.createElement('script');
     sc.src = src;
-    sc.defer = true;
+    sc.onload = () => { try { onload && onload(); } catch(_){} };
     document.body.appendChild(sc);
   }
 
@@ -32,29 +31,30 @@
   }
 
   async function loadShell() {
-    // CSS
+    // CSS umum
     CSS_LIST.forEach(injectCssOnce);
 
-    // HEADER host
+    // Host header/footer
     const headerHost = document.getElementById('header') || (() => {
-      const d = document.createElement('div');
-      d.id = 'header'; document.body.prepend(d); return d;
+      const d = document.createElement('div'); d.id = 'header'; document.body.prepend(d); return d;
     })();
-    // FOOTER host
     const footerHost = document.getElementById('footer') || (() => {
-      const d = document.createElement('div');
-      d.id = 'footer'; document.body.appendChild(d); return d;
+      const d = document.createElement('div'); d.id = 'footer'; document.body.appendChild(d); return d;
     })();
 
     // Inject HTML
     try { headerHost.innerHTML = await fetchHtml(HEADER_HTML); } catch (e) { console.error(e); }
     try {
       footerHost.innerHTML = await fetchHtml(FOOTER_HTML);
-      // Pastikan quotes.js dimuat setelah footer siap
-      ensureScript(QUOTES_JS);
+      // Pastikan quotes.js dimuat, lalu paksa boot ulang jika tersedia
+      ensureScript(QUOTES_JS, () => {
+        if (typeof window.SIMBEDA_FOOTER_BOOT === 'function') {
+          window.SIMBEDA_FOOTER_BOOT();
+        }
+      });
     } catch (e) { console.error(e); }
 
-    // Set nav active (berdasarkan path)
+    // Tandai nav aktif
     try {
       const path = location.pathname.replace(/\/+/g, '/');
       document.querySelectorAll('[data-nav]').forEach(a => {
@@ -63,7 +63,7 @@
       });
     } catch (_) {}
 
-    // Render breadcrumb user (jika ada)
+    // Breadcrumb user sederhana
     try {
       const raw = localStorage.getItem('simbeda_auth');
       if (raw) {
