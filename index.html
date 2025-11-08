@@ -1,114 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SIMBEDA Dumai — Beranda</title>
-  <meta name="description" content="Portal Manajemen Kebencanaan Daerah Kota Dumai (SIMBEDA) — Beranda resmi, statistik cepat, dan aksi kilat." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIMBEDA Kota Dumai</title>
 
-  <!-- CSS Global -->
-  <link rel="stylesheet" href="/css/main.css" />
-  <!-- CSS Beranda -->
-  <link rel="stylesheet" href="/modules/home/home.css" />
+  <!-- Font & Style -->
+  <link rel="stylesheet" href="components/header/header.css" />
+  <link rel="stylesheet" href="components/footer/footer.css" />
+  <link rel="stylesheet" href="assets/fonts/Roboto.css" />
 
-  <!-- Konfigurasi wilayah -->
-  <script src="/js/config.js" defer></script>
-
-  <!-- Layout injector: header/footer + auth guard + breadcrumb + account -->
-  <script src="/js/layout/layout.js" defer></script>
-
-  <!-- Logika Beranda -->
-  <script src="/modules/home/home.js" defer></script>
+  <!-- Layout Loader -->
+  <script src="js/layout/layout.js" defer></script>
 </head>
+
 <body>
-  <!-- Header & footer akan di-inject otomatis oleh layout.js -->
+  <div id="header"></div>
 
-  <main id="main" class="container">
-    <!-- HERO -->
-    <section class="hero card">
-      <div class="hero__text">
-        <h1>SIMBEDA Kota Dumai</h1>
-        <p class="subtitle">Sistem Informasi Manajemen Bencana Daerah — ringkas, akurat, terintegrasi.</p>
-        <div class="actions">
-          <a class="btn primary" href="/modules/lapor_warga/lapor_warga.html">Lapor Warga</a>
-          <a class="btn" href="/modules/laporan_cepat/laporan_cepat.html">Laporan Cepat</a>
-          <a class="btn" href="/modules/agenda/agenda.html">Agenda</a>
-          <a class="btn" href="/modules/nota_dinas/nota_dinas.html">Nota Dinas</a>
-        </div>
-      </div>
-      <div class="hero__hint">
-        <small>Tips: Beranda menampilkan rekap otomatis dari data lokal perangkat (localStorage).</small>
-      </div>
+  <main class="main-home">
+    <section class="intro">
+      <h1>Selamat Datang di <span>SIMBEDA Kota Dumai</span></h1>
+      <p>Sistem Informasi Manajemen Bencana Daerah</p>
+      <a href="modules/login/login.html" class="btn-home">Masuk ke Sistem</a>
     </section>
 
-    <!-- STAT CARDS -->
-    <section class="cards-grid">
-      <article class="stat card">
-        <div class="stat__label">Total Lapor Warga</div>
-        <div id="stat-lapor-warga" class="stat__value">0</div>
-        <div class="stat__foot"><a href="/modules/lapor_warga/lapor_warga.html">Lihat & Kelola</a></div>
-      </article>
-
-      <article class="stat card">
-        <div class="stat__label">Total Laporan Cepat</div>
-        <div id="stat-laporan-cepat" class="stat__value">0</div>
-        <div class="stat__foot"><a href="/modules/laporan_cepat/laporan_cepat.html">Buka Modul</a></div>
-      </article>
-
-      <article class="stat card">
-        <div class="stat__label">Kecamatan</div>
-        <div id="stat-kecamatan" class="stat__value">7</div>
-        <div class="stat__foot"><span id="stat-kelurahan">36</span> Kelurahan</div>
-      </article>
-
-      <article class="stat card">
-        <div class="stat__label">Update Terakhir</div>
-        <div id="stat-update" class="stat__value">—</div>
-        <div class="stat__foot">Sinkron dari data lokal</div>
-      </article>
-    </section>
-
-    <!-- TERBARU -->
-    <section class="latest card">
-      <div class="card__head">
-        <h2>Terbaru dari Lapor Warga</h2>
-        <a href="/modules/lapor_warga/lapor_warga.html" class="link">Semua</a>
-      </div>
-      <ul id="list-lapor-warga" class="list"></ul>
-    </section>
-
-    <section class="latest card">
-      <div class="card__head">
-        <h2>Terbaru dari Laporan Cepat</h2>
-        <a href="/modules/laporan_cepat/laporan_cepat.html" class="link">Semua</a>
-      </div>
-      <ul id="list-laporan-cepat" class="list"></ul>
-    </section>
-
-    <!-- INSIGHT WILAYAH -->
-    <section class="insight card">
-      <div class="card__head">
-        <h2>Insight Wilayah</h2>
-        <button id="btn-toggle-wilayah" class="btn sm">Tampilkan Rincian</button>
-      </div>
-      <div id="wilayah-compact" class="insight__compact">
-        <div><strong id="wilayah-kec-count">7</strong> Kecamatan</div>
-        <div><strong id="wilayah-kel-count">36</strong> Kelurahan</div>
-      </div>
-      <div id="wilayah-detail" class="insight__detail" hidden></div>
-    </section>
-
-    <!-- PETA MINI OPSIONAL -->
-    <section class="map-lite card">
-      <div class="card__head">
-        <h2>Peta Ringkas (Opsional)</h2>
-        <button id="btn-load-map" class="btn sm">Muat Peta Mini</button>
-      </div>
-      <div id="map-placeholder" class="map-lite__placeholder">
-        <p>Peta tidak dimuat otomatis agar beranda tetap ringan.</p>
-      </div>
-      <div id="map-container" class="map-lite__canvas" hidden></div>
+    <section class="info">
+      <h2>Tujuan SIMBEDA</h2>
+      <p>
+        SIMBEDA merupakan platform digital Badan Penanggulangan Bencana Daerah
+        (BPBD) Kota Dumai untuk mengelola laporan bencana, memantau kondisi
+        wilayah, dan menyalurkan informasi cepat kepada masyarakat serta pihak
+        terkait.
+      </p>
     </section>
   </main>
+
+  <div id="footer"></div>
 </body>
 </html>

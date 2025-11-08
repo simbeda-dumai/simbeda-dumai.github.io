@@ -1,89 +1,61 @@
-// Lapor Warga — gunakan data wilayah dari js/config.js dan simpan ke localStorage
-(function () {
-  const wilayah = (window.SIMBEDA_WILAYAH || {});
-  const LIST_KEC = Array.isArray(wilayah.kecamatan) ? wilayah.kecamatan.slice() : [];
-  const KEL_BY_KEC = wilayah.kelurahanByKecamatan || {};
+// daftar kelurahan per kecamatan
+const dataKelurahan = {
+  "Sungai Sembilan": ["Bangsal Aceh", "Tanjung Penyembal", "Lubuk Gaung", "Batu Teritip", "Basilam Baru"],
+  "Dumai Barat": ["Purnama", "Bumi Ayu", "Simpang Tetap Darul Ihsan", "Bukit Datuk"],
+  "Dumai Kota": ["Rimba Sekampung", "Teluk Binjai", "Bintan", "Laksamana"],
+  "Dumai Timur": ["Tanjung Palas", "Bukit Timah", "Buluh Kasap", "Jaya Mukti"],
+  "Dumai Selatan": ["Bumi Ayu Selatan", "Mekar Sari", "Bukit Batrem", "Ratu Sima"],
+  "Bukit Kapur": ["Bukit Kayu Kapur", "Gurun Panjang", "Kampung Baru", "Bukit Nenas"],
+  "Medang Kampai": ["Guntung", "Pelintung", "Teluk Makmur"]
+};
 
-  const form = document.getElementById('form-lapor-warga');
-  const kecSel = document.getElementById('kecamatan');
-  const kelSel = document.getElementById('kelurahan');
-  const kecText = document.getElementById('kecamatan_text');
-  const kelText = document.getElementById('kelurahan_text');
-
-  function populateKecamatan() {
-    if (!kecSel) return;
-    kecSel.innerHTML = '<option value="">— pilih kecamatan —</option>';
-    LIST_KEC.forEach(n => {
-      const opt = document.createElement('option'); opt.value = n; opt.textContent = n; kecSel.appendChild(opt);
+function isiKelurahan() {
+  const kecamatan = document.getElementById("kecamatan").value;
+  const kelSelect = document.getElementById("kelurahan");
+  kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';
+  if (dataKelurahan[kecamatan]) {
+    dataKelurahan[kecamatan].forEach(kel => {
+      const opt = document.createElement("option");
+      opt.value = kel;
+      opt.textContent = kel;
+      kelSelect.appendChild(opt);
     });
-    const optLain = document.createElement('option'); optLain.value = 'Lainnya'; optLain.textContent = 'Lainnya';
-    kecSel.appendChild(optLain);
+  }
+}
+
+function cekJenisManual() {
+  const jenis = document.getElementById("jenisBencana").value;
+  document.getElementById("manualJenis").style.display = jenis === "Lainnya" ? "block" : "none";
+}
+
+function simpanLaporanWarga(e) {
+  e.preventDefault();
+
+  const laporan = {
+    nama: document.getElementById("nama").value.trim(),
+    nik: document.getElementById("nik").value.trim(),
+    pekerjaan: document.getElementById("pekerjaan").value.trim(),
+    alamat: document.getElementById("alamat").value.trim(),
+    kecamatan: document.getElementById("kecamatan").value,
+    kelurahan: document.getElementById("kelurahan").value,
+    jenis: document.getElementById("jenisBencana").value === "Lainnya"
+      ? document.getElementById("jenisManual").value.trim()
+      : document.getElementById("jenisBencana").value,
+    latitude: document.getElementById("latitude").value.trim(),
+    longitude: document.getElementById("longitude").value.trim(),
+    deskripsi: document.getElementById("deskripsi").value.trim(),
+    waktu: new Date().toLocaleString("id-ID")
+  };
+
+  if (!laporan.nama || !laporan.nik || !laporan.kecamatan || !laporan.kelurahan || !laporan.jenis) {
+    alert("❌ Mohon lengkapi semua data penting!");
+    return false;
   }
 
-  function populateKelurahan(kec) {
-    if (!kelSel) return;
-    kelSel.innerHTML = '<option value="">— pilih kelurahan —</option>';
-    const arr = KEL_BY_KEC[kec] || [];
-    if (arr.length) {
-      arr.forEach(n => {
-        const opt = document.createElement('option'); opt.value = n; opt.textContent = n; kelSel.appendChild(opt);
-      });
-      kelSel.classList.remove('lw-hidden');
-      kelText.classList.add('lw-hidden'); kelText.value = '';
-    } else {
-      kelSel.classList.add('lw-hidden');
-      kelText.classList.remove('lw-hidden');
-      kelSel.value = '';
-    }
-  }
+  let data = JSON.parse(localStorage.getItem("laporan_warga") || "[]");
+  data.unshift(laporan);
+  localStorage.setItem("laporan_warga", JSON.stringify(data));
 
-  function handleKecamatanChange() {
-    const v = kecSel.value;
-    if (v === 'Lainnya') {
-      kecText.classList.remove('lw-hidden');
-      populateKelurahan(''); // sembunyikan dropdown
-    } else {
-      kecText.classList.add('lw-hidden');
-      populateKelurahan(v);
-    }
-  }
-
-  // Init
-  populateKecamatan();
-  kecSel && kecSel.addEventListener('change', handleKecamatanChange);
-
-  // Submit
-  form && form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const data = new FormData(form);
-    const isLain = (data.get('kecamatan') === 'Lainnya');
-    const kecNama = isLain ? (data.get('kecamatan_text') || '').trim() : (data.get('kecamatan') || '').trim();
-    const kelNama = (kelSel && !kelSel.classList.contains('lw-hidden')) ? (data.get('kelurahan') || '').trim() : (data.get('kelurahan_text') || '').trim();
-
-    const payload = {
-      by_user: (data.get('nama') || '').trim(),
-      kontak: (data.get('kontak') || '').trim(),
-      jenis: (data.get('jenis') || 'Lainnya'),
-      deskripsi: (data.get('deskripsi') || '').trim(),
-      kecamatan: kecNama,
-      kelurahan: kelNama,
-      alamat: (data.get('alamat') || '').trim(),
-      created_at: new Date().toISOString(),
-      source: 'lapor_warga'
-    };
-
-    if (!payload.by_user) { alert('Nama wajib diisi.'); return; }
-    if (!payload.kontak) { alert('Kontak wajib diisi.'); return; }
-    if (!payload.kecamatan) { alert('Kecamatan harus dipilih/diisi.'); return; }
-    if (!payload.kelurahan) { alert('Kelurahan harus dipilih/diisi.'); return; }
-    if (!payload.deskripsi) { alert('Deskripsi wajib diisi.'); return; }
-
-    const KEY = 'lapor_warga';
-    const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
-    arr.push(payload);
-    localStorage.setItem(KEY, JSON.stringify(arr));
-
-    alert('Laporan berhasil dikirim. Terima kasih!');
-    try { window.location.reload(); } catch (_) {}
-  });
-})();
+  document.getElementById("formWarga").reset();
+  alert("✅ Laporan warga berhasil dikirim!");
+}

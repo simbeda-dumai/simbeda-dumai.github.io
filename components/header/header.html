@@ -1,27 +1,32 @@
 <header class="app-header">
-  <div class="topbar">
-    <div class="brand">
-      <a href="/" class="brand__link">
-        <img src="/assets/img/dumai.png" alt="Dumai" />
-        <img src="/assets/img/dumai_idaman.png" alt="Dumai Idaman" />
-        <img src="/assets/img/asn.png" alt="ASN" />
-        <span class="brand__title">SIMBEDA Kota Dumai</span>
-      </a>
-    </div>
-
-    <nav class="nav">
-      <a class="nav__link" href="/">Beranda</a>
-      <a class="nav__link" href="/modules/dashboard/dashboard.html">Dashboard</a>
-      <a class="nav__link" href="/modules/lapor_warga/lapor_warga.html">Lapor Warga</a>
-      <a class="nav__link" href="/modules/laporan_cepat/laporan_cepat.html">Laporan Cepat</a>
-      <a class="nav__link" href="/modules/agenda/agenda.html">Agenda</a>
-      <a class="nav__link" href="/modules/nota_dinas/nota_dinas.html">Nota Dinas</a>
-    </nav>
-
-    <div class="account" id="account-area">
-      <a class="btn btn-login" href="/modules/login/login.html">Masuk</a>
+  <div class="header-left">
+    <img src="/assets/img/logo_simbeda.png" alt="Logo SIMBEDA" class="main-logo">
+    <div class="title-text">
+      <h1>SIMBEDA Kota Dumai</h1>
+      <p>Sistem Informasi Manajemen Bencana Daerah</p>
     </div>
   </div>
 
-  <div class="breadcrumb" id="breadcrumb"></div>
+  <nav class="nav-menu">
+    <a href="/index.html" class="nav-item">Beranda</a>
+    <a href="/modules/dashboard/dashboard.html" class="nav-item">Dashboard</a>
+    <a href="/modules/laporan_cepat/laporan_cepat.html" class="nav-item">Laporan Cepat</a>
+    <a href="/modules/lapor_warga/lapor_warga.html" class="nav-item">Lapor Warga</a>
+    <a href="/modules/login/login.html" class="nav-item">Login</a>
+  </nav>
+
+  <div class="header-right">
+    <img src="/assets/img/dumai_idaman.png" alt="Logo Dumai Idaman">
+    <img src="/assets/img/asn.png" alt="Logo ASN">
+  </div>
 </header>
+
+<script>
+  // aktifkan link sesuai halaman aktif
+  const current = window.location.pathname;
+  document.querySelectorAll(".nav-item").forEach(link => {
+    if (current === link.getAttribute("href")) {
+      link.classList.add("active");
+    }
+  });
+</script>
