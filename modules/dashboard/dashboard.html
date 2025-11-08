@@ -1,39 +1,18 @@
-<div id="header"></div>
 
-<main id="dashboard-container">
-  <section class="dashboard-summary">
-    <h2>Statistik Laporan</h2>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3 id="totalLaporan">0</h3>
-        <p>Jumlah Laporan</p>
-      </div>
-      <div class="stat-card">
-        <h3 id="asalLaporan">0</h3>
-        <p>Asal Kecamatan</p>
-      </div>
-      <div class="stat-card">
-        <h3 id="pengunjung">0</h3>
-        <p>Pengunjung</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="dashboard-map">
-    <h2>Peta Kejadian</h2>
-    <div id="map"></div>
-  </section>
-</main>
-
-<div id="footer"></div>
-
-<!-- Leaflet JS & CSS -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<script src="/js/layout/layout.js" defer></script>
-<script src="dashboard.js" defer></script>
-<link rel="stylesheet" href="dashboard.css" />
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="/assets/css/style.css">
+    </head>
+    <body>
+        <header><h1>SIMBEDA Dashboard</h1></header>
+        <div class="container">
+            <div id="user-info"></div>
+            <button class="btn" onclick="logout()">Logout</button>
+        </div>
+    </body>
+    </html>
+    
