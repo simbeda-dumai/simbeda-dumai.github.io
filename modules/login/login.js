@@ -23,7 +23,7 @@ function loginUser(e) {
     return false;
   }
   if (p !== users[u].password) {
-    alert("❌ Password salah! Silahkan Coba Lagi!");
+    alert("❌ Password salah!");
     return false;
   }
 

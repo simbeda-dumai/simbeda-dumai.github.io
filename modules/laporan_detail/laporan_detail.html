@@ -1,0 +1,67 @@
+<!-- modules/laporan_detail/laporan_detail.html -->
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Input Laporan Detail Kejadian — SIMBEDA</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/modules/laporan_detail/laporan_detail.css">
+  <script src="/js/config.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/modules/laporan_detail/laporan_detail.js" defer></script>
+</head>
+<body>
+  <div id="app-header"></div>
+  <main class="container">
+    <h1>Input Laporan Detail Kejadian</h1>
+    <form id="formDetail" class="card">
+      <div class="grid">
+        <label>Kecamatan
+          <select id="fieldKecamatan" name="kecamatan" required></select>
+        </label>
+        <label>Kelurahan
+          <select id="fieldKelurahan" name="kelurahan" required></select>
+        </label>
+      </div>
+
+      <div class="grid">
+        <label>Jenis Kejadian
+          <select id="fieldJenis" name="jenis" required>
+            <option value="">Pilih...</option>
+            <option>Banji r</option>
+            <option>Kebakaran</option>
+            <option>Puting Beliung</option>
+            <option>Tanah Longsor</option>
+            <option>Gelombang Pasang</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+        <label id="wrapJenisManual" style="display:none">Jenis (Tuliskan Manual)
+          <input id="fieldJenisManual" name="jenis_manual" placeholder="Contoh: Kabel Listrik Putus">
+        </label>
+      </div>
+
+      <label>Deskripsi Kejadian
+        <textarea name="deskripsi" rows="4" placeholder="Ringkas, kronologis, dampak, kebutuhan..."></textarea>
+      </label>
+
+      <div class="grid">
+        <label>Tanggal & Waktu
+          <input type="datetime-local" name="waktu" required>
+        </label>
+        <label>Lokasi (Titik Koordinat)
+          <input type="text" name="koordinat" placeholder="-1.7, 101.45">
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Simpan Laporan</button>
+      </div>
+    </form>
+  </main>
+  <div id="app-footer"></div>
+  <script src="/js/layout/layout.js"></script>
+</body>
+</html>
