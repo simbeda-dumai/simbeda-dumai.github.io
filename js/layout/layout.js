@@ -1,4 +1,4 @@
-// ===== Efek Transisi Antar Halaman =====
+// ===== Efek transisi antar halaman =====
 document.body.classList.add("fade-in");
 window.addEventListener("beforeunload", () => {
   document.body.classList.add("fade-out");
@@ -8,35 +8,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const headerEl = document.getElementById("header");
   const footerEl = document.getElementById("footer");
 
-  // Deteksi path base otomatis
-  const tryPaths = [
-    "/components/", // root GitHub Pages
-    "../components/",
-    "../../components/"
-  ];
+  // muat header dari root (GitHub Pages safe)
+  fetch("/components/header/header.html")
+    .then(r => {
+      if (!r.ok) throw new Error("Header gagal dimuat");
+      return r.text();
+    })
+    .then(html => headerEl.innerHTML = html)
+    .catch(err => {
+      headerEl.innerHTML = `<div style="background:#fee2e2;color:#b91c1c;padding:8px;text-align:center;">
+        ⚠️ ${err.message}
+      </div>`;
+    });
 
-  const loadHTML = async (target, file) => {
-    for (const path of tryPaths) {
-      try {
-        const res = await fetch(`${path}${file}`);
-        if (res.ok) {
-          const html = await res.text();
-          target.innerHTML = html;
-          // jika footer, muat quotes.js juga
-          if (file.includes("footer")) {
-            const script = document.createElement("script");
-            script.src = `${path}footer/quotes.js`;
-            document.body.appendChild(script);
-          }
-          return;
-        }
-      } catch {}
-    }
-    target.innerHTML = `<div style="background:#fee2e2;color:#b91c1c;padding:10px;text-align:center;">
-      ⚠️ Gagal memuat ${file} (404)
-    </div>`;
-  };
+  // muat footer
+  fetch("/components/footer/footer.html")
+    .then(r => {
+      if (!r.ok) throw new Error("Footer gagal dimuat");
+      return r.text();
+    })
+    .then(html => {
+      footerEl.innerHTML = html;
 
-  if (headerEl) loadHTML(headerEl, "header/header.html");
-  if (footerEl) loadHTML(footerEl, "footer/footer.html");
+      // pastikan quotes.js dimuat setelah footer selesai
+      const script = document.createElement("script");
+      script.src = "/components/footer/quotes.js";
+      script.defer = true;
+      document.body.appendChild(script);
+    })
+    .catch(err => {
+      footerEl.innerHTML = `<div style="background:#fee2e2;color:#b91c1c;padding:8px;text-align:center;">
+        ⚠️ ${err.message}
+      </div>`;
+    });
 });
