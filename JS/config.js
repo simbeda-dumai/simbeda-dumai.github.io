@@ -1,5 +1,4 @@
 // SIMBEDA — Wilayah Kota Dumai (7 kecamatan, 36 kelurahan)
-// Data statis; perbarui bila terjadi perubahan wilayah.
 window.SIMBEDA_WILAYAH = {
   "kecamatan": [
     "Bukit Kapur",

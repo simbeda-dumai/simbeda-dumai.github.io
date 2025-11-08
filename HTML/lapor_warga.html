@@ -1,88 +1,82 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SIMBEDA — Lapor Warga</title>
-  <link rel="icon" href="/assets/img/logo_simbeda.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lapor Warga | SIMBEDA Kota Dumai</title>
 
-  <!-- CSS dasar agar konsisten; layout.js juga akan meng-inject jika belum ada -->
-  <link rel="stylesheet" href="//CSS/Roboto.css" />
-  <link rel="stylesheet" href="/assets/css/transition.css" />
-  <link rel="stylesheet" href="/components/header/header.css" />
-  <link rel="stylesheet" href="/components/footer/footer.css" />
-  <link rel="stylesheet" href="lapor_warga.css" />
+  <!-- TANPA guard (sesuai instruksi) -->
 
-  <!-- Script data wilayah + layout + modul -->
-  <script src="/js/config.js" defer></script>
+  <!-- Style modul -->
+  <link rel="stylesheet" href="/CSS/lapor_warga.css" />
+
+  <!-- Wilayah (opsional untuk isi dropdown) -->
+  <script src="/JS/config.js" defer></script>
+
+  <!-- Layout injector -->
   <script src="/JS/layout.js" defer></script>
-  <script src="lapor_warga.js" defer></script>
+
+  <!-- Script modul -->
+  <script src="/JS/lapor_warga.js" defer></script>
 </head>
-<body class="page page-lapor-warga fade-in">
+<body>
   <div id="header"></div>
 
-  <main class="lw-container">
-    <section class="lw-card">
-      <h1 class="lw-title">Lapor Warga</h1>
-      <p class="lw-subtitle">Formulir pelaporan dari masyarakat. Pastikan informasi yang diberikan akurat dan dapat dipertanggungjawabkan.</p>
+  <main class="page-wrap">
+    <section class="page-card">
+      <h1>Lapor Warga</h1>
+      <p class="subtitle">Sampaikan laporan Anda. Data tersimpan lokal.</p>
 
-      <form id="form-lapor-warga" class="lw-form" autocomplete="off">
-        <div class="lw-grid-2">
-          <div class="lw-row">
-            <label for="nama">Nama Pelapor</label>
-            <input id="nama" name="nama" type="text" placeholder="Nama lengkap" required />
-          </div>
-          <div class="lw-row">
-            <label for="kontak">Kontak</label>
-            <input id="kontak" name="kontak" type="text" placeholder="No. HP/WA" required />
-          </div>
+      <form class="form-grid" autocomplete="off">
+        <div class="field">
+          <label for="waktu">Waktu</label>
+          <input type="datetime-local" id="waktu" />
         </div>
 
-        <div class="lw-grid-2">
-          <div class="lw-row">
-            <label for="kecamatan">Kecamatan</label>
-            <select id="kecamatan" name="kecamatan" required>
-              <option value="">— pilih kecamatan —</option>
-            </select>
-            <input id="kecamatan_text" name="kecamatan_text" class="lw-hidden" type="text" placeholder="Nama kecamatan" />
-          </div>
-          <div class="lw-row">
-            <label for="kelurahan">Kelurahan/Desa</label>
-            <select id="kelurahan" name="kelurahan" required>
-              <option value="">— pilih kelurahan —</option>
-            </select>
-            <input id="kelurahan_text" name="kelurahan_text" class="lw-hidden" type="text" placeholder="Nama kelurahan/desa" />
-          </div>
+        <div class="field">
+          <label for="nama">Nama Pelapor</label>
+          <input type="text" id="nama" placeholder="Nama lengkap" />
         </div>
 
-        <div class="lw-row">
-          <label for="alamat">Detail Lokasi</label>
-          <input id="alamat" name="alamat" type="text" placeholder="Nama jalan, RT/RW, patokan" />
+        <div class="field">
+          <label for="kontak">Kontak</label>
+          <input type="text" id="kontak" placeholder="No HP/WA atau Email" />
         </div>
 
-        <div class="lw-row">
-          <label for="jenis">Jenis Kejadian</label>
-          <select id="jenis" name="jenis" required>
-            <option value="">— pilih —</option>
-            <option value="Kebakaran">Kebakaran</option>
-            <option value="Banjir">Banjir</option>
-            <option value="Tanah Longsor">Tanah Longsor</option>
-            <option value="Angin Kencang">Angin Kencang</option>
-            <option value="Lainnya">Lainnya</option>
+        <div class="field">
+          <label for="kecamatan">Kecamatan</label>
+          <select id="kecamatan">
+            <option value="">— Pilih kecamatan —</option>
           </select>
         </div>
 
-        <div class="lw-row">
-          <label for="deskripsi">Deskripsi Singkat</label>
-          <textarea id="deskripsi" name="deskripsi" rows="4" placeholder="Jelaskan kejadian secara ringkas" required></textarea>
+        <div class="field">
+          <label for="kelurahan">Kelurahan</label>
+          <select id="kelurahan">
+            <option value="">— Pilih kelurahan —</option>
+          </select>
         </div>
 
-        <div class="lw-actions">
-          <button type="reset" class="btn ghost">Bersihkan</button>
-          <button id="btn-kirim" type="submit" class="btn primary">Kirim</button>
+        <div class="field col-2">
+          <label for="lokasi">Lokasi (boleh isi koordinat, mis. 1.668, 101.45)</label>
+          <input type="text" id="lokasi" placeholder="Contoh: Gg. Melati / lat:1.66 lng:101.41" />
+        </div>
+
+        <div class="field">
+          <label for="kejadian">Kejadian</label>
+          <input type="text" id="kejadian" placeholder="Banjir / Kebakaran / Longsor..." />
+        </div>
+
+        <div class="field col-2">
+          <label for="keterangan">Keterangan</label>
+          <textarea id="keterangan" rows="4" placeholder="Lengkapi detail agar valid..."></textarea>
+        </div>
+
+        <div class="actions col-2">
+          <button id="btn-kirim" class="btn-primary" type="button">Kirim</button>
+          <p id="msg" class="msg" role="alert" aria-live="polite"></p>
         </div>
       </form>
-      <p class="lw-hint">Data yang Anda kirim akan terlihat oleh petugas internal untuk verifikasi.</p>
     </section>
   </main>
 

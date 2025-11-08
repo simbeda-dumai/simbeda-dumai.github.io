@@ -1,18 +1,18 @@
-// SIMBEDA - Login (abs path + validasi + redirect per-role + fallback local)
+// SIMBEDA - Login (abs path + validasi + redirect per-role + fallback lokal)
 (function () {
   'use strict';
 
-  // Utama: path absolut GitHub Pages; Fallback: relatif (untuk preview lokal)
+  // Utama (GitHub Pages root) + fallback (preview lokal)
   const USER_JSON_CANDIDATES = ['/JSON/users.json', 'JSON/users.json'];
 
-  // Mapping redirect per-role (ubah sesuai kebutuhan)
+  // Redirect per-role (ubah kalau perlu)
   const REDIRECT_BY_ROLE = {
     'Kota': '/HTML/dashboard.html',
     'Kecamatan': '/HTML/dashboard.html',
     'default': '/HTML/dashboard.html'
   };
 
-  // Helper ringkas
+  // Helper kecil
   const $ = (sel) => document.querySelector(sel);
   const pick = (...vals) => {
     for (const v of vals) if (v !== undefined && v !== null && String(v).trim() !== '') return v;
@@ -23,9 +23,9 @@
       try {
         const res = await fetch(url, { cache: 'no-store' });
         if (res.ok) return normalizeUsers(await res.json());
-      } catch (_) { /* coba kandidat berikutnya */ }
+      } catch (_) {}
     }
-    throw new Error('users.json tidak bisa dimuat. Cek path /JSON/users.json & pastikan Pages sudah update.');
+    throw new Error('users.json gagal dimuat. Cek path: /JSON/users.json (pastikan Pages sudah terupdate).');
   }
 
   // Normalisasi → map: { usernameLower: { username, password, role, area, modules } }
@@ -115,10 +115,8 @@
       e.preventDefault();
       const uname = (dom.u.value || '').trim();
       const pass = (dom.p.value || '').trim();
-
       const [err, info] = validate(USERS, uname, pass);
       if (err) return showMsg(dom.msg, err);
-
       showMsg(dom.msg, 'Berhasil masuk.', true);
       saveSession(uname, info);
       window.location.assign(nextUrl(info));

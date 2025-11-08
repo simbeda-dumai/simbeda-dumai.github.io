@@ -1,110 +1,166 @@
-// Dashboard — tambah rekap laporan dari localStorage (laporan_cepat & lapor_warga)
+// SIMBEDA - Dashboard (Leaflet + Statistik + Counter Kunjungan)
+// Halaman ini diproteksi oleh /JS/auth-guard.js via <meta name="simbeda:module" content="dashboard">
 (function () {
-  const BASE = window.SIMBEDA_BASE || (function(){
-    const parts = window.location.pathname.split('/').filter(Boolean);
-    const first = parts[0];
-    const roots = new Set(['modules','components','assets','js']);
-    return (!first || roots.has(first)) ? '/' : `/${first}/`;
-  })();
+  'use strict';
 
-  // Proteksi login jika dashboard internal
-  const user = localStorage.getItem('user_login');
-  if (!user) {
-    const loginUrl = BASE + 'modules/login/login.html';
-    try { window.location.replace(loginUrl); } catch (_) { window.location.href = loginUrl; }
-    return;
+  // ----- Konstanta peta -----
+  const MAP_ELEMENT_ID = 'map';
+  // Pusat Dumai (perkiraan) & zoom default
+  const DEFAULT_CENTER = [1.666, 101.45];
+  const DEFAULT_ZOOM = 12;
+
+  // ----- Util kecil -----
+  const $ = (s) => document.querySelector(s);
+
+  function getSession() {
+    try { return JSON.parse(localStorage.getItem('simbeda_auth') || 'null'); }
+    catch(_) { return null; }
   }
 
-  function read(key){ try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(_) { return []; } }
-  const cepat = read('laporan_cepat').map(x => ({...x, __type:'cepat'}));
-  const warga = read('lapor_warga').map(x => ({...x, __type:'warga'}));
-  const all = [...cepat, ...warga];
-
-  function groupBy(arr, fnKey) {
-    const map = new Map();
-    arr.forEach(item => {
-      const k = fnKey(item);
-      map.set(k, (map.get(k) || 0) + 1);
-    });
-    return map; // Map(key -> count)
+  // Baca localStorage dengan default
+  function readLS(key, def) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return def;
+      return JSON.parse(raw);
+    } catch (_) { return def; }
   }
 
-  function ensureStyles() {
-    if (document.getElementById('recap-style')) return;
-    const css = `
-    .recap {max-width: 1200px; margin: 16px auto; padding: 0 16px;}
-    .recap-cards {display: grid; grid-template-columns: 1fr; gap: 12px; margin: 12px 0;}
-    @media(min-width: 780px){ .recap-cards { grid-template-columns: repeat(3, 1fr);} }
-    .recap-card {background:#fff;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08);padding:16px}
-    .recap-card h3{margin:0 0 6px;font-size:1rem}
-    .recap-card .num{font-size:1.8rem;font-weight:800}
-    .recap table{width:100%;border-collapse:collapse;margin-top:8px}
-    .recap th,.recap td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left}
-    .recap th{font-size:.9rem;color:#475569}
-    .recap .muted{color:#64748b;font-size:.9rem}
-    `;
-    const s = document.createElement('style'); s.id = 'recap-style'; s.textContent = css; document.head.appendChild(s);
+  // Naikkan counter pengunjung dashboard
+  function bumpVisitCounter() {
+    try {
+      const k = 'simbeda_dashboard_visits';
+      const n = Number(localStorage.getItem(k) || '0') + 1;
+      localStorage.setItem(k, String(n));
+      return n;
+    } catch (_) { return 1; }
   }
 
-  function formatInt(n){ return new Intl.NumberFormat('id-ID').format(n); }
+  // Coba ambil koordinat dari teks "lokasi" (mis. "1.67, 101.45" / "lat:1.67 lng:101.45")
+  function parseLatLngFromText(txt) {
+    if (!txt || typeof txt !== 'string') return null;
 
-  function renderRecap() {
-    ensureStyles();
-    let root = document.getElementById('recap-container');
-    if (!root) {
-      root = document.createElement('section');
-      root.id = 'recap-container';
-      root.className = 'recap';
-      const anchor = document.querySelector('main') || document.body;
-      anchor.appendChild(root);
+    // Pola 1: ada kata lat/lng eksplisit
+    const m1 = txt.match(/lat\s*[:=]?\s*(-?\d+(?:\.\d+)?)\s*[, ]+\s*lng\s*[:=]?\s*(-?\d+(?:\.\d+)?)/i);
+    if (m1) {
+      const lat = parseFloat(m1[1]), lng = parseFloat(m1[2]);
+      if (isFinite(lat) && isFinite(lng)) return [lat, lng];
     }
-    root.innerHTML = '';
 
-    // Cards summary
-    const cardWrap = document.createElement('div'); cardWrap.className = 'recap-cards';
-    const cardTotal = (title, num, sub) => {
-      const el = document.createElement('div'); el.className = 'recap-card';
-      el.innerHTML = `<h3>${title}</h3><div class="num">${formatInt(num)}</div>${sub?`<div class="muted">${sub}</div>`:''}`; return el;
-    };
-    cardWrap.appendChild(cardTotal('Total Semua Laporan', all.length, 'Laporan Cepat + Lapor Warga'));
-    cardWrap.appendChild(cardTotal('Laporan Cepat', cepat.length, 'Internal petugas'));
-    cardWrap.appendChild(cardTotal('Lapor Warga', warga.length, 'Dari masyarakat'));
-    root.appendChild(cardWrap);
-
-    // Table per kecamatan
-    const kecMap = groupBy(all, x => (x.kecamatan || '—'));
-    const kelMap = groupBy(all, x => (x.kelurahan || '—'));
-
-    const table = document.createElement('table');
-    table.innerHTML = '<thead><tr><th>Wilayah</th><th>Jumlah</th></tr></thead>';
-    const tb = document.createElement('tbody');
-    Array.from(kecMap.entries()).sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${k}</td><td>${formatInt(v)}</td>`; tb.appendChild(tr);
-    });
-    table.appendChild(tb);
-
-    const title1 = document.createElement('h3'); title1.textContent = 'Rekap per Kecamatan';
-    root.appendChild(title1);
-    root.appendChild(table);
-
-    // Table per kelurahan (top 20)
-    const table2 = document.createElement('table');
-    table2.innerHTML = '<thead><tr><th>Kelurahan/Desa</th><th>Jumlah</th></tr></thead>';
-    const tb2 = document.createElement('tbody');
-    Array.from(kelMap.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).forEach(([k,v])=>{
-      const tr = document.createElement('tr'); tr.innerHTML = `<td>${k}</td><td>${formatInt(v)}</td>`; tb2.appendChild(tr);
-    });
-    table2.appendChild(tb2);
-
-    const title2 = document.createElement('h3'); title2.textContent = 'Top 20 Kelurahan/Desa';
-    root.appendChild(title2);
-    root.appendChild(table2);
+    // Pola 2: dua angka float dipisah spasi/koma
+    const nums = txt.match(/-?\d+(?:\.\d+)?/g);
+    if (nums && nums.length >= 2) {
+      const lat = parseFloat(nums[0]), lng = parseFloat(nums[1]);
+      if (isFinite(lat) && isFinite(lng)) return [lat, lng];
+    }
+    return null;
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderRecap);
-  } else {
-    renderRecap();
+  // Kumpulkan laporan dari dua sumber localStorage
+  function collectReports() {
+    const cepat = readLS('laporan_cepat', []);   // [{waktu,kecamatan,kelurahan,lokasi,jenis,deskripsi}]
+    const warga = readLS('lapor_warga', []);     // [{waktu,nama,kontak,kecamatan,kelurahan,lokasi,kejadian,keterangan}]
+
+    const norm = [];
+
+    for (const r of cepat) {
+      const ll = parseLatLngFromText(r.lokasi);
+      norm.push({
+        source: 'laporan_cepat',
+        waktu: r.waktu || '',
+        kecamatan: r.kecamatan || '',
+        kelurahan: r.kelurahan || '',
+        lokasi: r.lokasi || '',
+        jenis: r.jenis || '',
+        deskripsi: r.deskripsi || '',
+        latlng: ll
+      });
+    }
+
+    for (const r of warga) {
+      const ll = parseLatLngFromText(r.lokasi);
+      norm.push({
+        source: 'lapor_warga',
+        waktu: r.waktu || '',
+        kecamatan: r.kecamatan || '',
+        kelurahan: r.kelurahan || '',
+        lokasi: r.lokasi || '',
+        jenis: r.kejadian || '',
+        deskripsi: r.keterangan || '',
+        latlng: ll
+      });
+    }
+
+    return norm;
   }
+
+  // Render angka ringkasan
+  function renderStats(reports, visits) {
+    const total = reports.length;
+    const kecSet = new Set();
+    for (const r of reports) {
+      if (r.kecamatan && String(r.kecamatan).trim()) {
+        kecSet.add(String(r.kecamatan).trim());
+      }
+    }
+    $('#totalLaporan') && ($('#totalLaporan').textContent = String(total));
+    $('#asalLaporan') && ($('#asalLaporan').textContent = String(kecSet.size));
+    $('#pengunjung') && ($('#pengunjung').textContent = String(visits));
+  }
+
+  // Inisialisasi peta Leaflet + marker
+  function initMapAndMarkers(reports) {
+    if (typeof L === 'undefined') {
+      console.error('Leaflet L tidak tersedia. Pastikan <script leaflet> sudah dimuat.');
+      return;
+    }
+    const host = document.getElementById(MAP_ELEMENT_ID);
+    if (!host) return;
+
+    const map = L.map(host, { scrollWheelZoom: true });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+    }).addTo(map);
+
+    const bounds = [];
+    for (const r of reports) {
+      if (!r.latlng) continue;
+      const [lat, lng] = r.latlng;
+      const marker = L.marker([lat, lng]).addTo(map);
+      const info = `
+        <b>${r.jenis || '(tidak ada jenis)'}</b><br/>
+        <small>${r.kelurahan ? r.kelurahan + ', ' : ''}${r.kecamatan || ''}</small><br/>
+        <small>${r.waktu || ''}</small><br/>
+        <div style="margin-top:6px">${r.lokasi || ''}</div>
+      `;
+      marker.bindPopup(info);
+      bounds.push([lat, lng]);
+    }
+
+    if (bounds.length) {
+      map.fitBounds(bounds, { padding: [24, 24] });
+    } else {
+      map.setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+    }
+  }
+
+  // Render judul/area dari sesi (opsional)
+  function renderHeader(sess) {
+    const el = document.querySelector('[data-dashboard-area]');
+    if (el) el.textContent = sess?.area || '-';
+  }
+
+  function boot() {
+    const sess = getSession();
+    renderHeader(sess);
+
+    const reports = collectReports();
+    const visits = bumpVisitCounter();
+
+    renderStats(reports, visits);
+    initMapAndMarkers(reports);
+  }
+
+  document.addEventListener('DOMContentLoaded', boot);
 })();

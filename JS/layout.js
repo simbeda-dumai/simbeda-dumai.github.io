@@ -1,65 +1,75 @@
-// Memuat header & footer secara dinamis + menjamin CSS transisi & Roboto selalu terpasang
+// SIMBEDA - Layout injector (ABSOLUTE PATHS)
 (function () {
-  // Hitung base path agar aman di root atau di project pages GitHub
-  function computeBase() {
-    const parts = window.location.pathname.split('/').filter(Boolean);
-    const first = parts[0];
-    const roots = new Set(['modules','components','assets','js']);
-    return (!first || roots.has(first)) ? '/' : `/${first}/`;
+  'use strict';
+
+  // ABSOLUTE paths
+  const CSS_LIST = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
+  const HEADER_HTML = '/HTML/header.html';
+  const FOOTER_HTML = '/HTML/footer.html';
+
+  function injectCssOnce(href) {
+    if ([...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href.includes(href))) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
   }
 
-  const BASE = computeBase();
-  window.SIMBEDA_BASE = BASE; // bisa dipakai modul lain
-
-  function insertOnce(tagName, attrs) {
-    const href = attrs.href || attrs.src || '';
-    if (!href) return null;
-    const exists = Array.from(document.querySelectorAll(tagName)).some(el => (el.href === href || el.src === href));
-    if (exists) return null;
-    const el = document.createElement(tagName);
-    Object.entries(attrs).forEach(([k,v]) => { if (v != null) el.setAttribute(k, v); });
-    (tagName === 'script' ? document.body : document.head).appendChild(el);
-    return el;
+  async function fetchHtml(url) {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Gagal load: ' + url);
+    return await res.text();
   }
 
-  // Pastikan CSS transisi & Roboto terpasang di semua halaman yang memakai layout
-  insertOnce('link', { rel: 'stylesheet', href: BASE + 'assets/css/transition.css', 'data-auto': '1' });
-  insertOnce('link', { rel: 'stylesheet', href: BASE + '/CSS/Roboto.css', 'data-auto': '1' });
+  async function loadShell() {
+    // CSS
+    CSS_LIST.forEach(injectCssOnce);
 
-  const header = document.getElementById('header');
-  const footer = document.getElementById('footer');
+    // HEADER
+    const headerHost = document.getElementById('header') || (() => {
+      const d = document.createElement('div');
+      d.id = 'header'; document.body.prepend(d); return d;
+    })();
+    // FOOTER
+    const footerHost = document.getElementById('footer') || (() => {
+      const d = document.createElement('div');
+      d.id = 'footer'; document.body.appendChild(d); return d;
+    })();
 
-  if (header) {
-    fetch(BASE + 'components/header/header.html')
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(html => {
-        header.innerHTML = html;
-        insertOnce('link', { rel: 'stylesheet', href: BASE + 'components/header/header.css' });
-      })
-      .catch(() => console.warn('[layout] Gagal memuat header'));
-  }
+    // Inject HTML
+    try { headerHost.innerHTML = await fetchHtml(HEADER_HTML); } catch (e) { console.error(e); }
+    try { footerHost.innerHTML = await fetchHtml(FOOTER_HTML); } catch (e) { console.error(e); }
 
-  if (footer) {
-    fetch(BASE + 'components/footer/footer.html')
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(html => {
-        footer.innerHTML = html;
-        insertOnce('link', { rel: 'stylesheet', href: BASE + 'components/footer/footer.css' });
-        if (!window.__quotesLoaded) {
-          const s = insertOnce('script', { src: BASE + 'components/footer/quotes.js', defer: 'defer' });
-          if (s) s.onload = () => { window.__quotesLoaded = true; };
+    // Set nav active (berdasarkan path)
+    try {
+      const path = location.pathname.replace(/\/+/g, '/');
+      document.querySelectorAll('[data-nav]').forEach(a => {
+        const target = a.getAttribute('data-nav');
+        if (path.endsWith(target)) a.classList.add('active');
+      });
+    } catch (_) {}
+
+    // Render breadcrumb user (jika ada)
+    try {
+      const raw = localStorage.getItem('simbeda_auth');
+      if (raw) {
+        const s = JSON.parse(raw);
+        const slot = document.querySelector('[data-auth-slot]') || document.querySelector('#header');
+        if (slot) {
+          const el = document.createElement('div');
+          el.className = 'auth-crumb';
+          el.innerHTML = `
+            <span>${s.username || '-'}</span>
+            <span class="sep">•</span>
+            <span>${s.role || '-'}</span>
+            <span class="sep">•</span>
+            <span>${s.area || '-'}</span>
+          `;
+          slot.appendChild(el);
         }
-      })
-      .catch(() => console.warn('[layout] Gagal memuat footer'));
+      }
+    } catch (_) {}
   }
 
-  // Efek transisi halus
-  document.addEventListener('readystatechange', () => {
-    if (document.readyState === 'complete') {
-      document.body.classList.add('fade-in');
-    }
-  });
-  window.addEventListener('beforeunload', () => {
-    document.body.classList.add('fade-out');
-  });
+  document.addEventListener('DOMContentLoaded', loadShell);
 })();

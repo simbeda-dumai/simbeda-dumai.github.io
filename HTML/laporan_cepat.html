@@ -1,114 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SIMBEDA — Laporan Cepat</title>
-  <link rel="icon" href="/assets/img/logo_simbeda.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Laporan Cepat | SIMBEDA Kota Dumai</title>
 
-  <!-- CSS dasar (layout.js juga akan meng-inject kalau belum ada) -->
-  <link rel="stylesheet" href="//CSS/Roboto.css" />
-  <link rel="stylesheet" href="/assets/css/transition.css" />
-  <link rel="stylesheet" href="/components/header/header.css" />
-  <link rel="stylesheet" href="/components/footer/footer.css" />
-  <link rel="stylesheet" href="laporan_cepat.css" />
+  <!-- Guard hanya untuk modul laporan_cepat -->
+  <meta name="simbeda:module" content="laporan_cepat">
+  <script src="/JS/auth-guard.js" defer></script>
 
-  <!-- Script data wilayah + layout + modul -->
-  <script src="/js/config.js" defer></script>
+  <!-- Style modul (ABSOLUTE PATH) -->
+  <link rel="stylesheet" href="/CSS/laporan_cepat.css" />
+
+  <!-- Wilayah (opsional untuk isi dropdown) -->
+  <script src="/JS/config.js" defer></script>
+
+  <!-- Layout injector: header/footer + css umum -->
   <script src="/JS/layout.js" defer></script>
-  <script src="laporan_cepat.js" defer></script>
+
+  <!-- Script modul -->
+  <script src="/JS/laporan_cepat.js" defer></script>
 </head>
-<body class="page page-laporan-cepat fade-in">
+<body>
   <div id="header"></div>
 
-  <main class="lc-container">
-    <section class="lc-card">
-      <h1 class="lc-title">Laporan Cepat</h1>
-      <p class="lc-subtitle">Isi data ringkas kejadian untuk notifikasi cepat internal BPBD. Lokasi dapat diambil otomatis dari perangkat.</p>
+  <main class="page-wrap">
+    <section class="page-card">
+      <h1>Laporan Cepat</h1>
+      <p class="subtitle">Catat kejadian singkat untuk reaksi cepat.</p>
 
-      <form id="form-laporan-cepat" class="lc-form" autocomplete="off">
-        <div class="lc-row">
-          <label for="jenis">Jenis Kejadian</label>
-          <select id="jenis" name="jenis" required>
-            <option value="">— pilih —</option>
-            <option value="Kebakaran">Kebakaran</option>
-            <option value="Banjir">Banjir</option>
-            <option value="Tanah Longsor">Tanah Longsor</option>
-            <option value="Angin Kencang">Angin Kencang</option>
-            <option value="Lainnya">Lainnya</option>
+      <form class="form-grid" autocomplete="off">
+        <div class="field">
+          <label for="waktu">Waktu</label>
+          <input type="datetime-local" id="waktu" />
+        </div>
+
+        <div class="field">
+          <label for="kecamatan">Kecamatan</label>
+          <select id="kecamatan">
+            <option value="">— Pilih kecamatan —</option>
           </select>
         </div>
 
-        <div class="lc-grid-2">
-          <div class="lc-row">
-            <label for="kecamatan">Kecamatan</label>
-            <select id="kecamatan" name="kecamatan" required>
-              <option value="">— pilih kecamatan —</option>
-            </select>
-            <input id="kecamatan_text" name="kecamatan_text" class="lc-hidden" type="text" placeholder="Nama kecamatan" />
-          </div>
-          <div class="lc-row">
-            <label for="kelurahan">Kelurahan/Desa</label>
-            <select id="kelurahan" name="kelurahan" required>
-              <option value="">— pilih kelurahan —</option>
-            </select>
-            <input id="kelurahan_text" name="kelurahan_text" class="lc-hidden" type="text" placeholder="Nama kelurahan/desa" />
-          </div>
+        <div class="field">
+          <label for="kelurahan">Kelurahan</label>
+          <select id="kelurahan">
+            <option value="">— Pilih kelurahan —</option>
+          </select>
         </div>
 
-        <div class="lc-grid-2">
-          <div class="lc-row">
-            <label for="latitude">Latitude</label>
-            <input id="latitude" name="latitude" type="text" inputmode="decimal" placeholder="-" required />
-            <input id="lat" type="hidden" />
-            <input id="lokasi_lat" type="hidden" />
-          </div>
-          <div class="lc-row">
-            <label for="longitude">Longitude</label>
-            <input id="longitude" name="longitude" type="text" inputmode="decimal" placeholder="-" required />
-            <input id="lng" type="hidden" />
-            <input id="lokasi_lng" type="hidden" />
-          </div>
+        <div class="field col-2">
+          <label for="lokasi">Lokasi (boleh isi koordinat, mis. 1.668, 101.45)</label>
+          <input type="text" id="lokasi" placeholder="Contoh: Jl. Merdeka No.1 / lat:1.67 lng:101.45" />
         </div>
 
-        <div class="lc-row">
-          <label for="alamat">Detail Lokasi</label>
-          <input id="alamat" name="alamat" type="text" placeholder="Nama jalan, RT/RW, patokan" />
+        <div class="field">
+          <label for="jenis">Jenis Kejadian</label>
+          <input type="text" id="jenis" placeholder="Banjir / Kebakaran / Angin Kencang..." />
         </div>
 
-        <div class="lc-actions">
-          <button id="btn-lokasi" type="button" class="btn secondary">Gunakan Lokasi Saya</button>
-          <div class="lc-spacer"></div>
-          <button type="reset" class="btn ghost">Bersihkan</button>
-          <button id="btn-kirim" type="submit" class="btn primary">Kirim</button>
+        <div class="field col-2">
+          <label for="deskripsi">Deskripsi Singkat</label>
+          <textarea id="deskripsi" rows="4" placeholder="Ringkas, faktual, dan jelas..."></textarea>
+        </div>
+
+        <div class="actions col-2">
+          <button id="btn-simpan" class="btn-primary" type="button">Simpan</button>
+          <p id="msg" class="msg" role="alert" aria-live="polite"></p>
         </div>
       </form>
-
-      <p class="lc-hint">Jika daftar belum muncul, muat ulang halaman. Kamu juga bisa pilih “Lainnya” untuk mengetik manual.</p>
     </section>
   </main>
 
   <div id="footer"></div>
-
-  <!-- Fallback geolokasi jika modul belum binding tombol -->
-  <script>
-  window.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('btn-lokasi');
-    if (btn && !btn.dataset.bound) {
-      btn.dataset.bound = '1';
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (!navigator.geolocation) { alert('Geolocation tidak didukung browser.'); return; }
-        navigator.geolocation.getCurrentPosition(function (pos) {
-          const lat = pos.coords.latitude; const lng = pos.coords.longitude;
-          ['latitude','lat','lokasi_lat'].forEach(id => { const el = document.getElementById(id); if (el) el.value = lat; });
-          ['longitude','lng','lokasi_lng'].forEach(id => { const el = document.getElementById(id); if (el) el.value = lng; });
-        }, function (err) {
-          alert('Gagal mengambil lokasi: ' + err.message);
-        }, { enableHighAccuracy: true, timeout: 10000 });
-      });
-    }
-  });
-  </script>
 </body>
 </html>
