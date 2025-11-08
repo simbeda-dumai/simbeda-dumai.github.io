@@ -1,43 +1,77 @@
 :root{
-  /* Radial gradient: putih → emas → oranye → merah → biru → biru tua */
-  --g0:#ffffff; --g1:#d4af37; --g2:#f59e0b; --g3:#ef4444; --g4:#3b82f6; --g5:#0b1a3c;
-  --hdr-grad: radial-gradient(circle at 50% -30%, var(--g0) 0%, var(--g1) 24%, var(--g2) 42%, var(--g3) 60%, var(--g4) 78%, var(--g5) 100%);
-  --txt:#e9eefb; --muted:#c9d1e6; --ring: 0 0 0 3px rgba(255,255,255,.25);
+  /* Palet ala instansi/BNPB */
+  --bnpb-orange:#F58220;     /* aksen */
+  --gov-navy:#0B1A3C;        /* latar utama */
+  --gov-blue:#143059;        /* transisi */
+  --gov-royal:#1E3A8A;       /* royal blue */
+  --txt:#F5F7FF;
+  --muted:#C9D1E6;
+  --ring:0 0 0 3px rgba(245,247,255,.25);
 }
 
-.sb-header{ position:sticky; top:0; z-index:50; color:var(--txt); background: var(--hdr-grad); }
+/* Bar header dengan gradien lembut + garis aksen oranye */
+.sb-header{
+  position:sticky; top:0; z-index:50; color:var(--txt);
+  background:
+    linear-gradient(90deg, var(--gov-navy) 0%, var(--gov-blue) 40%, var(--gov-royal) 75%, var(--gov-navy) 100%);
+  box-shadow:
+    inset 0 -3px 0 var(--bnpb-orange); /* garis aksen bawah */
+}
+
+/* sedikit saturasi saat sticky/scroll */
 .sb-header.is-sticky{ filter:saturate(110%) }
 
-.sb-header__inner{ max-width:1200px; margin:0 auto; padding:10px 14px; display:flex; align-items:center; gap:12px; }
+.sb-header__inner{
+  max-width:1200px; margin:0 auto;
+  padding:10px 14px;
+  display:flex; align-items:center; gap:12px;
+}
 
 .sb-brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--txt); }
 .sb-brand .logo{ height:28px; width:auto; display:block; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
 .sb-brand .logo.secondary{ opacity:.9; height:24px }
 
 .sb-nav{ margin-left:auto; display:flex; align-items:center; gap:14px; }
-.sb-link{ color:var(--txt); text-decoration:none; font-weight:600; padding:8px 10px; border-radius:10px; line-height:1; transition: background .15s ease, transform .06s ease, box-shadow .15s ease; }
-.sb-link:hover{ background: rgba(255,255,255,.12) }
+.sb-link{
+  color:var(--txt); text-decoration:none; font-weight:600;
+  padding:8px 10px; border-radius:10px; line-height:1;
+  transition: background .15s ease, transform .06s ease, box-shadow .15s ease;
+}
+.sb-link:hover{ background: rgba(255,255,255,.10) }
 .sb-link:active{ transform: translateY(1px) }
-.sb-link.active{ background: rgba(255,255,255,.18); box-shadow: var(--ring) }
-.sb-link-login{ border:1px solid rgba(255,255,255,.35); padding:8px 12px; border-radius:10px; background: rgba(0,0,0,.15) }
 
+/* aktif → pill biru dengan outline oranye tipis */
+.sb-link.active{
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+  outline:1px solid rgba(245,130,32,.55);
+  box-shadow:0 0 0 2px rgba(245,130,32,.22) inset;
+}
+
+.sb-link-login{
+  border:1px solid rgba(255,255,255,.25);
+  padding:8px 12px; border-radius:9999px;
+  background: rgba(0,0,0,.18);
+}
+
+/* slot breadcrumb lama (opsional) */
 .sb-auth{ margin-left:10px; display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px }
 .sb-auth .sep{ opacity:.7; margin:0 4px }
 
 /* User pill + logout */
 .sb-userpill{
   display:flex; align-items:center; gap:8px;
-  border:1px solid rgba(255,255,255,.35);
+  border:1px solid rgba(245,130,32,.55);
   background: rgba(0,0,0,.18);
   border-radius:9999px; padding:6px 8px; line-height:1;
+  box-shadow:0 0 0 2px rgba(245,130,32,.18) inset;
 }
 .sb-userpill .sb-user{ font-weight:700; color:#fff; padding:0 2px; max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .sb-logout{
   appearance:none; border:0; cursor:pointer;
-  background: rgba(0,0,0,.28); color:#fff; font-weight:700;
+  background: var(--bnpb-orange); color:#0b1020; font-weight:800;
   padding:6px 10px; border-radius:9999px;
 }
-.sb-logout:hover{ background: rgba(0,0,0,.38) }
+.sb-logout:hover{ filter:brightness(0.95) }
 .sb-logout:focus{ outline:none; box-shadow: var(--ring) }
 
 /* Mobile */
@@ -49,10 +83,11 @@
   .sb-hamburger{ display:flex }
   .sb-nav{
     position:fixed; left:0; right:0; top:56px;
-    background: var(--hdr-grad);
+    background: linear-gradient(180deg, var(--gov-navy) 0%, var(--gov-blue) 60%, var(--gov-royal) 100%);
     display:grid; gap:0; padding:8px 10px;
     transform: translateY(-12px); opacity:0; pointer-events:none;
     transition: transform .18s ease, opacity .18s ease;
+    box-shadow: inset 0 -3px 0 var(--bnpb-orange);
   }
   .sb-link{ padding:12px 10px; border-radius:8px }
   .sb-auth{ display:none }

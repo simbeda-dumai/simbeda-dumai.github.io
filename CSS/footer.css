@@ -1,61 +1,27 @@
 :root{
-  /* Radial gradient: putih → emas → oranye → merah → biru → biru tua (tanpa kuning & hijau) */
-  --g0:#ffffff;   /* putih */
-  --g1:#d4af37;   /* emas */
-  --g2:#f59e0b;   /* oranye */
-  --g3:#ef4444;   /* merah */
-  --g4:#3b82f6;   /* biru */
-  --g5:#0b1a3c;   /* biru tua */
-
-  /* pusat radial sedikit di bawah footer agar gradasi menyapu ke atas */
-  --ftr-grad: radial-gradient(circle at 50% 130%,
-    var(--g0) 0%,
-    var(--g1) 24%,
-    var(--g2) 42%,
-    var(--g3) 60%,
-    var(--g4) 78%,
-    var(--g5) 100%
-  );
-
-  --txt:#f5f7ff; --muted:#e6ecff;
+  --bnpb-orange:#F58220;
+  --gov-navy:#0B1A3C;
+  --gov-blue:#143059;
+  --gov-royal:#1E3A8A;
+  --txt:#F5F7FF; --muted:#E6ECFF;
 }
 
-/* Font NotoSans lokal (untuk quotes) */
-@font-face{
-  font-family: "NotoSansLocal";
-  src: url("/fonts/NotoSans-VariableFont_wdth,wght.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face{
-  font-family: "NotoSansLocal";
-  src: url("/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: italic;
-  font-display: swap;
-}
-
+/* Gradien vertikal tenang + garis aksen oranye di atas */
 .sb-footer{
   color:var(--txt);
-  background: var(--ftr-grad);
+  background: linear-gradient(180deg, var(--gov-navy) 0%, var(--gov-blue) 55%, var(--gov-royal) 100%);
+  box-shadow: inset 0 3px 0 var(--bnpb-orange);
   margin-top:24px;
 }
 
 .sb-footer__inner{
   max-width:1200px; margin:0 auto;
   padding:16px 14px 22px;
-  display:grid;
-  grid-template-rows:auto auto;
-  align-items:center; justify-items:center;
-  row-gap:10px;
-  text-align:center;
+  display:grid; grid-template-rows:auto auto;
+  align-items:center; justify-items:center; row-gap:10px; text-align:center;
 }
 
-.footer-line{
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  flex-wrap:wrap;
-}
+.footer-line{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
 .footer-brand{ font-size:16px; font-weight:700; letter-spacing:.2px }
 .footer-sep{ opacity:.85 }
 .footer-clock{
@@ -65,12 +31,20 @@
 }
 
 /* Quotes: NotoSans Italic Bold */
+@font-face{
+  font-family: "NotoSansLocal";
+  src: url("/fonts/NotoSans-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face{
+  font-family: "NotoSansLocal";
+  src: url("/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
 .footer-quote{
   margin:0;
   font-family:"NotoSansLocal","Noto Sans",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-  font-weight:700;   /* Bold */
-  font-style:italic; /* Italic */
-  color:#ffffff; opacity:.95;
+  font-weight:700; font-style:italic; color:#ffffff; opacity:.95;
 }
 
 @media (max-width:720px){
