@@ -1,12 +1,19 @@
-<footer class="simbeda-footer">
-  <div class="footer-content">
-    <div class="footer-left">
-      <p><strong>PEMERINTAH KOTA DUMAI</strong></p>
-      <p>BADAN PENANGGULANGAN BENCANA DAERAH (BPBD) KOTA DUMAI</p>
+<footer class="app-footer">
+  <div class="footer__wrap">
+    <div class="footer__brand">
+      <img src="/assets/img/bw_dumai.png" alt="Kota Dumai" />
+      <div>
+        <strong>SIMBEDA Kota Dumai</strong><br/>
+        <small>BPBD Kota Dumai • Sistem Informasi Manajemen Bencana Daerah</small>
+      </div>
     </div>
-    <div class="footer-right">
-      <p id="quote">Memuat kutipan inspiratif...</p>
-      <p id="timeNow">00:00:00</p>
+
+    <div class="footer__meta">
+      <div id="quote-rotator">“…”</div>
+      <div class="copy">© <span id="year"></span> Pemerintah Kota Dumai</div>
     </div>
   </div>
 </footer>
+<script>
+  (function(){ var y=new Date().getFullYear(); var el=document.getElementById('year'); if(el) el.textContent=y; })();
+</script>
