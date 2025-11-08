@@ -1,3 +1,10 @@
+// ===== Proteksi Login =====
+const user = localStorage.getItem("user_login");
+if (!user) {
+  alert("⚠️ Anda belum login. Silakan login terlebih dahulu.");
+  window.location.href = "/modules/login/login.html";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const user = localStorage.getItem("user_login");
   const name = localStorage.getItem("user_name");
