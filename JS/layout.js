@@ -1,12 +1,13 @@
-// SIMBEDA - Layout injector (ABSOLUTE PATHS + panggil quotes setelah footer siap)
+// SIMBEDA - Layout injector (ABS PATHS + footer quotes + user pill + beranda hide login)
 (function () {
   'use strict';
 
-  const CSS_LIST   = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
+  const CSS_LIST    = ['/CSS/Roboto.css', '/CSS/transition.css', '/CSS/header.css', '/CSS/footer.css'];
   const HEADER_HTML = '/HTML/header.html';
   const FOOTER_HTML = '/HTML/footer.html';
   const QUOTES_JS   = '/JS/quotes.js';
 
+  // --- helpers ---
   function injectCssOnce(href) {
     if ([...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href.includes(href))) return;
     const link = document.createElement('link');
@@ -20,6 +21,7 @@
     if (exists) { try { onload && onload(); } catch(_){} return; }
     const sc = document.createElement('script');
     sc.src = src;
+    sc.defer = true;
     sc.onload = () => { try { onload && onload(); } catch(_){} };
     document.body.appendChild(sc);
   }
@@ -28,6 +30,68 @@
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error('Gagal load: ' + url);
     return await res.text();
+  }
+
+  function getSession() {
+    try { return JSON.parse(localStorage.getItem('simbeda_auth') || 'null'); } catch(_) { return null; }
+  }
+
+  function isHome() {
+    const p = location.pathname.replace(/\/+$/,'');
+    return p === '' || p === '/' || p.endsWith('/index.html');
+  }
+
+  // Tambahkan/ubah area login di navbar
+  function decorateNavbarWithAuth(sess) {
+    const nav = document.querySelector('.sb-nav');
+    if (!nav) return;
+
+    const loginLink = nav.querySelector('.sb-link-login');
+
+    // 1) Beranda: jangan tampilkan "Masuk"
+    if (isHome() && loginLink) {
+      loginLink.remove();
+    }
+
+    // 2) Jika punya sesi → ganti "Masuk" jadi pill user + Logout
+    if (sess) {
+      // Jika link Masuk masih ada, replace; kalau tidak, append di ujung kanan
+      const pill = document.createElement('div');
+      pill.className = 'sb-userpill';
+      pill.innerHTML = `
+        <span class="sb-user" title="${sess.area || ''}">${sess.username || '-'}</span>
+        <button id="sb-logout" class="sb-logout" type="button" title="Keluar dari sistem">Logout</button>
+      `;
+
+      if (loginLink) loginLink.replaceWith(pill);
+      else nav.appendChild(pill);
+
+      // Handler logout
+      const btn = pill.querySelector('#sb-logout');
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        try { localStorage.removeItem('simbeda_auth'); } catch(_) {}
+        window.location.assign('/HTML/login.html');
+      });
+    }
+  }
+
+  // Breadcrumb kecil (hanya jika tidak ada user pill)
+  function renderAuthCrumb(sess) {
+    if (!sess) return;
+    if (document.querySelector('.sb-userpill')) return; // jangan double
+    const slot = document.querySelector('[data-auth-slot]') || document.querySelector('#header');
+    if (!slot) return;
+    const el = document.createElement('div');
+    el.className = 'auth-crumb';
+    el.innerHTML = `
+      <span>${sess.username || '-'}</span>
+      <span class="sep">•</span>
+      <span>${sess.role || '-'}</span>
+      <span class="sep">•</span>
+      <span>${sess.area || '-'}</span>
+    `;
+    slot.appendChild(el);
   }
 
   async function loadShell() {
@@ -46,11 +110,8 @@
     try { headerHost.innerHTML = await fetchHtml(HEADER_HTML); } catch (e) { console.error(e); }
     try {
       footerHost.innerHTML = await fetchHtml(FOOTER_HTML);
-      // Pastikan quotes.js dimuat, lalu paksa boot ulang jika tersedia
       ensureScript(QUOTES_JS, () => {
-        if (typeof window.SIMBEDA_FOOTER_BOOT === 'function') {
-          window.SIMBEDA_FOOTER_BOOT();
-        }
+        if (typeof window.SIMBEDA_FOOTER_BOOT === 'function') window.SIMBEDA_FOOTER_BOOT();
       });
     } catch (e) { console.error(e); }
 
@@ -63,26 +124,10 @@
       });
     } catch (_) {}
 
-    // Breadcrumb user sederhana
-    try {
-      const raw = localStorage.getItem('simbeda_auth');
-      if (raw) {
-        const s = JSON.parse(raw);
-        const slot = document.querySelector('[data-auth-slot]') || document.querySelector('#header');
-        if (slot) {
-          const el = document.createElement('div');
-          el.className = 'auth-crumb';
-          el.innerHTML = `
-            <span>${s.username || '-'}</span>
-            <span class="sep">•</span>
-            <span>${s.role || '-'}</span>
-            <span class="sep">•</span>
-            <span>${s.area || '-'}</span>
-          `;
-          slot.appendChild(el);
-        }
-      }
-    } catch (_) {}
+    // Render auth (user pill + crumb fallback)
+    const sess = getSession();
+    decorateNavbarWithAuth(sess);
+    renderAuthCrumb(sess);
   }
 
   document.addEventListener('DOMContentLoaded', loadShell);
