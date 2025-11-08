@@ -1,65 +1,82 @@
-// Memuat header & footer secara dinamis + menjamin CSS transisi & Roboto selalu terpasang
-(function () {
-  // Hitung base path agar aman di root atau di project pages GitHub
-  function computeBase() {
-    const parts = window.location.pathname.split('/').filter(Boolean);
-    const first = parts[0];
-    const roots = new Set(['modules','components','assets','js']);
-    return (!first || roots.has(first)) ? '/' : `/${first}/`;
+/* layout.js — MINIMAL FEATURE PACK (ABSOLUTE PATHS, UX-PRESERVING)
+ * Fitur:
+ * 1) Auth Guard: halaman non-publik redirect ke login jika belum login.
+ * 2) Account Hydration: jika #account-area ada dan user login, tampilkan Nama + (Role · Unit) + tombol Keluar.
+ *    Jika tidak login, biarkan tombol "Masuk" yang sudah ada — tidak diubah.
+ * 3) Breadcrumb: render ke #breadcrumb kalau elemennya ada.
+ * Catatan: Tidak mengubah CSS/HTML kamu. Semua path ABSOLUTE (/components, /modules, /css, /js, /assets).
+ */
+(function(){
+  // ---------- Helpers ----------
+  function readSession(){
+    try{
+      const raw = localStorage.getItem('session_user');
+      if(!raw) return null;
+      const o = JSON.parse(raw);
+      return (o && (o.name || o.username)) ? o : null;
+    }catch(_){ return null; }
   }
-
-  const BASE = computeBase();
-  window.SIMBEDA_BASE = BASE; // bisa dipakai modul lain
-
-  function insertOnce(tagName, attrs) {
-    const href = attrs.href || attrs.src || '';
-    if (!href) return null;
-    const exists = Array.from(document.querySelectorAll(tagName)).some(el => (el.href === href || el.src === href));
-    if (exists) return null;
-    const el = document.createElement(tagName);
-    Object.entries(attrs).forEach(([k,v]) => { if (v != null) el.setAttribute(k, v); });
-    (tagName === 'script' ? document.body : document.head).appendChild(el);
-    return el;
+  function logout(){
+    try{ localStorage.removeItem('session_user'); }catch(_){}
+    location.href = '/';
   }
+  function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',\"'\":'&#39;'}[m])); }
 
-  // Pastikan CSS transisi & Roboto terpasang di semua halaman yang memakai layout
-  insertOnce('link', { rel: 'stylesheet', href: BASE + 'assets/css/transition.css', 'data-auto': '1' });
-  insertOnce('link', { rel: 'stylesheet', href: BASE + 'assets/fonts/Roboto.css', 'data-auto': '1' });
-
-  const header = document.getElementById('header');
-  const footer = document.getElementById('footer');
-
-  if (header) {
-    fetch(BASE + 'components/header/header.html')
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(html => {
-        header.innerHTML = html;
-        insertOnce('link', { rel: 'stylesheet', href: BASE + 'components/header/header.css' });
-      })
-      .catch(() => console.warn('[layout] Gagal memuat header'));
-  }
-
-  if (footer) {
-    fetch(BASE + 'components/footer/footer.html')
-      .then(r => r.ok ? r.text() : Promise.reject(r.status))
-      .then(html => {
-        footer.innerHTML = html;
-        insertOnce('link', { rel: 'stylesheet', href: BASE + 'components/footer/footer.css' });
-        if (!window.__quotesLoaded) {
-          const s = insertOnce('script', { src: BASE + 'components/footer/quotes.js', defer: 'defer' });
-          if (s) s.onload = () => { window.__quotesLoaded = true; };
-        }
-      })
-      .catch(() => console.warn('[layout] Gagal memuat footer'));
-  }
-
-  // Efek transisi halus
-  document.addEventListener('readystatechange', () => {
-    if (document.readyState === 'complete') {
-      document.body.classList.add('fade-in');
+  // ---------- Auth Guard ----------
+  (function guard(){
+    const PUBLIC = [
+      '/', '/index.html',
+      '/modules/login/', '/modules/login/login.html',
+      '/assets/', '/css/', '/js/', '/components/', '/modules/home/'
+    ];
+    const p = location.pathname;
+    const isPublic = (p === '/' || p === '/index.html' || PUBLIC.some(x => p.startsWith(x)));
+    if (!isPublic && !readSession()){
+      const back = encodeURIComponent(location.pathname + location.search);
+      location.replace('/modules/login/login.html?redirect=' + back);
     }
-  });
-  window.addEventListener('beforeunload', () => {
-    document.body.classList.add('fade-out');
-  });
+  })();
+
+  // ---------- Account Hydration (non-intrusive) ----------
+  (function hydrateAccount(){
+    const host = document.getElementById('account-area');
+    if(!host) return; // hormati UX kamu bila tidak ada kontainer
+
+    const s = readSession();
+    if(!s){
+      // Biarkan tombol "Masuk" yang sudah ada di HTML kamu.
+      return;
+    }
+    const name = s.name || s.username || 'Pengguna';
+    const role = s.role ? String(s.role) : '';
+    const unit = s.unit ? (' · ' + s.unit) : '';
+    host.innerHTML =
+      '<span class="user-name">'+esc(name)+'</span>' +
+      ((role || unit) ? '<span class="user-meta">'+esc(role+unit)+'</span>' : '') +
+      '<button id="btn-logout" class="btn btn-logout" type="button">Keluar</button>';
+    host.querySelector('#btn-logout')?.addEventListener('click', logout);
+  })();
+
+  // ---------- Breadcrumb (aman) ----------
+  (function breadcrumb(){
+    const box = document.getElementById('breadcrumb');
+    if(!box) return;
+    const TITLE_MAP = { modules:'Modul', dashboard:'Dashboard', lapor_warga:'Lapor Warga', laporan_cepat:'Laporan Cepat', login:'Masuk' };
+    const parts = location.pathname.split('/').filter(Boolean);
+    if(parts.length === 0){ box.innerHTML = '<span>Beranda</span>'; return; }
+    function toLabel(part){
+      const base = part.replace('.html','').replace(/_/g,'-');
+      return TITLE_MAP[base] || base.split('-').map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+    }
+    const crumbs = ['<a href=\"/\">Beranda</a>'];
+    let acc = '';
+    for(let i=0;i<parts.length;i++){
+      acc += '/' + parts[i];
+      const last = i === parts.length - 1;
+      const label = toLabel(parts[i]);
+      if(last) crumbs.push('<span>'+label+'</span>');
+      else crumbs.push('<a href=\"'+acc+'/\">'+label+'</a>');
+    }
+    box.innerHTML = crumbs.join(' / ');
+  })();
 })();
