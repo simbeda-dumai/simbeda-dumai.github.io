@@ -24,7 +24,7 @@
 
   // Pastikan CSS transisi & Roboto terpasang di semua halaman yang memakai layout
   insertOnce('link', { rel: 'stylesheet', href: BASE + 'assets/css/transition.css', 'data-auto': '1' });
-  insertOnce('link', { rel: 'stylesheet', href: BASE + 'assets/fonts/Roboto.css', 'data-auto': '1' });
+  insertOnce('link', { rel: 'stylesheet', href: BASE + '/CSS/Roboto.css', 'data-auto': '1' });
 
   const header = document.getElementById('header');
   const footer = document.getElementById('footer');

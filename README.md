@@ -131,7 +131,7 @@ http://localhost:8000/
 
 | File / Folder | Fungsi |
 |----------------|--------|
-| `/js/layout/layout.js` | Menyuntikkan header dan footer ke seluruh halaman. |
+| `"/JS/layout.js"` | Menyuntikkan header dan footer ke seluruh halaman. |
 | `/components/footer/quotes.js` | Mengatur rotasi kutipan inspiratif tiap 5 menit. |
 | `/modules/print/print.js` | Mengelola format cetak & ekspor laporan ke PDF. |
 | `/js/config.js` | Menyimpan pengaturan global sistem (versi, URL API, dll). |
