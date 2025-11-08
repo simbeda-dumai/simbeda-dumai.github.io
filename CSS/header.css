@@ -1,15 +1,11 @@
 :root{
-  /* Palet gradasi: hitam → biru tua → biru muda → toska → kuning muda → kuning tua → oranye → coklat */
-  --g0:#000000;    /* hitam */
-  --g1:#0b1a3c;    /* biru tua */
-  --g2:#3a7bd5;    /* biru muda */
-  --g3:#00c8b3;    /* toska */
-  --g4:#fff4b1;    /* kuning muda */
-  --g5:#f2c400;    /* kuning tua */
-  --g6:#ff8a00;    /* oranye */
-  --g7:#6b4f2a;    /* coklat */
+  /* Gradien baru: hijau muda → kuning → oranye → biru tua */
+  --g0:#34d399;   /* hijau muda */
+  --g1:#facc15;   /* kuning */
+  --g2:#f59e0b;   /* oranye */
+  --g3:#0b1a3c;   /* biru tua */
 
-  --hdr-grad: linear-gradient(90deg, var(--g0) 0%, var(--g1) 12%, var(--g2) 24%, var(--g3) 38%, var(--g4) 54%, var(--g5) 68%, var(--g6) 82%, var(--g7) 100%);
+  --hdr-grad: linear-gradient(90deg, var(--g0) 0%, var(--g1) 33%, var(--g2) 66%, var(--g3) 100%);
   --txt:#e9eefb;
   --muted:#c9d1e6;
   --ring: 0 0 0 3px rgba(255,255,255,.25);
@@ -19,9 +15,8 @@
   position:sticky; top:0; z-index:50;
   color:var(--txt);
   background: var(--hdr-grad);
-  border-bottom: 0;
 }
-.sb-header.is-sticky{ filter: saturate(110%) }
+.sb-header.is-sticky{ filter:saturate(110%) }
 
 .sb-header__inner{
   max-width:1200px; margin:0 auto;
@@ -38,42 +33,23 @@
 }
 .sb-brand .logo.secondary{ opacity:.9; height:24px }
 
-.sb-nav{
-  margin-left:auto;
-  display:flex; align-items:center; gap:14px;
-}
+.sb-nav{ margin-left:auto; display:flex; align-items:center; gap:14px; }
 .sb-link{
   color:var(--txt); text-decoration:none; font-weight:600;
   padding:8px 10px; border-radius:10px; line-height:1;
-  transition: background .15s ease, color .15s ease, transform .06s ease, box-shadow .15s ease;
+  transition: background .15s ease, transform .06s ease, box-shadow .15s ease;
 }
 .sb-link:hover{ background: rgba(255,255,255,.12) }
 .sb-link:active{ transform: translateY(1px) }
-.sb-link.active{
-  background: rgba(255,255,255,.18);
-  box-shadow: var(--ring);
-}
-.sb-link-login{
-  border:1px solid rgba(255,255,255,.35); padding:8px 12px; border-radius:10px;
-  background: rgba(0,0,0,.15);
-}
+.sb-link.active{ background: rgba(255,255,255,.18); box-shadow: var(--ring) }
+.sb-link-login{ border:1px solid rgba(255,255,255,.35); padding:8px 12px; border-radius:10px; background: rgba(0,0,0,.15) }
 
-.sb-auth{
-  margin-left:10px; display:flex; align-items:center; gap:8px;
-  color:var(--muted); font-size:13px;
-}
+.sb-auth{ margin-left:10px; display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px }
 .sb-auth .sep{ opacity:.7; margin:0 4px }
 
 /* Mobile */
-.sb-hamburger{
-  display:none; cursor:pointer; margin-left:auto;
-  width:36px; height:36px; border-radius:8px;
-  align-items:center; justify-content:center;
-}
-.sb-hamburger span{
-  display:block; width:22px; height:2px; background:#fff; margin:5px 7px;
-  transition:transform .2s ease, opacity .2s ease;
-}
+.sb-hamburger{ display:none; cursor:pointer; margin-left:auto; width:36px; height:36px; border-radius:8px; align-items:center; justify-content:center; }
+.sb-hamburger span{ display:block; width:22px; height:2px; background:#fff; margin:5px 7px; transition:transform .2s ease, opacity .2s ease; }
 .sb-nav-toggle{ display:none }
 
 @media (max-width:880px){
@@ -88,7 +64,6 @@
   .sb-link{ padding:12px 10px; border-radius:8px }
   .sb-auth{ display:none }
 
-  /* Toggle open */
   .sb-nav-toggle:checked ~ .sb-header__inner .sb-nav{
     transform: translateY(0); opacity:1; pointer-events:auto;
   }

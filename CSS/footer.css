@@ -1,20 +1,25 @@
 :root{
-  /* Gradien: hitam → biru tua → biru muda → toska → kuning muda → kuning tua → oranye → coklat */
-  --g0:#000000; --g1:#0b1a3c; --g2:#3a7bd5; --g3:#00c8b3;
-  --g4:#fff4b1; --g5:#f2c400; --g6:#ff8a00; --g7:#6b4f2a;
+  /* Gradien baru: hijau muda → kuning → oranye → biru tua (konsisten dengan header) */
+  --g0:#34d399; --g1:#facc15; --g2:#f59e0b; --g3:#0b1a3c;
+  --ftr-grad: linear-gradient(90deg, var(--g0) 0%, var(--g1) 33%, var(--g2) 66%, var(--g3) 100%);
 
-  --ftr-grad: linear-gradient(90deg,
-    var(--g0) 0%,
-    var(--g1) 12%,
-    var(--g2) 24%,
-    var(--g3) 38%,
-    var(--g4) 54%,
-    var(--g5) 68%,
-    var(--g6) 82%,
-    var(--g7) 100%);
+  --txt:#f5f7ff; --muted:#e6ecff;
+}
 
-  --txt:#f5f7ff;
-  --muted:#e6ecff;
+/* Muat font NotoSans lokal (regular + italic variable) */
+@font-face{
+  font-family: "NotoSansLocal";
+  src: url("/fonts/NotoSans-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face{
+  font-family: "NotoSansLocal";
+  src: url("/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
 }
 
 .sb-footer{
@@ -38,16 +43,20 @@
   flex-wrap:wrap;
 }
 .footer-brand{ font-size:16px; font-weight:700; letter-spacing:.2px }
-.footer-sep{ opacity:.8 }
+.footer-sep{ opacity:.85 }
 .footer-clock{
   font-variant-numeric: tabular-nums;
   padding:4px 8px; border-radius:8px;
   background: rgba(0,0,0,.18);
 }
 
+/* KHUSUS quotes = NotoSans Italic Bold */
 .footer-quote{
   margin:0;
-  font-style:italic; color:#ffffff; opacity:.95;
+  font-family:"NotoSansLocal","Noto Sans",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  font-weight:700;            /* Bold */
+  font-style:italic;          /* Italic */
+  color:#ffffff; opacity:.95;
 }
 
 @media (max-width:720px){
