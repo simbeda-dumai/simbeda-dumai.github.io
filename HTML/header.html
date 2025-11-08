@@ -1,32 +1,30 @@
-<header class="app-header">
-  <div class="header-left">
-    <img src="/assets/img/logo_simbeda.png" alt="Logo SIMBEDA" class="main-logo">
-    <div class="title-text">
-      <h1>SIMBEDA Kota Dumai</h1>
-      <p>Sistem Informasi Manajemen Bencana Daerah</p>
-    </div>
-  </div>
+<header class="sb-header" role="banner">
+  <!-- Toggle mobile -->
+  <input type="checkbox" id="sb-nav-toggle" class="sb-nav-toggle" aria-label="Buka/Tutup menu" />
 
-  <nav class="nav-menu">
-    <a href="/index.html" class="nav-item">Beranda</a>
-    <a href="/modules/dashboard/dashboard.html" class="nav-item">Dashboard</a>
-    <a href="/modules/laporan_cepat/laporan_cepat.html" class="nav-item">Laporan Cepat</a>
-    <a href="/modules/lapor_warga/lapor_warga.html" class="nav-item">Lapor Warga</a>
-    <a href="/modules/login/login.html" class="nav-item">Login</a>
-  </nav>
+  <div class="sb-header__inner">
+    <!-- Brand / Logo -->
+    <a class="sb-brand" href="/index.html" aria-label="Beranda SIMBEDA">
+      <img src="/IMG/logo_simbeda.png" alt="Logo SIMBEDA" class="logo" />
+      <img src="/IMG/dumai_idaman.png" alt="Dumai Idaman" class="logo secondary" />
+      <img src="/IMG/asn.png" alt="ASN" class="logo secondary" />
+    </a>
 
-  <div class="header-right">
-    <img src="/assets/img/dumai_idaman.png" alt="Logo Dumai Idaman">
-    <img src="/assets/img/asn.png" alt="Logo ASN">
+    <!-- Hamburger (mobile) -->
+    <label for="sb-nav-toggle" class="sb-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <!-- Nav -->
+    <nav class="sb-nav" role="navigation" aria-label="Navigasi utama">
+      <a href="/index.html"               data-nav="index.html"            class="sb-link">Beranda</a>
+      <a href="/HTML/dashboard.html"      data-nav="dashboard.html"        class="sb-link">Dashboard</a>
+      <a href="/HTML/laporan_cepat.html"  data-nav="laporan_cepat.html"    class="sb-link">Laporan Cepat</a>
+      <a href="/HTML/lapor_warga.html"    data-nav="lapor_warga.html"      class="sb-link">Lapor Warga</a>
+      <a href="/HTML/login.html"          data-nav="login.html"            class="sb-link sb-link-login">Masuk</a>
+    </nav>
+
+    <!-- Slot info akun (diisi otomatis oleh layout.js / breadcrumb) -->
+    <div class="sb-auth" data-auth-slot></div>
   </div>
 </header>
-
-<script>
-  // aktifkan link sesuai halaman aktif
-  const current = window.location.pathname;
-  document.querySelectorAll(".nav-item").forEach(link => {
-    if (current === link.getAttribute("href")) {
-      link.classList.add("active");
-    }
-  });
-</script>
