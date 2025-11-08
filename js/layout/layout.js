@@ -6,23 +6,46 @@ window.addEventListener("beforeunload", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Muat header
-  fetch("components/header/header.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("header").innerHTML = data;
-    })
-    .catch(() => console.error("Gagal memuat header"));
+  // Deteksi level folder agar path selalu benar di GitHub Pages
+  let basePath = "";
+  const depth = window.location.pathname.split("/").length - 2;
+  for (let i = 0; i < depth; i++) basePath += "../";
 
-  // Muat footer
-  fetch("components/footer/footer.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("footer").innerHTML = data;
-      // setelah footer dimuat, muat script quotes (waktu & kata bijak)
+  const headerEl = document.getElementById("header");
+  const footerEl = document.getElementById("footer");
+
+  // ===== MUAT HEADER =====
+  fetch(`${basePath}components/header/header.html`)
+    .then(res => {
+      if (!res.ok) throw new Error("Header 404");
+      return res.text();
+    })
+    .then(html => {
+      if (headerEl) headerEl.innerHTML = html;
+    })
+    .catch(() => {
+      if (headerEl)
+        headerEl.innerHTML = `<div style="background:#fee2e2;color:#b91c1c;padding:10px;text-align:center;">
+          ⚠️ Header tidak ditemukan (404)
+        </div>`;
+    });
+
+  // ===== MUAT FOOTER =====
+  fetch(`${basePath}components/footer/footer.html`)
+    .then(res => {
+      if (!res.ok) throw new Error("Footer 404");
+      return res.text();
+    })
+    .then(html => {
+      if (footerEl) footerEl.innerHTML = html;
       const script = document.createElement("script");
-      script.src = "components/footer/quotes.js";
+      script.src = `${basePath}components/footer/quotes.js`;
       document.body.appendChild(script);
     })
-    .catch(() => console.error("Gagal memuat footer"));
+    .catch(() => {
+      if (footerEl)
+        footerEl.innerHTML = `<div style="background:#fee2e2;color:#b91c1c;padding:10px;text-align:center;">
+          ⚠️ Footer tidak ditemukan (404)
+        </div>`;
+    });
 });
