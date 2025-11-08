@@ -5,26 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dashboard | SIMBEDA Kota Dumai</title>
 
-  <!-- Guard hanya untuk modul dashboard -->
-  <meta name="simbeda:module" content="dashboard">
-  <script src="/JS/auth-guard.js" defer></script>
-
-  <!-- Style halaman (ABSOLUTE PATH) -->
+  <!-- TIDAK ADA meta guard di dashboard -->
   <link rel="stylesheet" href="/CSS/dashboard.css" />
 
-  <!-- Leaflet CSS (CDN) -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-
-  <!-- Layout injector: header/footer + css umum -->
-  <script src="/JS/layout.js" defer></script>
-
-  <!-- Leaflet JS (CDN) -->
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 
-  <!-- Script dashboard (ABSOLUTE PATH) -->
+  <!-- Shell & Modul -->
+  <script src="/JS/layout.js" defer></script>
   <script src="/JS/dashboard.js" defer></script>
 </head>
 <body>
@@ -51,8 +40,7 @@
 
     <section class="dashboard-map">
       <h2>Peta Kejadian</h2>
-      <!-- pastikan ada tinggi agar peta tampil -->
-      <div id="map" style="height: 380px;"></div>
+      <div id="map"></div>
     </section>
   </main>
 

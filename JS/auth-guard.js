@@ -1,51 +1,34 @@
-// SIMBEDA - Auth Guard (aktif hanya untuk modul tertentu)
+// SIMBEDA - Auth Guard (dashboard publik, modul lain butuh login + izin)
 (function () {
   'use strict';
 
-  // HANYA modul ini yang dijaga
-  const ENFORCED_MODULES = new Set(['dashboard', 'laporan_cepat']);
+  const meta = document.querySelector('meta[name="simbeda:module"]');
+  const moduleName = (meta?.content || '').trim().toLowerCase();
 
-  function getSession() {
-    try {
-      const raw = localStorage.getItem('simbeda_auth');
-      return raw ? JSON.parse(raw) : null;
-    } catch (_) { return null; }
+  // Kalau halaman tidak mendeklarasikan modul → tidak dijaga
+  if (!moduleName) return;
+
+  // Dashboard kini publik (abaikan guard meski ada meta)
+  if (moduleName === 'dashboard') return;
+
+  // Ambil sesi
+  let sess = null;
+  try { sess = JSON.parse(localStorage.getItem('simbeda_auth') || 'null'); } catch (_) {}
+
+  // Wajib login untuk modul selain dashboard
+  if (!sess) {
+    const next = encodeURIComponent(location.pathname + location.search + location.hash);
+    location.assign(`/HTML/login.html?next=${next}`);
+    return;
   }
 
-  function getRequiredModule() {
-    const m = document.querySelector('meta[name="simbeda:module"]');
-    return m ? (m.getAttribute('content') || '').trim() : '';
+  // Cek izin modul jika ada daftar modules pada sesi
+  const mods = Array.isArray(sess.modules) ? sess.modules.map(m => String(m).toLowerCase()) : null;
+  if (mods && !mods.includes(moduleName)) {
+    // Tidak berizin → arahkan ke login agar jelas
+    location.assign('/HTML/login.html');
+    return;
   }
 
-  function hasAccess(sess, mod) {
-    if (!mod) return true;                     // kalau modul tak didefinisikan, abaikan
-    if (!sess || !Array.isArray(sess.modules)) return false;
-    return sess.modules.includes(mod);
-  }
-
-  function boot() {
-    const mod = getRequiredModule();
-
-    // Jika bukan modul yang diproteksi, jangan apa-apa
-    if (!ENFORCED_MODULES.has(mod)) return;
-
-    const sess = getSession();
-    if (!sess) {
-      window.location.replace('/HTML/login.html');
-      return;
-    }
-
-    if (!hasAccess(sess, mod)) {
-      alert('Akses ditolak untuk modul: ' + mod);
-      window.location.replace('/HTML/dashboard.html');
-      return;
-    }
-
-    // Expose info user ke DOM (opsional untuk UI)
-    document.documentElement.setAttribute('data-simbeda-user', sess.username || '');
-    document.documentElement.setAttribute('data-simbeda-role', sess.role || '');
-    document.documentElement.setAttribute('data-simbeda-area', sess.area || '');
-  }
-
-  document.addEventListener('DOMContentLoaded', boot);
+  // Lolos guard
 })();
