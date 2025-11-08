@@ -1,24 +1,30 @@
 :root{
-  /* Palet ala instansi/BNPB */
-  --bnpb-orange:#F58220;     /* aksen */
-  --gov-navy:#0B1A3C;        /* latar utama */
-  --gov-blue:#143059;        /* transisi */
-  --gov-royal:#1E3A8A;       /* royal blue */
+  /* Palet & aksen */
+  --bnpb-orange:#F58220;     /* aksen tipis ala instansi */
+  --white:#ffffff;
+  --turq:#00c8b3;            /* turqoise */
+  --blue:#3b82f6;            /* biru */
+  --navy:#0B1A3C;            /* biru tua */
+
+  /* Gradien header baru (white → turqoise → blue → navy) */
+  --hdr-grad: linear-gradient(90deg,
+    var(--white) 0%,
+    var(--turq) 30%,
+    var(--blue) 65%,
+    var(--navy) 100%
+  );
+
   --txt:#F5F7FF;
   --muted:#C9D1E6;
   --ring:0 0 0 3px rgba(245,247,255,.25);
 }
 
-/* Bar header dengan gradien lembut + garis aksen oranye */
+/* Bar header dengan gradien + garis aksen oranye tipis di bawah */
 .sb-header{
   position:sticky; top:0; z-index:50; color:var(--txt);
-  background:
-    linear-gradient(90deg, var(--gov-navy) 0%, var(--gov-blue) 40%, var(--gov-royal) 75%, var(--gov-navy) 100%);
-  box-shadow:
-    inset 0 -3px 0 var(--bnpb-orange); /* garis aksen bawah */
+  background: var(--hdr-grad);
+  box-shadow: inset 0 -3px 0 var(--bnpb-orange);
 }
-
-/* sedikit saturasi saat sticky/scroll */
 .sb-header.is-sticky{ filter:saturate(110%) }
 
 .sb-header__inner{
@@ -39,25 +45,22 @@
 }
 .sb-link:hover{ background: rgba(255,255,255,.10) }
 .sb-link:active{ transform: translateY(1px) }
-
-/* aktif → pill biru dengan outline oranye tipis */
 .sb-link.active{
   background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
   outline:1px solid rgba(245,130,32,.55);
   box-shadow:0 0 0 2px rgba(245,130,32,.22) inset;
 }
-
 .sb-link-login{
   border:1px solid rgba(255,255,255,.25);
   padding:8px 12px; border-radius:9999px;
   background: rgba(0,0,0,.18);
 }
 
-/* slot breadcrumb lama (opsional) */
+/* Breadcrumb slot (opsional) */
 .sb-auth{ margin-left:10px; display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px }
 .sb-auth .sep{ opacity:.7; margin:0 4px }
 
-/* User pill + logout */
+/* User pill + logout (setelah login) */
 .sb-userpill{
   display:flex; align-items:center; gap:8px;
   border:1px solid rgba(245,130,32,.55);
@@ -65,7 +68,10 @@
   border-radius:9999px; padding:6px 8px; line-height:1;
   box-shadow:0 0 0 2px rgba(245,130,32,.18) inset;
 }
-.sb-userpill .sb-user{ font-weight:700; color:#fff; padding:0 2px; max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sb-userpill .sb-user{
+  font-weight:700; color:#fff; padding:0 2px;
+  max-width:220px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
 .sb-logout{
   appearance:none; border:0; cursor:pointer;
   background: var(--bnpb-orange); color:#0b1020; font-weight:800;
@@ -83,7 +89,7 @@
   .sb-hamburger{ display:flex }
   .sb-nav{
     position:fixed; left:0; right:0; top:56px;
-    background: linear-gradient(180deg, var(--gov-navy) 0%, var(--gov-blue) 60%, var(--gov-royal) 100%);
+    background: var(--hdr-grad); /* pakai gradien yang sama di menu mobile */
     display:grid; gap:0; padding:8px 10px;
     transform: translateY(-12px); opacity:0; pointer-events:none;
     transition: transform .18s ease, opacity .18s ease;
