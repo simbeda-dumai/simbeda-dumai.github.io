@@ -14,6 +14,7 @@ const users = {
 
 function loginUser(e) {
   e.preventDefault();
+  const btn = e.target.querySelector("button");
   const u = document.getElementById("username").value.trim().toLowerCase();
   const p = document.getElementById("password").value.trim();
 
@@ -21,17 +22,21 @@ function loginUser(e) {
     alert("❌ Username tidak ditemukan!");
     return false;
   }
-
   if (p !== "dumaisiaga") {
     alert("❌ Password salah!");
     return false;
   }
 
+  // efek loading
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner"></div> Memproses...`;
+
   localStorage.setItem("user_login", u);
   localStorage.setItem("user_name", users[u].name);
   localStorage.setItem("user_area", users[u].area);
-  alert(`✅ Selamat datang, ${users[u].name}!`);
 
-  window.location.href = "../../modules/dashboard/dashboard.html";
-  return false;
+  setTimeout(() => {
+    alert(`✅ Selamat datang, ${users[u].name}!`);
+    window.location.href = "/modules/dashboard/dashboard.html";
+  }, 1500);
 }

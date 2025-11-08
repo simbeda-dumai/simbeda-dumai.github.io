@@ -1,3 +1,10 @@
+// ===== efek transisi antar halaman =====
+document.body.classList.add("fade-in");
+
+window.addEventListener("beforeunload", () => {
+  document.body.classList.add("fade-out");
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   // Muat header
   fetch("components/header/header.html")
