@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+.simbeda-footer {
+  background: linear-gradient(90deg, #facc15, #fb923c);
+  color: #1e293b;
+  padding: 15px 25px;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 100;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-left p {
+  margin: 0;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.footer-right {
+  text-align: right;
+  animation: fadeQuote 1s ease-in-out;
+}
+
+.footer-right p {
+  margin: 0;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+#quote {
+  font-style: italic;
+  font-weight: 600;
+}
+
+@keyframes fadeQuote {
+  0% { opacity: 0; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-right {
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,50 @@
+{
+    "kalaksa": {
+        "name": "Kepala Pelaksana",
+        "area": "BPBD Kota Dumai",
+        "password": "siagasatu",
+        "role": "Kota"
+    },
+    "sekre": {
+        "name": "Sekretaris",
+        "area": "BPBD Kota Dumai",
+        "password": "",
+        "role": "Kota"
+    },
+    "kabid": {
+        "name": "Kepala Bidang",
+        "area": "BPBD Kota Dumai",
+        "password": "",
+        "role": "Kota"
+    },
+    "admin": {
+        "name": "Admin BPBD",
+        "area": "BPBD Kota Dumai",
+        "password": "",
+        "role": "Kota"
+    },
+    "ss": {
+        "name": "Kecamatan Sungai Sembilan",
+        "area": "Sungai Sembilan",
+        "password": "",
+        "role": "Kecamatan"
+    },
+    "dk": {
+        "name": "Kecamatan Dumai Kota",
+        "area": "Dumai Kota",
+        "password": "",
+        "role": "Kecamatan"
+    },
+    "db": {
+        "name": "Kecamatan Dumai Barat",
+        "area": "Dumai Barat",
+        "password": "",
+        "role": "Kecamatan"
+    },
+    "dt": {
+        "name": "Kecamatan D'...",
+        "area": "Dumai Timur",
+        "password": "",
+        "role": "Kecamatan"
+    }
+}

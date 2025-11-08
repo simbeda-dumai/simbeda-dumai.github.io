@@ -1,9 +1,0 @@
-
-    /* Simplified main styles */
-    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    header { background: linear-gradient(45deg, #FF9B00, #FFDD00); padding: 20px; text-align: center; }
-    footer { background: #333; color: #fff; text-align: center; padding: 10px; position: fixed; width: 100%; bottom: 0; }
-    .btn { background-color: #FF9B00; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px; }
-    .btn:hover { background-color: #FFCC00; }
-    

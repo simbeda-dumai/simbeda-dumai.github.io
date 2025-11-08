@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SIMBEDA — Laporan Cepat</title>
+  <link rel="icon" href="/assets/img/logo_simbeda.png" />
+
+  <!-- CSS dasar (layout.js juga akan meng-inject kalau belum ada) -->
+  <link rel="stylesheet" href="/assets/fonts/Roboto.css" />
+  <link rel="stylesheet" href="/assets/css/transition.css" />
+  <link rel="stylesheet" href="/components/header/header.css" />
+  <link rel="stylesheet" href="/components/footer/footer.css" />
+  <link rel="stylesheet" href="laporan_cepat.css" />
+
+  <!-- Script data wilayah + layout + modul -->
+  <script src="/js/config.js" defer></script>
+  <script src="/js/layout/layout.js" defer></script>
+  <script src="laporan_cepat.js" defer></script>
+</head>
+<body class="page page-laporan-cepat fade-in">
+  <div id="header"></div>
+
+  <main class="lc-container">
+    <section class="lc-card">
+      <h1 class="lc-title">Laporan Cepat</h1>
+      <p class="lc-subtitle">Isi data ringkas kejadian untuk notifikasi cepat internal BPBD. Lokasi dapat diambil otomatis dari perangkat.</p>
+
+      <form id="form-laporan-cepat" class="lc-form" autocomplete="off">
+        <div class="lc-row">
+          <label for="jenis">Jenis Kejadian</label>
+          <select id="jenis" name="jenis" required>
+            <option value="">— pilih —</option>
+            <option value="Kebakaran">Kebakaran</option>
+            <option value="Banjir">Banjir</option>
+            <option value="Tanah Longsor">Tanah Longsor</option>
+            <option value="Angin Kencang">Angin Kencang</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <div class="lc-grid-2">
+          <div class="lc-row">
+            <label for="kecamatan">Kecamatan</label>
+            <select id="kecamatan" name="kecamatan" required>
+              <option value="">— pilih kecamatan —</option>
+            </select>
+            <input id="kecamatan_text" name="kecamatan_text" class="lc-hidden" type="text" placeholder="Nama kecamatan" />
+          </div>
+          <div class="lc-row">
+            <label for="kelurahan">Kelurahan/Desa</label>
+            <select id="kelurahan" name="kelurahan" required>
+              <option value="">— pilih kelurahan —</option>
+            </select>
+            <input id="kelurahan_text" name="kelurahan_text" class="lc-hidden" type="text" placeholder="Nama kelurahan/desa" />
+          </div>
+        </div>
+
+        <div class="lc-grid-2">
+          <div class="lc-row">
+            <label for="latitude">Latitude</label>
+            <input id="latitude" name="latitude" type="text" inputmode="decimal" placeholder="-" required />
+            <input id="lat" type="hidden" />
+            <input id="lokasi_lat" type="hidden" />
+          </div>
+          <div class="lc-row">
+            <label for="longitude">Longitude</label>
+            <input id="longitude" name="longitude" type="text" inputmode="decimal" placeholder="-" required />
+            <input id="lng" type="hidden" />
+            <input id="lokasi_lng" type="hidden" />
+          </div>
+        </div>
+
+        <div class="lc-row">
+          <label for="alamat">Detail Lokasi</label>
+          <input id="alamat" name="alamat" type="text" placeholder="Nama jalan, RT/RW, patokan" />
+        </div>
+
+        <div class="lc-actions">
+          <button id="btn-lokasi" type="button" class="btn secondary">Gunakan Lokasi Saya</button>
+          <div class="lc-spacer"></div>
+          <button type="reset" class="btn ghost">Bersihkan</button>
+          <button id="btn-kirim" type="submit" class="btn primary">Kirim</button>
+        </div>
+      </form>
+
+      <p class="lc-hint">Jika daftar belum muncul, muat ulang halaman. Kamu juga bisa pilih “Lainnya” untuk mengetik manual.</p>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <!-- Fallback geolokasi jika modul belum binding tombol -->
+  <script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('btn-lokasi');
+    if (btn && !btn.dataset.bound) {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!navigator.geolocation) { alert('Geolocation tidak didukung browser.'); return; }
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          const lat = pos.coords.latitude; const lng = pos.coords.longitude;
+          ['latitude','lat','lokasi_lat'].forEach(id => { const el = document.getElementById(id); if (el) el.value = lat; });
+          ['longitude','lng','lokasi_lng'].forEach(id => { const el = document.getElementById(id); if (el) el.value = lng; });
+        }, function (err) {
+          alert('Gagal mengambil lokasi: ' + err.message);
+        }, { enableHighAccuracy: true, timeout: 10000 });
+      });
+    }
+  });
+  </script>
+</body>
+</html>
