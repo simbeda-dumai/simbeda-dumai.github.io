@@ -5,42 +5,65 @@ if (!user) {
   window.location.href = "/modules/login/login.html";
 }
 
-function simpanLaporan(e) {
-  e.preventDefault();
+// ===== Daftar kelurahan per kecamatan =====
+const kelurahanData = {
+  "Sungai Sembilan": ["Lubuk Gaung", "Batu Teritip", "Tanjung Penyembal", "Bangsal Aceh", "Pangkalan Sesai"],
+  "Dumai Barat": ["Purnama", "Bukit Datuk", "Bumi Ayu"],
+  "Dumai Kota": ["Bintan", "Laksamana", "Rimba Sekampung", "Teluk Binjai"],
+  "Dumai Timur": ["Tanjung Palas", "Jaya Mukti", "Bumi Ayu", "Buluh Kasap"],
+  "Dumai Selatan": ["Mekar Sari", "Bukit Batrem", "Ratu Sima"],
+  "Bukit Kapur": ["Bukit Nenas", "Kampung Baru", "Tanjung Penyembal"],
+  "Medang Kampai": ["Pelintung", "Guntung", "Teluk Makmur"]
+};
 
-  const jenis = document.getElementById("jenis").value.trim();
-  const lokasi = document.getElementById("lokasi").value.trim();
-  const deskripsi = document.getElementById("deskripsi").value.trim();
-  const waktu = new Date().toLocaleString("id-ID");
-  const user = localStorage.getItem("user_name") || "Anonim";
+// ===== Filter kelurahan berdasarkan kecamatan =====
+document.getElementById("kecamatan").addEventListener("change", e => {
+  const kec = e.target.value;
+  const kelurahanSelect = document.getElementById("kelurahan");
+  kelurahanSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';
+  if (kelurahanData[kec]) {
+    kelurahanData[kec].forEach(kel => {
+      const opt = document.createElement("option");
+      opt.value = kel;
+      opt.textContent = kel;
+      kelurahanSelect.appendChild(opt);
+    });
+  }
+});
 
-  const laporan = { waktu, user, jenis, lokasi, deskripsi };
+// ===== Input manual jenis bencana =====
+document.getElementById("jenisBencana").addEventListener("change", e => {
+  document.getElementById("jenisManual").style.display =
+    e.target.value === "manual" ? "block" : "none";
+});
 
-  let log = JSON.parse(localStorage.getItem("laporan_cepat") || "[]");
-  log.unshift(laporan);
-  localStorage.setItem("laporan_cepat", JSON.stringify(log));
-
-  tampilkanLog();
-  document.getElementById("formLaporan").reset();
-  alert("✅ Laporan berhasil disimpan!");
-}
-
-function tampilkanLog() {
-  const tbody = document.querySelector("#tabelLog tbody");
-  tbody.innerHTML = "";
-  const log = JSON.parse(localStorage.getItem("laporan_cepat") || "[]");
-
-  log.forEach(l => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${l.waktu}</td>
-      <td>${l.user}</td>
-      <td>${l.jenis}</td>
-      <td>${l.lokasi}</td>
-      <td>${l.deskripsi}</td>
-    `;
-    tbody.appendChild(tr);
+// ===== Ambil lokasi otomatis (OpenStreetMap) =====
+function ambilLokasi() {
+  if (!navigator.geolocation) return alert("Geolocation tidak didukung browser ini.");
+  navigator.geolocation.getCurrentPosition(pos => {
+    const lat = pos.coords.latitude.toFixed(5);
+    const lng = pos.coords.longitude.toFixed(5);
+    document.getElementById("koordinat").value = `${lat}, ${lng}`;
+  }, err => {
+    alert("Gagal mengambil lokasi: " + err.message);
   });
 }
 
-document.addEventListener("DOMContentLoaded", tampilkanLog);
+// ===== Simpan laporan =====
+document.getElementById("formLaporanCepat").addEventListener("submit", e => {
+  e.preventDefault();
+  const data = {
+    jenis: document.getElementById("jenisBencana").value === "manual"
+      ? document.getElementById("jenisManual").value
+      : document.getElementById("jenisBencana").value,
+    kecamatan: document.getElementById("kecamatan").value,
+    kelurahan: document.getElementById("kelurahan").value,
+    lokasi: document.getElementById("lokasi").value,
+    koordinat: document.getElementById("koordinat").value,
+    deskripsi: document.getElementById("deskripsi").value,
+    waktu: new Date().toLocaleString()
+  };
+  console.log("📩 Data laporan cepat:", data);
+  alert("✅ Laporan cepat berhasil disimpan!");
+  e.target.reset();
+});

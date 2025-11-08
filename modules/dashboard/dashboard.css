@@ -1,61 +1,68 @@
-// daftar kelurahan per kecamatan
-const dataKelurahan = {
-  "Sungai Sembilan": ["Bangsal Aceh", "Tanjung Penyembal", "Lubuk Gaung", "Batu Teritip", "Basilam Baru"],
-  "Dumai Barat": ["Purnama", "Bumi Ayu", "Simpang Tetap Darul Ihsan", "Bukit Datuk"],
-  "Dumai Kota": ["Rimba Sekampung", "Teluk Binjai", "Bintan", "Laksamana"],
-  "Dumai Timur": ["Tanjung Palas", "Bukit Timah", "Buluh Kasap", "Jaya Mukti"],
-  "Dumai Selatan": ["Bumi Ayu Selatan", "Mekar Sari", "Bukit Batrem", "Ratu Sima"],
-  "Bukit Kapur": ["Bukit Kayu Kapur", "Gurun Panjang", "Kampung Baru", "Bukit Nenas"],
-  "Medang Kampai": ["Guntung", "Pelintung", "Teluk Makmur"]
-};
-
-function isiKelurahan() {
-  const kecamatan = document.getElementById("kecamatan").value;
-  const kelSelect = document.getElementById("kelurahan");
-  kelSelect.innerHTML = '<option value="">-- Pilih Kelurahan --</option>';
-  if (dataKelurahan[kecamatan]) {
-    dataKelurahan[kecamatan].forEach(kel => {
-      const opt = document.createElement("option");
-      opt.value = kel;
-      opt.textContent = kel;
-      kelSelect.appendChild(opt);
-    });
-  }
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
 }
 
-function cekJenisManual() {
-  const jenis = document.getElementById("jenisBencana").value;
-  document.getElementById("manualJenis").style.display = jenis === "Lainnya" ? "block" : "none";
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9fafb;
+  margin: 0;
+  padding: 0;
 }
 
-function simpanLaporanWarga(e) {
-  e.preventDefault();
+#dashboard-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
 
-  const laporan = {
-    nama: document.getElementById("nama").value.trim(),
-    nik: document.getElementById("nik").value.trim(),
-    pekerjaan: document.getElementById("pekerjaan").value.trim(),
-    alamat: document.getElementById("alamat").value.trim(),
-    kecamatan: document.getElementById("kecamatan").value,
-    kelurahan: document.getElementById("kelurahan").value,
-    jenis: document.getElementById("jenisBencana").value === "Lainnya"
-      ? document.getElementById("jenisManual").value.trim()
-      : document.getElementById("jenisBencana").value,
-    latitude: document.getElementById("latitude").value.trim(),
-    longitude: document.getElementById("longitude").value.trim(),
-    deskripsi: document.getElementById("deskripsi").value.trim(),
-    waktu: new Date().toLocaleString("id-ID")
-  };
+.dashboard-summary, .dashboard-map {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+}
 
-  if (!laporan.nama || !laporan.nik || !laporan.kecamatan || !laporan.kelurahan || !laporan.jenis) {
-    alert("❌ Mohon lengkapi semua data penting!");
-    return false;
+.dashboard-summary h2, .dashboard-map h2 {
+  margin-top: 0;
+  color: #1e293b;
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 120px;
+  background: linear-gradient(135deg, #facc15, #fb923c);
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+#map {
+  height: 350px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #dashboard-container {
+    grid-template-columns: 1fr;
   }
-
-  let data = JSON.parse(localStorage.getItem("laporan_warga") || "[]");
-  data.unshift(laporan);
-  localStorage.setItem("laporan_warga", JSON.stringify(data));
-
-  document.getElementById("formWarga").reset();
-  alert("✅ Laporan warga berhasil dikirim!");
+  #map {
+    height: 280px;
+  }
 }

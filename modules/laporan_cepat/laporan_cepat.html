@@ -1,50 +1,43 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Cepat | SIMBEDA Kota Dumai</title>
+<form id="formLaporanCepat" class="lapor-form">
+  <label for="jenisBencana">Jenis Bencana</label>
+  <select id="jenisBencana" required>
+    <option value="">-- Pilih Jenis --</option>
+    <option>Banjir</option>
+    <option>Kebakaran</option>
+    <option>Tanah Longsor</option>
+    <option>Angin Puting Beliung</option>
+    <option>Gelombang Pasang</option>
+    <option value="manual">Lainnya (Input Manual)</option>
+  </select>
+  <input type="text" id="jenisManual" placeholder="Tulis jenis bencana lain..." style="display:none;">
 
-  <link rel="stylesheet" href="../../components/header/header.css">
-  <link rel="stylesheet" href="../../components/footer/footer.css">
-  <link rel="stylesheet" href="laporan_cepat.css">
-  <script src="../../js/layout/layout.js" defer></script>
-</head>
+  <label for="kecamatan">Kecamatan</label>
+  <select id="kecamatan" required>
+    <option value="">-- Pilih Kecamatan --</option>
+    <option value="Sungai Sembilan">Sungai Sembilan</option>
+    <option value="Dumai Barat">Dumai Barat</option>
+    <option value="Dumai Kota">Dumai Kota</option>
+    <option value="Dumai Timur">Dumai Timur</option>
+    <option value="Dumai Selatan">Dumai Selatan</option>
+    <option value="Bukit Kapur">Bukit Kapur</option>
+    <option value="Medang Kampai">Medang Kampai</option>
+  </select>
 
-<body>
-  <div id="header"></div>
+  <label for="kelurahan">Kelurahan</label>
+  <select id="kelurahan" required>
+    <option value="">-- Pilih Kelurahan --</option>
+  </select>
 
-  <main class="laporan-container">
-    <h2>Laporan Cepat Bencana</h2>
-    <form id="formLaporan" onsubmit="return simpanLaporan(event)">
-      <label>Jenis Bencana:</label>
-      <input type="text" id="jenis" placeholder="Contoh: Banjir, Kebakaran" required>
+  <label for="lokasi">Lokasi Kejadian</label>
+  <input type="text" id="lokasi" placeholder="Nama lokasi kejadian" required />
 
-      <label>Lokasi Kejadian:</label>
-      <input type="text" id="lokasi" placeholder="Nama jalan / area" required>
+  <label for="koordinat">Titik Koordinat (Lat, Lng)</label>
+  <input type="text" id="koordinat" placeholder="-1.6870, 101.4100" />
 
-      <label>Deskripsi Singkat:</label>
-      <textarea id="deskripsi" rows="3" placeholder="Tuliskan deskripsi kejadian"></textarea>
+  <button type="button" onclick="ambilLokasi()">Gunakan Lokasi Saya</button>
 
-      <button type="submit">Kirim Laporan</button>
-    </form>
+  <label for="deskripsi">Deskripsi Singkat</label>
+  <textarea id="deskripsi" placeholder="Tuliskan kondisi dan dampak singkat..." required></textarea>
 
-    <h3>Riwayat Laporan</h3>
-    <table id="tabelLog">
-      <thead>
-        <tr>
-          <th>Waktu</th>
-          <th>User</th>
-          <th>Jenis</th>
-          <th>Lokasi</th>
-          <th>Deskripsi</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </main>
-
-  <div id="footer"></div>
-  <script src="laporan_cepat.js"></script>
-</body>
-</html>
+  <button type="submit">Kirim Laporan</button>
+</form>

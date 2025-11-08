@@ -1,49 +1,24 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | SIMBEDA Kota Dumai</title>
-
-  <link rel="stylesheet" href="../../components/header/header.css" />
-  <link rel="stylesheet" href="../../components/footer/footer.css" />
-  <link rel="stylesheet" href="dashboard.css" />
-  <script src="../../js/layout/layout.js" defer></script>
-</head>
-
-<body>
-  <div id="header"></div>
-
-  <main class="dashboard-container">
-    <div class="top-bar">
-      <div class="user-info">
-        <span id="userName"></span> | <span id="userArea"></span>
-        <button id="logoutBtn">Logout</button>
+<div id="dashboard-container">
+  <section class="dashboard-summary">
+    <h2>Statistik Laporan</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="totalLaporan">0</h3>
+        <p>Jumlah Laporan</p>
       </div>
-      <h2>Dashboard SIMBEDA</h2>
-    </div>
-
-    <div class="stats">
-      <div class="card">
-        <h3 id="reportsCount">0</h3>
-        <p>Total Laporan</p>
+      <div class="stat-card">
+        <h3 id="asalLaporan">0</h3>
+        <p>Asal Laporan (Kecamatan)</p>
       </div>
-      <div class="card">
-        <h3 id="adminCount">0</h3>
-        <p>Laporan Internal</p>
-      </div>
-      <div class="card">
-        <h3 id="wargaCount">0</h3>
-        <p>Laporan Warga</p>
+      <div class="stat-card">
+        <h3 id="pengunjung">0</h3>
+        <p>Pengunjung</p>
       </div>
     </div>
+  </section>
 
+  <section class="dashboard-map">
+    <h2>Peta Kejadian</h2>
     <div id="map"></div>
-  </main>
-
-  <div id="footer"></div>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="dashboard.js"></script>
-</body>
-</html>
+  </section>
+</div>
