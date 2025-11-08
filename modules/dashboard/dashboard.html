@@ -1,4 +1,6 @@
-<div id="dashboard-container">
+<div id="header"></div>
+
+<main id="dashboard-container">
   <section class="dashboard-summary">
     <h2>Statistik Laporan</h2>
     <div class="stats-grid">
@@ -8,7 +10,7 @@
       </div>
       <div class="stat-card">
         <h3 id="asalLaporan">0</h3>
-        <p>Asal Laporan (Kecamatan)</p>
+        <p>Asal Kecamatan</p>
       </div>
       <div class="stat-card">
         <h3 id="pengunjung">0</h3>
@@ -21,4 +23,17 @@
     <h2>Peta Kejadian</h2>
     <div id="map"></div>
   </section>
-</div>
+</main>
+
+<div id="footer"></div>
+
+<!-- Leaflet JS & CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="/js/layout/layout.js" defer></script>
+<script src="dashboard.js" defer></script>
+<link rel="stylesheet" href="dashboard.css" />
