@@ -1,4 +1,4 @@
-// SIMBEDA - Lapor Warga (publik + GPS + dropdown Jenis + manual + detail lokasi)
+// SIMBEDA - Lapor Warga (publik + GPS + dropdown Jenis + manual hanya saat "Lainnya")
 (function () {
   'use strict';
 
@@ -14,7 +14,7 @@
     'Kebakaran Lahan',
     'Gelombang Pasang / Rob',
     'Kecelakaan',
-    'Lainnya — Tulis manual…'
+    'Lainnya' // ← manual hanya saat ini dipilih
   ];
 
   function readLS(key, def){ try{ const raw=localStorage.getItem(key); return raw?JSON.parse(raw):def; }catch(_){ return def; } }
@@ -35,21 +35,29 @@
     });
   }
 
-  // jenis + manual
+  // Jenis + manual hanya saat "Lainnya"
   function buildJenis(){
     const sel=$('#jenis'), wrap=$('#jenisManualWrap'), manual=$('#jenisManual');
     if(!sel||!wrap||!manual) return;
+
     sel.innerHTML='';
-    JENIS_LIST.forEach((txt,i)=>{
-      const val = (txt.startsWith('Lainnya') ? 'manual' : txt);
-      sel.appendChild(new Option(txt, val, i===0, i===0));
+    // Placeholder
+    sel.appendChild(new Option('— Pilih jenis —', '', true, true));
+    sel.firstElementChild.disabled = true;
+
+    // Opsi
+    JENIS_LIST.forEach(txt=>{
+      const val = (txt === 'Lainnya') ? 'manual' : txt;
+      sel.appendChild(new Option(txt, val, false, false));
     });
+
     const toggle=()=>{
-      if(sel.value==='manual'){ wrap.hidden=false; manual.focus(); }
-      else { wrap.hidden=true; manual.value=''; }
+      const isManual = sel.value === 'manual';
+      wrap.hidden = !isManual;
+      if (!isManual) manual.value = '';
     };
     sel.addEventListener('change', toggle);
-    toggle();
+    toggle(); // awal pasti hidden
   }
 
   // GPS
@@ -71,8 +79,9 @@
   // form
   function readForm(){
     const selJenis = $('#jenis')?.value || '';
-    const manualJenis = ($('#jenisManualWrap')?.hidden ? '' : ($('#jenisManual')?.value || '').trim());
-    const jenisFinal = (selJenis === 'manual') ? manualJenis : selJenis;
+    const isManual = selJenis === 'manual';
+    const manualJenis = isManual ? ($('#jenisManual')?.value || '').trim() : '';
+    const jenisFinal = isManual ? manualJenis : selJenis;
 
     return {
       waktu: $('#waktu')?.value || new Date().toISOString(),
@@ -84,6 +93,7 @@
       deskripsi: $('#deskripsi')?.value || ''
     };
   }
+
   function save(rec){ const arr=readLS(KEY, []); arr.unshift(rec); writeLS(KEY, arr); }
   function showMsg(t, ok=false){ const el=$('#msg'); if(!el) return; el.textContent=t||''; el.style.color=ok?'#7CFC7C':'#ffd966'; }
 
@@ -96,6 +106,7 @@
     $('#btn-kirim')?.addEventListener('click', (e)=>{
       e.preventDefault();
       const rec=readForm();
+
       if(!rec.kecamatan || !rec.kelurahan){ showMsg('Lengkapi kecamatan & kelurahan.', false); return; }
       if(!rec.jenis){ showMsg('Pilih/isi jenis kejadian.', false); return; }
       if(!rec.lokasi){ showMsg('Isi lokasi (alamat/koordinat).', false); return; }
