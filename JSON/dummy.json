@@ -1,0 +1,73 @@
+[
+  {
+    "waktu": "2025-01-12T14:00",
+    "kecamatan": "Dumai Kota",
+    "kelurahan": "Sukajadi",
+    "lokasi": "lat:1.667890 lng:101.450123",
+    "detail_lokasi": "Jl. Merdeka RT 02/RW 03",
+    "jenis": "Banjir",
+    "deskripsi": "Genangan air 20–30 cm, jalanan macet.",
+    "markerColor": "#00c8b3"
+  },
+  {
+    "waktu": "2025-01-20T10:30",
+    "kecamatan": "Dumai Barat",
+    "kelurahan": "Pangkalan Sesai",
+    "lokasi": "lat:1.670000 lng:101.470000",
+    "detail_lokasi": "Jl. Pangkalan Sesai",
+    "jenis": "Kebakaran",
+    "deskripsi": "Kebakaran besar di lahan kosong dekat pemukiman.",
+    "markerColor": "#F58220"
+  },
+  {
+    "waktu": "2025-02-03T08:15",
+    "kecamatan": "Dumai Timur",
+    "kelurahan": "Bukit Batrem",
+    "lokasi": "lat:1.630000 lng:101.440000",
+    "detail_lokasi": "Jl. Bukit Batrem",
+    "jenis": "Pohon Tumbang",
+    "deskripsi": "Pohon besar tumbang menutup jalan utama.",
+    "markerColor": "#3b82f6"
+  },
+  {
+    "waktu": "2025-02-28T17:00",
+    "kecamatan": "Medang Kampai",
+    "kelurahan": "Pelintung",
+    "lokasi": "lat:1.612345 lng:101.452345",
+    "detail_lokasi": "Jl. Pelintung",
+    "jenis": "Gelombang Pasang",
+    "deskripsi": "Air pasang menyebabkan beberapa rumah terendam.",
+    "markerColor": "#22c55e"
+  },
+  {
+    "waktu": "2025-03-15T12:30",
+    "kecamatan": "Sungai Sembilan",
+    "kelurahan": "Bangsal Aceh",
+    "lokasi": "lat:1.590000 lng:101.460000",
+    "detail_lokasi": "Jl. Bangsal Aceh",
+    "jenis": "Tanah Longsor",
+    "deskripsi": "Tanah longsor menutup jalan utama menuju kawasan perumahan.",
+    "markerColor": "#F59E42"
+  },
+  {
+    "waktu": "2025-04-01T16:45",
+    "kecamatan": "Dumai Kota",
+    "kelurahan": "Rimba Sekampung",
+    "lokasi": "lat:1.664321 lng:101.455555",
+    "detail_lokasi": "Jl. Rimba Sekampung",
+    "jenis": "Banjir",
+    "deskripsi": "Banjir akibat hujan deras selama 6 jam.",
+    "markerColor": "#00c8b3"
+  },
+  // 54 laporan lainnya, dibagi per kecamatan dan kelurahan
+  {
+    "waktu": "2025-10-30T09:30",
+    "kecamatan": "Sungai Sembilan",
+    "kelurahan": "Tanjung Penyembal",
+    "lokasi": "lat:1.568934 lng:101.455756",
+    "detail_lokasi": "Jl. Tanjung Penyembal RT 01",
+    "jenis": "Kecelakaan",
+    "deskripsi": "Kecelakaan lalu lintas melibatkan 3 kendaraan.",
+    "markerColor": "#F57C00"
+  }
+]
