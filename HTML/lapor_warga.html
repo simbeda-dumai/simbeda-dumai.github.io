@@ -5,18 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lapor Warga | SIMBEDA Kota Dumai</title>
 
-  <!-- TANPA guard (sesuai instruksi) -->
-
-  <!-- Style modul -->
   <link rel="stylesheet" href="/CSS/lapor_warga.css" />
-
-  <!-- Wilayah (opsional untuk isi dropdown) -->
   <script src="/JS/config.js" defer></script>
-
-  <!-- Layout injector -->
   <script src="/JS/layout.js" defer></script>
-
-  <!-- Script modul -->
   <script src="/JS/lapor_warga.js" defer></script>
 </head>
 <body>
@@ -25,22 +16,12 @@
   <main class="page-wrap">
     <section class="page-card">
       <h1>Lapor Warga</h1>
-      <p class="subtitle">Sampaikan laporan Anda. Data tersimpan lokal.</p>
+      <p class="subtitle">Warga dapat melaporkan kejadian (GPS + jenis manual).</p>
 
       <form class="form-grid" autocomplete="off">
         <div class="field">
           <label for="waktu">Waktu</label>
           <input type="datetime-local" id="waktu" />
-        </div>
-
-        <div class="field">
-          <label for="nama">Nama Pelapor</label>
-          <input type="text" id="nama" placeholder="Nama lengkap" />
-        </div>
-
-        <div class="field">
-          <label for="kontak">Kontak</label>
-          <input type="text" id="kontak" placeholder="No HP/WA atau Email" />
         </div>
 
         <div class="field">
@@ -58,22 +39,39 @@
         </div>
 
         <div class="field col-2">
-          <label for="lokasi">Lokasi (boleh isi koordinat, mis. 1.668, 101.45)</label>
-          <input type="text" id="lokasi" placeholder="Contoh: Gg. Melati / lat:1.66 lng:101.41" />
+          <label for="lokasi">Lokasi (alamat/koordinat)</label>
+          <div class="loc-inline">
+            <input type="text" id="lokasi" placeholder="Contoh: Jl. Merdeka / lat:1.667890 lng:101.450123" />
+            <button id="btn-lokasi" class="btn-secondary" type="button">Gunakan Lokasi Saya</button>
+          </div>
+          <small id="loc-status" class="muted"></small>
+        </div>
+
+        <!-- Tambahan: Detail Lokasi -->
+        <div class="field col-2">
+          <label for="detail_lokasi">Detail Lokasi (Jalan/RT)</label>
+          <input type="text" id="detail_lokasi" placeholder="Contoh: Jl. Merdeka RT 02/RW 03" />
         </div>
 
         <div class="field">
-          <label for="kejadian">Kejadian</label>
-          <input type="text" id="kejadian" placeholder="Banjir / Kebakaran / Longsor..." />
+          <label for="jenis">Jenis Kejadian</label>
+          <select id="jenis" aria-controls="jenisManualWrap">
+            <!-- diisi via JS -->
+          </select>
+        </div>
+
+        <div id="jenisManualWrap" class="field manual-field" hidden>
+          <label for="jenisManual">Tulis Jenis Kejadian</label>
+          <input type="text" id="jenisManual" placeholder="Contoh: Jalan Amblas / Jembatan Rusak / dll." />
         </div>
 
         <div class="field col-2">
-          <label for="keterangan">Keterangan</label>
-          <textarea id="keterangan" rows="4" placeholder="Lengkapi detail agar valid..."></textarea>
+          <label for="deskripsi">Deskripsi Singkat</label>
+          <textarea id="deskripsi" rows="4" placeholder="Ringkas, faktual, dan jelas..."></textarea>
         </div>
 
         <div class="actions col-2">
-          <button id="btn-kirim" class="btn-primary" type="button">Kirim</button>
+          <button id="btn-kirim" class="btn-primary" type="button">Kirim Laporan</button>
           <p id="msg" class="msg" role="alert" aria-live="polite"></p>
         </div>
       </form>

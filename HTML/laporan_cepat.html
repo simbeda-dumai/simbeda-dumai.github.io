@@ -5,20 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Laporan Cepat | SIMBEDA Kota Dumai</title>
 
-  <!-- Guard hanya untuk modul laporan_cepat -->
+  <!-- Guard untuk modul laporan_cepat -->
   <meta name="simbeda:module" content="laporan_cepat">
   <script src="/JS/auth-guard.js" defer></script>
 
-  <!-- Style modul -->
   <link rel="stylesheet" href="/CSS/laporan_cepat.css" />
-
-  <!-- Wilayah (isi dropdown) -->
   <script src="/JS/config.js" defer></script>
-
-  <!-- Layout injector: header/footer + quotes -->
   <script src="/JS/layout.js" defer></script>
-
-  <!-- Script modul -->
   <script src="/JS/laporan_cepat.js" defer></script>
 </head>
 <body>
@@ -27,7 +20,7 @@
   <main class="page-wrap">
     <section class="page-card">
       <h1>Laporan Cepat</h1>
-      <p class="subtitle">Catat kejadian singkat untuk reaksi cepat. (Role-aware + GPS)</p>
+      <p class="subtitle">Catat kejadian singkat (role-aware + GPS + jenis manual).</p>
 
       <form class="form-grid" autocomplete="off">
         <div class="field">
@@ -59,9 +52,22 @@
           <small id="loc-status" class="muted"></small>
         </div>
 
+        <!-- Tambahan: Detail Lokasi -->
+        <div class="field col-2">
+          <label for="detail_lokasi">Detail Lokasi (Jalan/RT)</label>
+          <input type="text" id="detail_lokasi" placeholder="Contoh: Jl. Merdeka RT 02/RW 03" />
+        </div>
+
         <div class="field">
           <label for="jenis">Jenis Kejadian</label>
-          <input type="text" id="jenis" placeholder="Banjir / Kebakaran / Angin Kencang..." />
+          <select id="jenis" aria-controls="jenisManualWrap">
+            <!-- diisi via JS -->
+          </select>
+        </div>
+
+        <div id="jenisManualWrap" class="field manual-field" hidden>
+          <label for="jenisManual">Tulis Jenis Kejadian</label>
+          <input type="text" id="jenisManual" placeholder="Contoh: Jalan Amblas / Jembatan Rusak / dll." />
         </div>
 
         <div class="field col-2">
