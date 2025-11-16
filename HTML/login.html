@@ -1,52 +1,31 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Masuk | SIMBEDA Kota Dumai</title>
-  <link rel="stylesheet" href="/CSS/Roboto.css" />
-  <link rel="stylesheet" href="/CSS/login.css" />
-</head>
-<body>
-  <main class="login-wrap">
-    <section class="login-card" role="form" aria-labelledby="title">
+<header class="sb-header" role="banner">
+  <input type="checkbox" id="sb-nav-toggle" class="sb-nav-toggle" aria-label="Buka/Tutup menu" />
+  <div class="sb-header__inner">
+    <!-- Logo SIMBEDA -->
+    <a class="sb-brand" href="/index.html" aria-label="Beranda SIMBEDA">
       <img src="/IMG/logo_simbeda.png" alt="Logo SIMBEDA" class="logo" />
-      <h1 id="title">SIMBEDA Kota Dumai</h1>
-      <p class="subtitle">Sistem Informasi Manajemen Bencana Daerah</p>
+      <img src="/IMG/dumai_idaman.png" alt="Dumai Idaman" class="logo secondary" />
+      <img src="/IMG/asn.png" alt="ASN" class="logo secondary" />
+    </a>
 
-      <div class="form">
-        <label for="username">Pengguna</label>
-        <input id="username" name="username" type="text" placeholder="mis. dk / dt / db" autocomplete="username" />
+    <!-- Hamburger (mobile) -->
+    <label for="sb-nav-toggle" class="sb-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </label>
 
-        <label for="password">Kata Sandi</label>
-        <div class="password-row">
-          <input id="password" name="password" type="password" placeholder="Kata sandi" autocomplete="current-password" />
-          <button type="button" id="toggle-pass" aria-label="Tampilkan/Sembunyikan kata sandi">👁️</button>
-        </div>
+    <!-- Navigasi utama -->
+    <nav class="sb-nav" role="navigation" aria-label="Navigasi utama">
+      <a href="/index.html" class="sb-link">Beranda</a>
+      <a href="/HTML/dashboard.html" class="sb-link">Dashboard</a>
+      <a href="/HTML/laporan_cepat.html" class="sb-link">Laporan Cepat</a>
+      <a href="/HTML/lapor_warga.html" class="sb-link">Lapor Warga</a>
 
-        <button id="btn-login" class="btn-primary">Masuk</button>
-        <p id="login-msg" class="msg" role="alert" aria-live="polite"></p>
+      <!-- Tombol Login/Logout -->
+      <div id="auth-controls" class="sb-link sb-link-login">
+        <a href="/HTML/login.html" id="login-button">Masuk</a>
+        <span id="user-name" style="display:none;">Welcome, <span id="username-display"></span>!</span>
+        <a href="#" id="logout-button" style="display:none;">Logout</a>
       </div>
-    </section>
-  </main>
-
-  <script src="/JS/login.js" defer></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const $u = document.getElementById('username');
-      const $p = document.getElementById('password');
-      const $b = document.getElementById('btn-login');
-      const $t = document.getElementById('toggle-pass');
-
-      $t.addEventListener('click', () => {
-        $p.type = $p.type === 'password' ? 'text' : 'password';
-        $t.classList.toggle('on');
-      });
-
-      const submit = () => $b.click();
-      $u.addEventListener('keydown', e => (e.key === 'Enter') && submit());
-      $p.addEventListener('keydown', e => (e.key === 'Enter') && submit());
-    });
-  </script>
-</body>
-</html>
+    </nav>
+  </div>
+</header>
