@@ -1,34 +1,33 @@
-// SIMBEDA - Auth Guard (dashboard publik, modul lain butuh login + izin)
 (function () {
   'use strict';
 
-  const meta = document.querySelector('meta[name="simbeda:module"]');
-  const moduleName = (meta?.content || '').trim().toLowerCase();
+  const $ = (s) => document.querySelector(s);
 
-  // Kalau halaman tidak mendeklarasikan modul → tidak dijaga
-  if (!moduleName) return;
-
-  // Dashboard kini publik (abaikan guard meski ada meta)
-  if (moduleName === 'dashboard') return;
-
-  // Ambil sesi
-  let sess = null;
-  try { sess = JSON.parse(localStorage.getItem('simbeda_auth') || 'null'); } catch (_) {}
-
-  // Wajib login untuk modul selain dashboard
-  if (!sess) {
-    const next = encodeURIComponent(location.pathname + location.search + location.hash);
-    location.assign(`/HTML/login.html?next=${next}`);
-    return;
+  // Cek jika ada sesi di localStorage
+  function checkAuth() {
+    const session = JSON.parse(localStorage.getItem('simbeda_auth'));
+    if (!session || !session.username) {
+      window.location.href = '/HTML/login.html';  // Jika tidak ada sesi, arahkan ke login
+    }
   }
 
-  // Cek izin modul jika ada daftar modules pada sesi
-  const mods = Array.isArray(sess.modules) ? sess.modules.map(m => String(m).toLowerCase()) : null;
-  if (mods && !mods.includes(moduleName)) {
-    // Tidak berizin → arahkan ke login agar jelas
-    location.assign('/HTML/login.html');
-    return;
+  // Cek akses berdasarkan role
+  function checkRole() {
+    const session = JSON.parse(localStorage.getItem('simbeda_auth'));
+    if (session && session.role === 'Kota') {
+      // Allow access to Kota
+    } else if (session && session.role === 'Kecamatan') {
+      // Allow access to Kecamatan
+    } else {
+      window.location.href = '/HTML/login.html'; // Redirect jika role tidak sesuai
+    }
   }
 
-  // Lolos guard
+  // Main function to check authentication
+  function initGuard() {
+    checkAuth();
+    checkRole();
+  }
+
+  document.addEventListener('DOMContentLoaded', initGuard);
 })();

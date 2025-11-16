@@ -1,18 +1,13 @@
-// SIMBEDA - Login (abs path + validasi + redirect per-role + fallback lokal)
 (function () {
   'use strict';
 
-  // Utama (GitHub Pages root) + fallback (preview lokal)
   const USER_JSON_CANDIDATES = ['/JSON/users.json', 'JSON/users.json'];
-
-  // Redirect per-role (ubah kalau perlu)
   const REDIRECT_BY_ROLE = {
     'Kota': '/HTML/dashboard.html',
     'Kecamatan': '/HTML/dashboard.html',
     'default': '/HTML/dashboard.html'
   };
 
-  // Helper kecil
   const $ = (sel) => document.querySelector(sel);
   const pick = (...vals) => {
     for (const v of vals) if (v !== undefined && v !== null && String(v).trim() !== '') return v;
@@ -25,10 +20,9 @@
         if (res.ok) return normalizeUsers(await res.json());
       } catch (_) {}
     }
-    throw new Error('users.json gagal dimuat. Cek path: /JSON/users.json (pastikan Pages sudah terupdate).');
+    throw new Error('users.json gagal dimuat. Periksa /JSON/users.json');
   }
 
-  // Normalisasi → map: { usernameLower: { username, password, role, area, modules } }
   function normalizeUsers(raw) {
     const map = {};
     if (Array.isArray(raw)) {

@@ -2,10 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Masuk | SIMBEDA Kota Dumai</title>
-
-  <!-- Fonts & Styles (ABSOLUTE PATH) -->
   <link rel="stylesheet" href="/CSS/Roboto.css" />
   <link rel="stylesheet" href="/CSS/login.css" />
 </head>
@@ -28,20 +26,12 @@
 
         <button id="btn-login" class="btn-primary">Masuk</button>
         <p id="login-msg" class="msg" role="alert" aria-live="polite"></p>
-
-        <!-- Opsional untuk staging; hapus di produksi -->
-        <details class="hint">
-          <summary>Butuh bantuan?</summary>
-          <small>Contoh: pengguna <b>dt</b> & kata sandi <b>dumaisiaga</b> (jangan tampilkan di produksi).</small>
-        </details>
       </div>
     </section>
   </main>
 
-  <!-- Script (ABSOLUTE PATH). login.js diharapkan baca /JSON/users.json -->
   <script src="/JS/login.js" defer></script>
   <script>
-    // UX kecil: toggle password & Enter untuk submit
     document.addEventListener('DOMContentLoaded', () => {
       const $u = document.getElementById('username');
       const $p = document.getElementById('password');
