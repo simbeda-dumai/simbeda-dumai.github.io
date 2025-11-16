@@ -115,3 +115,15 @@
 .sb-link-login:hover {
   background: rgba(0,0,0,.30);
 }
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f9fafb;
+  margin: 0;
+  padding: 0;
+}
