@@ -1,6 +1,15 @@
 <header>
     <div class="header-logo">
         <img src="/img/logo_simbeda.png" alt="SimBeDa Logo">
+        <img src="/img/dumai_idaman.png" alt="Dumai Idaman Logo">
+        <img src="/img/asn.png" alt="ASN Logo">
     </div>
     <h1>SimBeDa-Dumai</h1>
+    <nav id="navbar">
+        <button onclick="loadModule('beranda')">Home</button>
+        <button onclick="loadModule('laporanWarga')">Laporan Warga</button>
+        <button onclick="loginUser()" id="loginButton" style="display:none;">Login</button>
+        <span id="userInfo"></span> <!-- Nama User -->
+        <button id="logoutButton" onclick="logoutUser()" style="display:none;">Logout</button> <!-- Tombol Logout -->
+    </nav>
 </header>
