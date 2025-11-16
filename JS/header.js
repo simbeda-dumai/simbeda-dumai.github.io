@@ -7,13 +7,13 @@
   function checkAuth() {
     const session = JSON.parse(localStorage.getItem('simbeda_auth'));
     if (session && session.username) {
-      // Tampilkan nama pengguna dan tombol logout
+      // Pastikan tombol login disembunyikan hanya jika sudah login
       $('#login-button').style.display = 'none';  // Sembunyikan tombol login
       $('#logout-button').style.display = 'inline';  // Tampilkan tombol logout
       $('#user-name').style.display = 'inline';  // Tampilkan nama pengguna
       $('#username-display').textContent = session.username;  // Tampilkan nama pengguna
     } else {
-      // Tampilkan tombol login dan sembunyikan nama pengguna
+      // Pastikan tombol login muncul jika belum login
       $('#login-button').style.display = 'inline';
       $('#logout-button').style.display = 'none';
       $('#user-name').style.display = 'none';
