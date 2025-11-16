@@ -3,7 +3,7 @@
 
   const $ = (s) => document.querySelector(s);
 
-  // Ambil data session dari localStorage
+  // Cek sesi login dari localStorage
   function checkAuth() {
     const session = JSON.parse(localStorage.getItem('simbeda_auth'));
     if (session && session.username) {
@@ -13,10 +13,10 @@
       $('#user-name').style.display = 'inline';  // Tampilkan nama pengguna
       $('#username-display').textContent = session.username;  // Tampilkan nama pengguna
     } else {
-      // Sembunyikan nama pengguna dan tombol logout jika belum login
-      $('#login-button').style.display = 'inline';  // Tampilkan tombol login
-      $('#logout-button').style.display = 'none';  // Sembunyikan tombol logout
-      $('#user-name').style.display = 'none';  // Sembunyikan nama pengguna
+      // Tampilkan tombol login dan sembunyikan nama pengguna
+      $('#login-button').style.display = 'inline';
+      $('#logout-button').style.display = 'none';
+      $('#user-name').style.display = 'none';
     }
   }
 
@@ -28,6 +28,6 @@
     window.location.href = '/HTML/login.html';  // Arahkan ke halaman login
   });
 
-  // Panggil fungsi untuk cek status autentikasi saat halaman dimuat
+  // Cek status autentikasi saat halaman dimuat
   document.addEventListener('DOMContentLoaded', checkAuth);
 })();

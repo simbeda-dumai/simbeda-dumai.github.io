@@ -1,7 +1,7 @@
 <header class="sb-header" role="banner">
   <input type="checkbox" id="sb-nav-toggle" class="sb-nav-toggle" aria-label="Buka/Tutup menu" />
   <div class="sb-header__inner">
-    <!-- Brand / Logo -->
+    <!-- Logo SIMBEDA -->
     <a class="sb-brand" href="/index.html" aria-label="Beranda SIMBEDA">
       <img src="/IMG/logo_simbeda.png" alt="Logo SIMBEDA" class="logo" />
       <img src="/IMG/dumai_idaman.png" alt="Dumai Idaman" class="logo secondary" />
@@ -19,7 +19,13 @@
       <a href="/HTML/dashboard.html" class="sb-link">Dashboard</a>
       <a href="/HTML/laporan_cepat.html" class="sb-link">Laporan Cepat</a>
       <a href="/HTML/lapor_warga.html" class="sb-link">Lapor Warga</a>
-      <a href="/HTML/login.html" class="sb-link sb-link-login">Masuk</a>
+
+      <!-- Tombol Login/Logout -->
+      <div id="auth-controls" class="sb-link sb-link-login">
+        <a href="/HTML/login.html" id="login-button">Masuk</a>
+        <span id="user-name" style="display:none;">Welcome, <span id="username-display"></span>!</span>
+        <a href="#" id="logout-button" style="display:none;">Logout</a>
+      </div>
     </nav>
   </div>
 </header>
