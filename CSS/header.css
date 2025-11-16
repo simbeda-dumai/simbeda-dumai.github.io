@@ -102,3 +102,16 @@
   .sb-nav-toggle:checked ~ .sb-header__inner .sb-hamburger span:nth-child(2){ opacity:0 }
   .sb-nav-toggle:checked ~ .sb-header__inner .sb-hamburger span:nth-child(3){ transform: translateY(-7px) rotate(-45deg) }
 }
+
+
+.sb-link-login {
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 8px 12px;
+  border-radius: 9999px;
+  background: rgba(0,0,0,.18);
+  display: inline-block;  /* Make sure it displays inline */
+}
+
+.sb-link-login:hover {
+  background: rgba(0,0,0,.30);
+}
