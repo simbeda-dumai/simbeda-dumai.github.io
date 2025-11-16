@@ -1,13 +1,33 @@
-<h3>Laporan Warga</h3>
-<form id="laporWargaForm">
-    <label for="jenisKejadian">Jenis Kejadian:</label>
-    <select id="jenisKejadian" required>
-        <option value="Banjir">Banjir</option>
-        <option value="Kebakaran">Kebakaran</option>
-    </select><br>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Warga - SimBeDa-Dumai</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h3>Laporan Warga</h3>
+    <form id="laporWargaForm">
+        <label for="jenisKejadian">Jenis Kejadian:</label>
+        <select id="jenisKejadian" required>
+            <option value="Banjir">Banjir</option>
+            <option value="Kebakaran">Kebakaran</option>
+            <option value="Angin Kencang">Angin Kencang</option>
+        </select><br>
 
-    <label for="lokasi">Lokasi Kejadian:</label>
-    <input type="text" id="lokasi" placeholder="Lokasi Kejadian" required><br>
+        <label for="lokasi">Lokasi Kejadian:</label>
+        <input type="text" id="lokasi" placeholder="Lokasi Kejadian" required><br>
 
-    <button type="submit">Kirim Laporan</button>
-</form>
+        <label for="waktuKejadian">Waktu Kejadian:</label>
+        <input type="datetime-local" id="waktuKejadian" value="" required><br>
+
+        <label for="uraian">Uraian Singkat Kejadian:</label>
+        <textarea id="uraian" placeholder="Uraikan kejadian secara singkat" required></textarea><br>
+
+        <button type="submit">Kirim Laporan</button>
+    </form>
+
+    <script src="/js/laporanWarga.js"></script>
+</body>
+</html>
