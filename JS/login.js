@@ -20,7 +20,7 @@
         if (res.ok) return normalizeUsers(await res.json());
       } catch (_) {}
     }
-    throw new Error('users.json gagal dimuat. Periksa /JSON/users.json');
+    throw new Error('users.json gagal dimuat. Periksa path: /JSON/users.json');
   }
 
   function normalizeUsers(raw) {
