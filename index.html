@@ -5,19 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SimBeDa-Dumai</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"> <!-- Menambahkan favicon -->
 </head>
 <body>
     <!-- Header -->
     <div id="header-container"></div>
-    
+
     <!-- Navbar -->
-    <div id="navbar"></div>  <!-- Navbar akan diisi oleh JavaScript -->
+    <div id="navbar"></div> <!-- Navbar akan diubah oleh JavaScript setelah login -->
 
     <!-- Main Content -->
     <main id="mainContent">
         <h1>Selamat datang di SimBeDa-Dumai</h1>
         <p>Sistem Manajemen Bencana Kota Dumai. Pilih menu di atas untuk mulai.</p>
     </main>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
 
     <!-- Footer -->
     <div id="footer-container"></div>

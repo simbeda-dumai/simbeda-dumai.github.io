@@ -1,4 +1,4 @@
-// Fungsi login untuk validasi username dan password
+// Fungsi untuk memvalidasi login pengguna
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -12,7 +12,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     if (user) {
         localStorage.setItem("loggedInUser", JSON.stringify(user));
         alert("Login berhasil!");
-        window.location.href = "index.html";  // Redirect ke halaman utama setelah login
+        updateNavbar(user);  // Memperbarui navbar setelah login
+        loadModule('beranda');  // Tampilkan beranda setelah login
     } else {
         alert("Username atau Password salah!");
     }
