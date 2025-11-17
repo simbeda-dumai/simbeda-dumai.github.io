@@ -66,49 +66,8 @@ header h1 {
     transform: scale(0.98);
 }
 
-/* Footer Styles */
-footer {
-    text-align: center;
-    margin-top: 40px;
+#navbar span {
+    margin-left: 20px;
     font-size: 1rem;
-}
-
-footer img {
-    width: 30px;
-    margin-right: 10px;
-}
-
-/* Media Queries for Mobile Devices */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-
-    #navbar button {
-        padding: 8px 15px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-
-    #navbar button {
-        padding: 8px 10px;
-        font-size: 0.9rem;
-    }
+    color: #fff;
 }

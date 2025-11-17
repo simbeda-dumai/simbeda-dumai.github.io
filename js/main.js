@@ -21,47 +21,28 @@ function loginUser() {
 function updateNavbar(user) {
     const navbar = document.getElementById("navbar");
 
+    // Pastikan navbar berfungsi setelah login
     navbar.innerHTML = `
         <button onclick="loadModule('beranda')">Home</button>
         <button onclick="loadModule('laporanWarga')">Laporan Warga</button>
         <button onclick="logoutUser()">Logout</button>
     `;
 
-    const userInfo = document.getElementById("userInfo");
-    userInfo.innerHTML = `Selamat datang, ${user.username}`;
-
-    // Menampilkan tombol khusus untuk admin atau kecamatan
-    if (user.role !== "warga") {
-        navbar.innerHTML += `<button onclick="loadModule('laporanWilayah')">Laporan Wilayah</button>`;
-    }
+    // Update dengan informasi user di navbar jika perlu
+    const userInfo = document.createElement('span');
+    userInfo.textContent = `Logged in as: ${user.username}`;
+    navbar.appendChild(userInfo);
 }
 
-// Fungsi logout
+// Fungsi untuk logout
 function logoutUser() {
     localStorage.removeItem("loggedInUser");
     alert("Logout berhasil!");
-    updateNavbar({});  // Reset navbar saat logout
-    loadModule('beranda');
+    window.location.reload();  // Refresh halaman setelah logout
 }
 
-// Fungsi untuk memuat modul-modul berdasarkan file HTML terpisah
-function loadModule(moduleName) {
-    const contentDiv = document.getElementById("mainContent");
-    
-    fetch(`html/${moduleName}.html`)
-        .then(response => response.text())
-        .then(html => {
-            contentDiv.innerHTML = html;
-        });
+// Fungsi untuk memuat modul berdasarkan nama
+function loadModule(module) {
+    // Menambahkan logika pemuatan modul di sini (misalnya beranda, laporan warga)
+    alert('Modul ' + module + ' dimuat!');
 }
-
-// Memperbarui navbar jika user sudah login saat halaman dimuat
-document.addEventListener("DOMContentLoaded", function() {
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (user) {
-        updateNavbar(user);
-    } else {
-        // Jika belum login, tampilkan tombol login
-        document.getElementById("loginButton").style.display = "inline";
-    }
-});
